@@ -2,9 +2,15 @@ import React from 'react'
 
 interface PropsType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     color: 'primary' | 'secondary' | 'warning'
+    className?: string
 }
 
-const Button: React.FC<PropsType> = ({ children, color, ...rest }) => {
+const Button: React.FC<PropsType> = ({
+    children,
+    color,
+    className,
+    ...rest
+}) => {
     let classes = ''
     switch (color) {
         case 'primary':
@@ -21,11 +27,8 @@ const Button: React.FC<PropsType> = ({ children, color, ...rest }) => {
     }
     return (
         <button
-            className={
-                'rounded-full px-buttonx py-buttony font-sf font-medium text-light' +
-                ' ' +
-                classes
-            }
+            className={`rounded-full px-buttonx py-buttony font-sf font-medium text-light  
+                 ${classes} ${className}`}
             {...rest}
         >
             {children}
