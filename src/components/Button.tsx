@@ -14,11 +14,15 @@ const Button: React.FC<PropsType> = ({
 }) => {
     return (
         <button
-            className={clsx('rounded-full py-buttony font-medium', {
-                'bg-primary text-light': color === 'primary',
-                'bg-light-purple text-primary': color === 'secondary',
-                'bg-warning text-light': color === 'warning',
-            })}
+            className={clsx(
+                'rounded-full py-buttony font-medium',
+                {
+                    'bg-primary text-light': color === 'primary',
+                    'bg-light-purple text-primary': color === 'secondary',
+                    'bg-warning text-light': color === 'warning',
+                },
+                className
+            )}
             {...rest}
         >
             {children}
