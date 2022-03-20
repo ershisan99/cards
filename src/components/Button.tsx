@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 
 interface PropsType extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,24 +12,13 @@ const Button: React.FC<PropsType> = ({
     className,
     ...rest
 }) => {
-    let classes = ''
-    switch (color) {
-        case 'primary':
-            classes = 'bg-primary'
-            break
-        case 'secondary':
-            classes = 'bg-secondary text-primary'
-            break
-        case 'warning':
-            classes = 'bg-warning'
-            break
-        default:
-            break
-    }
     return (
         <button
-            className={`rounded-full px-buttonx py-buttony font-sf font-medium text-light  
-                 ${classes} ${className}`}
+            className={clsx('rounded-full py-buttony font-medium', {
+                'bg-primary text-light': color === 'primary',
+                'bg-light-purple text-primary': color === 'secondary',
+                'bg-warning text-light': color === 'warning',
+            })}
             {...rest}
         >
             {children}
