@@ -62,6 +62,7 @@
 @layer components {
     .tab-item {
         @apply flex
+        w-44
         grow
         cursor-pointer
         items-center
@@ -74,6 +75,7 @@
 
     .tab-item__active {
         @apply flex
+        w-44
         grow
         cursor-pointer
         items-center
