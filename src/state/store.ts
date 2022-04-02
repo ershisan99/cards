@@ -5,10 +5,11 @@ import {
 } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { signInReducer } from './slices/signInSlice'
 import { signupReducer } from './slices/signUpSlice'
 
 export const store = configureStore({
-    reducer: { signup: signupReducer },
+    reducer: { signup: signupReducer, signIn: signInReducer },
 })
 
 export type RootState = ReturnType<typeof store.getState>

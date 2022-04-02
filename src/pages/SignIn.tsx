@@ -1,10 +1,20 @@
 import React, { useState } from 'react'
 import Button from '../components/Button'
+import Checkbox from '../components/Checkbox'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
+import {
+    selectSignIn,
+    signInActions,
+    signInThunks,
+} from '../state/slices/signInSlice'
+import { useActions, useAppSelector } from '../state/store'
 
 const SignIn = () => {
     const [isOpen, setIsOpen] = useState(true)
+    const { setRememberMe, setPassword, setEmail } = useActions(signInActions)
+    const { sendSignInRequest } = useActions(signInThunks)
+    const { email, password, rememberMe } = useAppSelector(selectSignIn)
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -12,18 +22,53 @@ const SignIn = () => {
                     Sign In
                 </div>
                 <form>
-                    <Input type="email" alias="email">
+                    <Input
+                        type="email"
+                        alias="email"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail({ email: e.currentTarget.value })
+                        }
+                    >
                         Email
                     </Input>
-                    <Input type="password" alias="password">
+                    <Input
+                        type="password"
+                        alias="password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword({ password: e.currentTarget.value })
+                        }
+                    >
                         Password
                     </Input>
+                    <Checkbox
+                        alias="remember me"
+                        checked={rememberMe}
+                        onChange={(e) =>
+                            setRememberMe({
+                                rememberMe: e.currentTarget.checked,
+                            })
+                        }
+                    >
+                        Remember Me
+                    </Checkbox>
                 </form>
                 <div className="flex justify-end text-xs text-slate underline underline-offset-2">
                     Forgot your password?
                 </div>
                 <div className="mt-20 mb-8 flex justify-center">
-                    <Button color="primary" className="px-24">
+                    <Button
+                        color="primary"
+                        className="px-24"
+                        onClick={() =>
+                            sendSignInRequest({
+                                password,
+                                email,
+                                rememberMe,
+                            })
+                        }
+                    >
                         Sign In
                     </Button>
                 </div>

@@ -5,7 +5,7 @@ import { RootState } from '../store'
 export const sendSignUpRequest = createAsyncThunk(
     'signup/send',
     async (payload: SignUpArgs) => {
-        return await UserAPI.register({
+        return await UserAPI.signUp({
             email: payload.email,
             password: payload.password,
         })
