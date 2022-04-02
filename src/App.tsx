@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import { store } from './state/store'
+import NewPassword from './pages/NewPassword'
 
 function App() {
     return (
@@ -20,7 +21,7 @@ function App() {
                         path={'/reset-password'}
                         element={'reset-password'}
                     />
-                    <Route path={'/new-password'} element={'new-password'} />
+                    <Route path={'/new-password'} element={<NewPassword />} />
                     <Route path={'/test-page'} element={'test-page'} />
                     <Route path={'/*'} element={'404'} />
                 </Routes>
