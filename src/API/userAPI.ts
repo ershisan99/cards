@@ -1,10 +1,11 @@
 import { instance } from './instance'
 
-type LoginArgs = {
+export type LoginArgs = {
     email: string
     password: string
     rememberMe: boolean
 }
+
 type MeRes = {
     _id: string
     email: string
@@ -19,11 +20,11 @@ type MeRes = {
     error?: string
 }
 
-type RegisterArgs = {
+export type SignUpArgs = {
     email: string
     password: string
 }
-type RegisterRes = {
+export type SignUpRes = {
     addedUser: any
     error?: string
 }
@@ -62,9 +63,9 @@ export const UserAPI = {
             })
             .then((res) => res.data)
     },
-    register: (args: RegisterArgs) => {
+    register: (args: SignUpArgs) => {
         return instance
-            .post<RegisterRes>('/auth/register', {
+            .post<SignUpRes>('/auth/register', {
                 email: args.email,
                 password: args.password,
             })
