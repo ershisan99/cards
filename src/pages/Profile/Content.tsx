@@ -8,7 +8,7 @@ export const Content = () => {
     const onTabClickHandler = (value: boolean) => setTabs(value)
 
     return (
-        <div className="h-screen w-full overflow-y-hidden bg-gradient">
+        <div className="h-full min-h-screen w-full bg-gradient">
             <Header tabs={tabs} onTabClickHandler={onTabClickHandler} />
             {tabs ? (
                 <Profile
