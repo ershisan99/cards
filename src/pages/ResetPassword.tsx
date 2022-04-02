@@ -3,7 +3,7 @@ import Modal from '../components/Modal'
 import Input from '../components/Input'
 import { NavLink } from 'react-router-dom'
 import Button from '../components/Button'
-import icon_mail from '../images/mail_icon.svg'
+import icon_mail from '../assets/mail_icon.svg'
 
 const ResetPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)
@@ -12,6 +12,7 @@ const ResetPassword = () => {
 
     const onChangeInputEmail = (e: string) => {
         setInputEmail(e)
+
         // todo: use regex
         // (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
     }
