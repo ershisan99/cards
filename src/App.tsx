@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
+import ResetPassword from './pages/ResetPassword'
 import { store } from './state/store'
 
 function App() {
@@ -18,8 +19,9 @@ function App() {
                     <Route path={'/profile'} element={'profile'} />
                     <Route
                         path={'/reset-password'}
-                        element={'reset-password'}
+                        element={<ResetPassword />}
                     />
+
                     <Route path={'/new-password'} element={'new-password'} />
                     <Route path={'/test-page'} element={'test-page'} />
                     <Route path={'/*'} element={'404'} />
