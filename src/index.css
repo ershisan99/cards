@@ -49,5 +49,12 @@
 @layer base {
     html {
         font-family: 'SF UI Display', Proxima Nova, system-ui, sans-serif;
+        box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
     }
 }
