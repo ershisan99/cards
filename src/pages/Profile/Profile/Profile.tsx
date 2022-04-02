@@ -14,7 +14,7 @@ export const Profile: React.FC<ProfileType> = ({ username, work, avatar }) => {
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-b-xl">
                 <div className="w-64 bg-light">
-                    <div className="flex flex-col items-center rounded-b-md bg-secondary py-2 px-6">
+                    <div className="flex flex-col items-center rounded-b-md bg-secondary py-6 px-6">
                         <div className="h-24 w-24 overflow-hidden rounded-full">
                             <img
                                 src={
@@ -59,7 +59,7 @@ export const Profile: React.FC<ProfileType> = ({ username, work, avatar }) => {
                     <Pagination
                         currentPage={1}
                         pageSize={10}
-                        totalUsersCount={100}
+                        totalUsersCount={1000}
                         onPageChanged={() => alert('changed')}
                     />
                 </div>
