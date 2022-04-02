@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
@@ -29,7 +30,9 @@ const ResetPassword = () => {
                     Did you remember your password?
                 </div>
                 <div className="text-center font-semibold text-primary">
-                    Try logging in
+                    <NavLink to={'/sign-in'} className={'cursor-pointer'}>
+                        Try logging in
+                    </NavLink>
                 </div>
             </Modal>
         </div>
