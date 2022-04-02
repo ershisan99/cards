@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
@@ -15,6 +16,7 @@ const SignUp = () => {
         useActions(signupActions)
     const { sendSignUpRequest } = useActions(signupThunks)
     const { email, password, confirmPassword } = useAppSelector(selectSignup)
+    const navigate = useNavigate()
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -57,7 +59,11 @@ const SignUp = () => {
                 </form>
 
                 <div className="mt-20 flex justify-around">
-                    <Button color="secondary" className="px-8">
+                    <Button
+                        color="secondary"
+                        className="px-8"
+                        onClick={() => navigate('/sign-in')}
+                    >
                         Cancel
                     </Button>
                     <Button

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Modal from '../components/Modal'
-import Input from '../components/Input'
-import { NavLink } from 'react-router-dom'
-import Button from '../components/Button'
+import { Link } from 'react-router-dom'
 import icon_mail from '../assets/mail_icon.svg'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import Modal from '../components/Modal'
 
 const ResetPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)
@@ -57,9 +57,9 @@ const ResetPassword = () => {
                     Did you remember your password?
                 </div>
                 <div className="mb-5 text-center font-semibold text-primary">
-                    <NavLink to={'/sign-in'} className={'cursor-pointer'}>
+                    <Link to={'/sign-in'} className={'cursor-pointer'}>
                         Try logging in
-                    </NavLink>
+                    </Link>
                 </div>
             </Modal>
 

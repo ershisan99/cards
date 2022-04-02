@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import Input from '../components/Input'
@@ -55,7 +56,7 @@ const SignIn = () => {
                     </Checkbox>
                 </form>
                 <div className="flex justify-end text-xs text-slate underline underline-offset-2">
-                    Forgot your password?
+                    <Link to="/reset-password">Forgot your password?</Link>
                 </div>
                 <div className="mt-20 mb-8 flex justify-center">
                     <Button
@@ -76,7 +77,7 @@ const SignIn = () => {
                     Don't have an account?
                 </div>
                 <div className="text-center font-semibold text-primary">
-                    Sign Up
+                    <Link to="/sign-up">Sign Up</Link>
                 </div>
             </Modal>
         </div>
