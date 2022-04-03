@@ -4,12 +4,12 @@ import icon_mail from '../../assets/images/mail_icon.svg'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
-import { useActions, useAppSelector } from '../../utils/helpers'
 import {
     resetPasswordActions,
     resetPasswordThunks,
     selectResetPassword,
 } from '../../state/slices/resetPasswordSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const ResetPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)
@@ -31,11 +31,7 @@ const ResetPassword = () => {
             sendResetPasswordRequest({
                 email,
                 from: 'test-front-admin <lazlo9ilazlo9i@gmail.com>',
-                message: `<div style="background-color: lime; padding: 15px">
-    password recovery link:
-    <a href="http://localhost:3000/#/set-new-password/$token$">
-    link</a>
-    </div>`,
+                message: `<div style='background-color: lime; padding: 15px'>password recovery link:<a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`,
             })
                 .unwrap()
                 .then(() => {
