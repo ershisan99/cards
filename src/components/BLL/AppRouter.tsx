@@ -6,11 +6,13 @@ import { useActions, useAppSelector } from '../../utils/helpers'
 
 const AppRouter = () => {
     const { GetMe } = useActions(userThunks)
-    const { isAuth } = useAppSelector(selectUser)
+    const { isAuth, isLoading } = useAppSelector(selectUser)
     useEffect(() => {
         GetMe({})
     }, [])
-    return isAuth ? (
+    return isLoading ? (
+        <div>Loading</div>
+    ) : isAuth ? (
         <Routes>
             {privateRoutes.map((route) => (
                 <Route
