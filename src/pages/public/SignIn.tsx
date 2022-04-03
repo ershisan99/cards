@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import Button from '../components/Button'
-import Checkbox from '../components/Checkbox'
-import Input from '../components/Input'
-import Modal from '../components/Modal'
-import { RouteNames } from '../routes'
+import Button from '../../components/UI/Button'
+import Checkbox from '../../components/UI/Checkbox'
+import Input from '../../components/UI/Input'
+import Modal from '../../components/UI/Modal'
+import { RouteNames } from '../../routes'
 import {
     selectSignIn,
     signInActions,
     signInThunks,
-} from '../state/slices/signInSlice'
-import { useActions, useAppSelector } from '../utils/helpers'
+} from '../../state/slices/signInSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const SignIn = () => {
     const [isOpen, setIsOpen] = useState(true)

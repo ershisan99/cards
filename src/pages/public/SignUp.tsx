@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import Modal from '../components/Modal'
-import { RouteNames } from '../routes'
+import Button from '../../components/UI/Button'
+import Input from '../../components/UI/Input'
+import Modal from '../../components/UI/Modal'
+import { RouteNames } from '../../routes'
 import {
     selectSignup,
     signupActions,
     signupThunks,
-} from '../state/slices/signUpSlice'
-import { useActions, useAppSelector } from '../utils/helpers'
+} from '../../state/slices/signUpSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const SignUp = () => {
     const [isOpen, setIsOpen] = useState(true)

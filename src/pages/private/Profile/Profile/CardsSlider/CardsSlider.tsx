@@ -1,5 +1,5 @@
-import RangeSlider from '../../../../components/DoubleRangeSlider'
 import React, { useEffect, useState } from 'react'
+import RangeSlider from '../../../../../components/UI/DoubleRangeSlider'
 
 const MIN_VALUE: number = 0
 const MAX_VALUE: number = 100

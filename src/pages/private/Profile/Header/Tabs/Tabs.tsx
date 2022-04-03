@@ -1,5 +1,5 @@
-import cards from '../../../../assets/cards.svg'
-import user from '../../../../assets/user.svg'
+import cards from '../../../../../assets/images/cards.svg'
+import user from '../../../../../assets/images/user.svg'
 
 type TabsPropsType = {
     tabs: boolean

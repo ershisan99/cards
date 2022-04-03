@@ -1,10 +1,10 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import NewPassword from '../pages/NewPassword'
-import Profile from '../pages/Profile/Profile/Profile'
-import ResetPassword from '../pages/ResetPassword'
-import SignIn from '../pages/SignIn'
-import SignUp from '../pages/SignUp'
+import Profile from '../pages/private/Profile/Profile/Profile'
+import NewPassword from '../pages/public/NewPassword'
+import ResetPassword from '../pages/public/ResetPassword'
+import SignIn from '../pages/public/SignIn'
+import SignUp from '../pages/public/SignUp'
 
 export interface IRoute {
     path: string

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import icon_mail from '../assets/mail_icon.svg'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import Modal from '../components/Modal'
+import icon_mail from '../../assets/images/mail_icon.svg'
+import Button from '../../components/UI/Button'
+import Input from '../../components/UI/Input'
+import Modal from '../../components/UI/Modal'
 
 const ResetPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import Modal from '../components/Modal'
+import Button from '../../components/UI/Button'
+import Input from '../../components/UI/Input'
+import Modal from '../../components/UI/Modal'
 
 const NewPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)

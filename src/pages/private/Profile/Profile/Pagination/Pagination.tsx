@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Select from '../../../../components/Select'
-import left from './../../../../assets/leftArr.svg'
-import right from './../../../../assets/rightArr.svg'
+import left from '../../../../../assets/images/leftArr.svg'
+import right from '../../../../../assets/images/rightArr.svg'
+import Select from '../../../../../components/UI/Select'
 
 type PaginationPropsType = {
     currentPage: number
