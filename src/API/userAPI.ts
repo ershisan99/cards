@@ -29,11 +29,11 @@ export type SignUpRes = {
     error?: string
 }
 
-type ForgotArgs = {
+export type ForgotArgs = {
     email: string // кому восстанавливать пароль
     from: string // от кого придёт письмо
     message: string // письмо, вместо $token$ бэк вставит токен. Пример:
-    //`<div style="background-color: lime; padding: 15px">
+    // `<div style="background-color: lime; padding: 15px">
     // password recovery link:
     // <a href='http://localhost:3000/#/set-new-password/$token$'>
     // link</a>
