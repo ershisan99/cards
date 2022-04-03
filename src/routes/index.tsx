@@ -18,7 +18,7 @@ export enum RouteNames {
     SIGN_IN = '/sign-in',
     SIGN_UP = '/sign-up',
     RESET_PASSWORD = '/reset-password',
-    NEW_PASSWORD = '/new-password',
+    NEW_PASSWORD = '/set-new-password/:token',
     PROFILE = '/profile',
 }
 

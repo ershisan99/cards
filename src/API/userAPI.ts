@@ -92,6 +92,6 @@ export const UserAPI = {
                 password: args.password,
                 resetPasswordToken: args.resetPasswordToken,
             })
-            .then((res) => res.data)
+            .then((res) => res)
     },
 }

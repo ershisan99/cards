@@ -8,41 +8,36 @@ import {
     newPasswordThunks,
     selectNewPassword,
 } from '../../state/slices/newPasswordSlice'
+import { useNavigate, useParams } from 'react-router'
+import { RouteNames } from '../../routes'
 
 const NewPassword = () => {
-    // регулярка
     const regex = /[A-Za-z0-9]{8,}/
-
-    // берем токен
-    const url = window.location.href.split('/')
-    const resetPasswordToken = url[url.length - 1]
-
-    // local state
+    const { token } = useParams()
+    const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState<boolean>(true)
     const [error, setError] = useState<boolean>(false)
-
-    // slice's
     const { setPassword } = useActions(newPasswordActions)
     const { sendNewPasswordRequest } = useActions(newPasswordThunks)
     const { password } = useAppSelector(selectNewPassword)
 
-    // functional
     const onChangeInputPassword = (e: string) => {
         setError(false)
         setPassword({ password: e })
     }
+
     const sendNewPassword = () => {
-        if (regex.test(password)) {
+        if (regex.test(password) && token) {
             sendNewPasswordRequest({
                 password,
-                resetPasswordToken,
+                resetPasswordToken: token,
             })
                 .unwrap()
-                .then((resp) => {
-                    console.log(resp.info)
+                .then(() => {
+                    navigate(RouteNames.SIGN_IN)
                 })
-                .catch((error) => {
-                    console.log(error.error)
+                .catch((res) => {
+                    console.log(res.error)
                 })
         }
 
@@ -71,8 +66,7 @@ const NewPassword = () => {
                     <h1 className="text-red-500">ERROR! INVALID PASSWORD!</h1>
                 )}
                 <div className="text-md flex justify-center text-light-gray opacity-40">
-                    Create a new password and we will send you further
-                    instructions to email
+                    Create a new password
                 </div>
                 <div className="text-md mt-3 flex flex-col justify-center text-light-gray opacity-40">
                     <b>The password must contain:</b>
@@ -82,7 +76,7 @@ const NewPassword = () => {
                     • upper and lower case
                     <br />
                 </div>
-                <div className="mt-20 mb-5 flex justify-center">
+                <div className="mt-10 mb-5 flex justify-center">
                     <Button
                         color="primary"
                         className="px-20"
