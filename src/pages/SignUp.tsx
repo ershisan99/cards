@@ -8,7 +8,7 @@ import {
     signupActions,
     signupThunks,
 } from '../state/slices/signUpSlice'
-import { useActions, useAppSelector } from '../state/store'
+import { useActions, useAppSelector } from '../utils/helpers'
 
 const SignUp = () => {
     const [isOpen, setIsOpen] = useState(true)
