@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
+import { RouteNames } from '../routes'
 import {
     selectSignup,
     signupActions,
@@ -62,7 +63,7 @@ const SignUp = () => {
                     <Button
                         color="secondary"
                         className="px-8"
-                        onClick={() => navigate('/sign-in')}
+                        onClick={() => navigate(RouteNames.SIGN_IN)}
                     >
                         Cancel
                     </Button>
@@ -74,6 +75,9 @@ const SignUp = () => {
                                 email,
                                 password,
                             })
+                                .unwrap()
+                                .then(() => navigate(RouteNames.SIGN_IN))
+                                .catch((err) => console.error(err))
                         }
                     >
                         Sign Up

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import Checkbox from '../components/Checkbox'
 import Input from '../components/Input'
 import Modal from '../components/Modal'
+import { RouteNames } from '../routes'
 import {
     selectSignIn,
     signInActions,
@@ -16,6 +18,7 @@ const SignIn = () => {
     const { setRememberMe, setPassword, setEmail } = useActions(signInActions)
     const { sendSignInRequest } = useActions(signInThunks)
     const { email, password, rememberMe } = useAppSelector(selectSignIn)
+    const navigate = useNavigate()
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -68,6 +71,9 @@ const SignIn = () => {
                                 email,
                                 rememberMe,
                             })
+                                .unwrap()
+                                .then(() => navigate(RouteNames.PROFILE))
+                                .catch((err) => console.error(err))
                         }
                     >
                         Sign In

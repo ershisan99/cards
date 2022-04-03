@@ -6,7 +6,7 @@ export type SignInArgs = {
     rememberMe: boolean
 }
 
-type MeRes = {
+export type MeRes = {
     _id: string
     email: string
     name: string
@@ -69,7 +69,7 @@ export const UserAPI = {
                 email: args.email,
                 password: args.password,
             })
-            .then((res) => res.data)
+            .then((res) => res)
     },
     getMe: () => {
         return instance.post<MeRes>('/auth/me').then((res) => res.data)
