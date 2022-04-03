@@ -71,6 +71,9 @@ export const UserAPI = {
             })
             .then((res) => res)
     },
+    signOut: () => {
+        return instance.delete('/auth/me').then((res) => res)
+    },
     getMe: () => {
         return instance.post<MeRes>('/auth/me').then((res) => res.data)
     },

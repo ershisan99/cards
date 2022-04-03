@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import Profile from '../pages/private/Profile/Profile/Profile'
+import { Content } from '../pages/private/Profile/Content'
 import NewPassword from '../pages/public/NewPassword'
 import ResetPassword from '../pages/public/ResetPassword'
 import SignIn from '../pages/public/SignIn'
@@ -46,7 +46,7 @@ export const publicRoutes: IRoute[] = [
 export const privateRoutes: IRoute[] = [
     {
         path: RouteNames.PROFILE,
-        component: <Profile />,
+        component: <Content />,
     },
     {
         path: RouteNames.START_PAGE,

@@ -5,10 +5,10 @@ import { selectUser, userThunks } from '../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
 
 const AppRouter = () => {
-    const { GetMe } = useActions(userThunks)
+    const { getMe } = useActions(userThunks)
     const { isAuth, isLoading } = useAppSelector(selectUser)
     useEffect(() => {
-        GetMe({})
+        getMe({})
     }, [])
     return isLoading ? (
         <div>Loading</div>

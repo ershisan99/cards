@@ -3,8 +3,11 @@ import { MeRes, UserAPI } from '../../API/userAPI'
 import { RootState } from '../store'
 import { sendSignInRequest } from './signInSlice'
 
-export const GetMe = createAsyncThunk('user/getMe', async () => {
+export const getMe = createAsyncThunk('user/getMe', async () => {
     return await UserAPI.getMe()
+})
+export const signOut = createAsyncThunk('user/signOut', async () => {
+    return await UserAPI.signOut()
 })
 
 type InitialState = {
@@ -26,7 +29,7 @@ const signInSlice = createSlice({
                 state.isAuth = !!state.user
                 state.isLoading = false
             })
-            .addCase(GetMe.fulfilled, (state, action) => {
+            .addCase(getMe.fulfilled, (state, action) => {
                 state.user = action.payload
                 state.isAuth = !!state.user
                 state.isLoading = false
@@ -34,14 +37,18 @@ const signInSlice = createSlice({
             .addCase(sendSignInRequest.pending, (state, action) => {
                 state.isLoading = true
             })
-            .addCase(GetMe.pending, (state, action) => {
+            .addCase(getMe.pending, (state, action) => {
                 state.isLoading = true
+            })
+            .addCase(getMe.rejected, (state, action) => {
+                state.isLoading = false
+                state.isAuth = false
             })
     },
 })
 
 export const userReducer = signInSlice.reducer
 export const userActions = signInSlice.actions
-export const userThunks = { GetMe }
+export const userThunks = { getMe, signOut }
 
 export const selectUser = (state: RootState) => state.user
