@@ -3,7 +3,7 @@ import { ForgotArgs, UserAPI } from '../../API/userAPI'
 import { RootState } from '../store'
 
 export const sendResetPasswordRequest = createAsyncThunk(
-    'signIn/send',
+    'resetPassword/send',
     async (payload: ForgotArgs) => {
         return await UserAPI.forgotPassword({
             email: payload.email,
@@ -17,10 +17,14 @@ const resetPasswordSlice = createSlice({
     name: 'resetPassword',
     initialState: {
         email: '',
+        isLoading: false,
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {
             state.email = action.payload.email
+        },
+        setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.isLoading = action.payload.value
         },
     },
 })

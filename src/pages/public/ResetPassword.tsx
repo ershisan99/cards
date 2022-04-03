@@ -25,7 +25,7 @@ const ResetPassword = () => {
     const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const { setEmail } = useActions(resetPasswordActions)
+    const { setEmail, setIsLoading } = useActions(resetPasswordActions)
     const { sendResetPasswordRequest } = useActions(resetPasswordThunks)
     const { email } = useAppSelector(selectResetPassword)
 
@@ -36,7 +36,7 @@ const ResetPassword = () => {
 
     const sendInstructions = () => {
         if (email.length > 0 && regex.test(email)) {
-            setIsOpen(false)
+            setIsLoading({ value: true })
             sendResetPasswordRequest({
                 email,
                 from: 'Cards 🎴 <marinadegames@gmail.com>',
@@ -44,6 +44,8 @@ const ResetPassword = () => {
             })
                 .unwrap()
                 .then(() => {
+                    setIsLoading({ value: true })
+                    setIsOpen(false)
                     setIsMessageSent(true)
                 })
         }
