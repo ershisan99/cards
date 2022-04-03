@@ -34,7 +34,7 @@ const NewPassword = () => {
                     </Input>
                 </form>
                 <div className="text-md flex justify-center text-light-gray opacity-40">
-                    Create new password and we will send you further
+                    Create a new password and we will send you further
                     instructions to email
                 </div>
                 <div className="mt-20 mb-5 flex justify-center">
