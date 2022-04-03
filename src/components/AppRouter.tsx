@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { privateRoutes, publicRoutes } from '../routes'
 
 const AppRouter = () => {
-    const isAuth = true
+    const isAuth = false
     return isAuth ? (
         <Routes>
             {privateRoutes.map((route) => (

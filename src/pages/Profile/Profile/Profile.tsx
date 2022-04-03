@@ -1,11 +1,11 @@
-import Table from './Table/Table'
-import { Pagination } from './Pagination/Pagination'
-import React from 'react'
+import React, { FC } from 'react'
 import CardsSlider from './CardsSlider/CardsSlider'
+import { Pagination } from './Pagination/Pagination'
 import Search from './Search/Search'
+import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
 
-export const Profile = () => {
+const Profile: FC = () => {
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-b-xl">
@@ -33,3 +33,4 @@ export const Profile = () => {
         </div>
     )
 }
+export default Profile

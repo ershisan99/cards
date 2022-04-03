@@ -1,11 +1,12 @@
 import React from 'react'
+import Profile from '../pages/Profile/Profile/Profile'
 import ResetPassword from '../pages/ResetPassword'
 import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
 
 export interface IRoute {
     path: string
-    component: React.ComponentType
+    component: JSX.Element
 }
 
 export enum RouteNames {
@@ -18,15 +19,20 @@ export enum RouteNames {
 export const publicRoutes: IRoute[] = [
     {
         path: RouteNames.SIGN_IN,
-        component: SignIn,
+        component: <SignIn />,
     },
     {
         path: RouteNames.SIGN_UP,
-        component: SignUp,
+        component: <SignUp />,
     },
     {
         path: RouteNames.RESET_PASSWORD,
-        component: ResetPassword,
+        component: <ResetPassword />,
     },
 ]
-export const privateRoutes: IRoute[] = []
+export const privateRoutes: IRoute[] = [
+    {
+        path: RouteNames.PROFILE,
+        component: <Profile />,
+    },
+]
