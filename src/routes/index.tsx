@@ -1,4 +1,5 @@
 import React from 'react'
+import NewPassword from '../pages/NewPassword'
 import Profile from '../pages/Profile/Profile/Profile'
 import ResetPassword from '../pages/ResetPassword'
 import SignIn from '../pages/SignIn'
@@ -13,6 +14,7 @@ export enum RouteNames {
     SIGN_IN = '/sign-in',
     SIGN_UP = '/sign-up',
     RESET_PASSWORD = '/reset-password',
+    NEW_PASSWORD = '/new-password',
     PROFILE = '/profile',
 }
 
@@ -28,6 +30,10 @@ export const publicRoutes: IRoute[] = [
     {
         path: RouteNames.RESET_PASSWORD,
         component: <ResetPassword />,
+    },
+    {
+        path: RouteNames.NEW_PASSWORD,
+        component: <NewPassword />,
     },
 ]
 export const privateRoutes: IRoute[] = [
