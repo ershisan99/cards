@@ -38,7 +38,26 @@ const RangeSlider: React.FC<SuperDoubleRangePropsType> = ({
                 onChange={onChangeRange}
                 tabIndex={max}
                 pushable={false}
-                style={{ color: '#21268f' }}
+                railStyle={{ backgroundColor: '#9a91c8' }}
+                trackStyle={{ backgroundColor: '#21268f' }}
+                handleStyle={[
+                    {
+                        top: '1px',
+                        padding: '2px',
+                        width: '20px',
+                        height: '20px',
+                        backgroundColor: '#ffffff',
+                        border: '5px solid #21268f',
+                    },
+                    {
+                        top: '1px',
+                        padding: '2px',
+                        width: '20px',
+                        height: '20px',
+                        backgroundColor: '#ffffff',
+                        border: '5px solid #21268f',
+                    },
+                ]}
             />
         </>
     )
