@@ -49,5 +49,62 @@
 @layer base {
     html {
         font-family: 'SF UI Display', Proxima Nova, system-ui, sans-serif;
+        box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+    }
+}
+
+@layer components {
+    .tab-item {
+        @apply flex
+        w-44
+        grow
+        cursor-pointer
+        items-center
+        border-b-4
+        border-b-transparent
+        align-middle
+        transition-all
+        hover:bg-secondary;
+    }
+
+    .tab-item__active {
+        @apply flex
+        w-44
+        grow
+        cursor-pointer
+        items-center
+        border-b-4
+        border-b-primary
+        bg-secondary-light
+        align-middle
+        transition-all
+        hover:bg-secondary;
+    }
+
+    .pagination-btn {
+        @apply h-6
+        px-2
+        py-1
+        text-center
+        hover:cursor-pointer
+        hover:bg-secondary
+        hover:text-white;
+    }
+
+    .pagination-btn__active {
+        @apply h-6
+        w-6
+        bg-primary
+        px-2
+        py-1
+        text-center
+        text-white
+        hover:cursor-pointer;
     }
 }
