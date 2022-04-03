@@ -1,4 +1,5 @@
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 import NewPassword from '../pages/NewPassword'
 import Profile from '../pages/Profile/Profile/Profile'
 import ResetPassword from '../pages/ResetPassword'
@@ -11,6 +12,7 @@ export interface IRoute {
 }
 
 export enum RouteNames {
+    START_PAGE = '/',
     SIGN_IN = '/sign-in',
     SIGN_UP = '/sign-up',
     RESET_PASSWORD = '/reset-password',
@@ -35,10 +37,18 @@ export const publicRoutes: IRoute[] = [
         path: RouteNames.NEW_PASSWORD,
         component: <NewPassword />,
     },
+    {
+        path: RouteNames.START_PAGE,
+        component: <Navigate to={RouteNames.SIGN_IN} />,
+    },
 ]
 export const privateRoutes: IRoute[] = [
     {
         path: RouteNames.PROFILE,
         component: <Profile />,
+    },
+    {
+        path: RouteNames.START_PAGE,
+        component: <Navigate to={RouteNames.PROFILE} />,
     },
 ]
