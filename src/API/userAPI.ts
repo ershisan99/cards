@@ -29,7 +29,7 @@ export type SignUpRes = {
     error?: string
 }
 
-type ForgotArgs = {
+export type ForgotArgs = {
     email: string // кому восстанавливать пароль
     from: string // от кого придёт письмо
     message: string // письмо, вместо $token$ бэк вставит токен. Пример:
