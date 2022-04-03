@@ -23,3 +23,4 @@ some description here
 -   [x] Run for Files: {\*\*/\*,\*}.{js,ts,jsx,tsx}
 -   [x] On 'Reformat Code' action
 -   [x] On save
+-   [x] On save
