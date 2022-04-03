@@ -10,14 +10,7 @@ export const Content = () => {
     return (
         <div className="h-full min-h-screen w-full bg-gradient">
             <Header tabs={tabs} onTabClickHandler={onTabClickHandler} />
-            {tabs ? (
-                <Profile
-                    username={'Ivan Ivanov'}
-                    work={'Front-end developer'}
-                />
-            ) : (
-                <Main />
-            )}
+            {tabs ? <Profile /> : <Main />}
         </div>
     )
 }
