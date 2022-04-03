@@ -18,23 +18,13 @@ const resetPasswordSlice = createSlice({
     initialState: {
         email: '',
         isLoading: false,
-        isMessageSent: false,
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {
             state.email = action.payload.email
         },
-        setIsLoading: (
-            state,
-            action: PayloadAction<{ isLoading: boolean }>
-        ) => {
-            state.isLoading = action.payload.isLoading
-        },
-        setIsMessageSent: (
-            state,
-            action: PayloadAction<{ isMessageSent: boolean }>
-        ) => {
-            state.isMessageSent = action.payload.isMessageSent
+        setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.isLoading = action.payload.value
         },
     },
 })

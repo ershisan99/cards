@@ -4,39 +4,53 @@ import icon_mail from '../../assets/images/mail_icon.svg'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
+import { useActions, useAppSelector } from '../../utils/helpers'
 import {
     resetPasswordActions,
     resetPasswordThunks,
     selectResetPassword,
 } from '../../state/slices/resetPasswordSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
 
 const ResetPassword = () => {
+    const customMessage = `
+                  <div style="background-color: indianred; padding: 15px">
+                      password recovery link: 
+                    <a href="http://localhost:3000/#/set-new-password/$token$">
+                      link
+                    </a>
+                  </div>`
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+
     const [isOpen, setIsOpen] = useState<boolean>(true)
-    const { email, isLoading, isMessageSent } =
-        useAppSelector(selectResetPassword)
-    const { setEmail, setIsLoading, setIsMessageSent } =
-        useActions(resetPasswordActions)
+    const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
+
+    const { setEmail, setIsLoading } = useActions(resetPasswordActions)
     const { sendResetPasswordRequest } = useActions(resetPasswordThunks)
+    const { email } = useAppSelector(selectResetPassword)
 
     const onChangeInputEmail = (e: string) => {
+        setError(false)
         setEmail({ email: e })
-
-        // todo: use regex
-        // (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
     }
+
     const sendInstructions = () => {
-        if (email.length > 0) {
-            setIsOpen(false)
+        if (email.length > 0 && regex.test(email)) {
+            setIsLoading({ value: true })
             sendResetPasswordRequest({
                 email,
-                from: 'test-front-admin <lazlo9ilazlo9i@gmail.com>',
-                message: `<div style='background-color: lime; padding: 15px'>password recovery link:<a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`,
+                from: 'Cards 🎴 <marinadegames@gmail.com>',
+                message: customMessage,
             })
                 .unwrap()
                 .then(() => {
-                    setIsMessageSent({ isMessageSent: true })
+                    setIsLoading({ value: true })
+                    setIsOpen(false)
+                    setIsMessageSent(true)
                 })
+        }
+        if (!regex.test(email)) {
+            setError(true)
         }
     }
 
@@ -57,6 +71,12 @@ const ResetPassword = () => {
                         Email
                     </Input>
                 </form>
+                <div>
+                    {/*todo: fix this*/}
+                    {error && (
+                        <h1 className="text-red-500">ERROR! INCORRECT EMAIL</h1>
+                    )}
+                </div>
                 <div className="text-md flex justify-center text-light-gray opacity-40">
                     Enter your email address and we will send you further
                     instructions
@@ -80,11 +100,7 @@ const ResetPassword = () => {
                 </div>
             </Modal>
 
-            <Modal
-                isOpen={isMessageSent}
-                setIsOpen={() => setIsMessageSent({ isMessageSent: true })}
-                title="Cards"
-            >
+            <Modal isOpen={isMessageSent} setIsOpen={() => {}} title="Cards">
                 <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
                     <img src={icon_mail} alt={'icon_mail'} />
                 </div>
@@ -92,7 +108,7 @@ const ResetPassword = () => {
                     Check Email
                 </div>
                 <div className="text-md mb-5 text-center text-light-gray opacity-60">
-                    We’ve sent an Email with instructions to example@mail.com
+                    We’ve sent an Email with instructions to {email}
                 </div>
             </Modal>
         </div>
