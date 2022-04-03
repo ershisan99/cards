@@ -2,20 +2,54 @@ import React, { useState } from 'react'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
+import { useActions, useAppSelector } from '../../utils/helpers'
+import {
+    newPasswordActions,
+    newPasswordThunks,
+    selectNewPassword,
+} from '../../state/slices/newPasswordSlice'
 
 const NewPassword = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(true)
-    const [password, setPassword] = useState<string>('')
+    // регулярка
+    const regex = /[A-Za-z0-9]{8,}/
 
+    // берем токен
+    const url = window.location.href.split('/')
+    const resetPasswordToken = url[url.length - 1]
+
+    // local state
+    const [isOpen, setIsOpen] = useState<boolean>(true)
+    const [error, setError] = useState<boolean>(false)
+
+    // slice's
+    const { setPassword } = useActions(newPasswordActions)
+    const { sendNewPasswordRequest } = useActions(newPasswordThunks)
+    const { password } = useAppSelector(selectNewPassword)
+
+    // functional
     const onChangeInputPassword = (e: string) => {
-        setPassword(e)
+        setError(false)
+        setPassword({ password: e })
     }
     const sendNewPassword = () => {
-        // todo use regexp
-        // (/[A-Za-z0-9]{6,}/)
-        console.log(password)
+        if (regex.test(password)) {
+            sendNewPasswordRequest({
+                password,
+                resetPasswordToken,
+            })
+                .unwrap()
+                .then((resp) => {
+                    console.log(resp.info)
+                })
+                .catch((error) => {
+                    console.log(error.error)
+                })
+        }
+
+        if (!regex.test(password)) setError(true)
     }
 
+    // return
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -33,9 +67,20 @@ const NewPassword = () => {
                         Password
                     </Input>
                 </form>
+                {error && (
+                    <h1 className="text-red-500">ERROR! INVALID PASSWORD!</h1>
+                )}
                 <div className="text-md flex justify-center text-light-gray opacity-40">
                     Create a new password and we will send you further
                     instructions to email
+                </div>
+                <div className="text-md mt-3 flex flex-col justify-center text-light-gray opacity-40">
+                    <b>The password must contain:</b>
+                    • at least 8 characters
+                    <br />
+                    • numbers <br />
+                    • upper and lower case
+                    <br />
                 </div>
                 <div className="mt-20 mb-5 flex justify-center">
                     <Button

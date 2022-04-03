@@ -44,7 +44,7 @@ type ForgotRes = {
     error?: string
 }
 
-type SetNewPasswordArgs = {
+export type SetNewPasswordArgs = {
     password: string
     resetPasswordToken: string
 }
