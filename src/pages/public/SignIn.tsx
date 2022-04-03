@@ -72,7 +72,9 @@ const SignIn = () => {
                                 rememberMe,
                             })
                                 .unwrap()
-                                .then(() => navigate(RouteNames.PROFILE))
+                                .then(() =>
+                                    navigate('../' + RouteNames.PROFILE)
+                                )
                                 .catch((err) => console.error(err))
                         }
                     >

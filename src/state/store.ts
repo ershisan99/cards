@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { signInReducer } from './slices/signInSlice'
 import { signupReducer } from './slices/signUpSlice'
 import { userReducer } from './slices/UserSlice'
+import { resetPasswordReducer } from './slices/resetPasswordSlice'
 import { newPasswordReducer } from './slices/newPasswordSlice'
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         signIn: signInReducer,
         user: userReducer,
         newPassword: newPasswordReducer,
+        resetPassword: resetPasswordReducer,
     },
 })
 

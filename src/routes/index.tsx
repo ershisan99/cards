@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { Content } from '../pages/private/Profile/Content'
+import RequireAuth from '../components/BLL/RequireAuth'
+import Profile from '../pages/private/Profile/Profile/Profile'
 import NewPassword from '../pages/public/NewPassword'
 import ResetPassword from '../pages/public/ResetPassword'
 import SignIn from '../pages/public/SignIn'
@@ -21,7 +22,11 @@ export enum RouteNames {
     PROFILE = '/profile',
 }
 
-export const publicRoutes: IRoute[] = [
+export const routes: IRoute[] = [
+    {
+        path: RouteNames.START_PAGE,
+        component: <Navigate to={RouteNames.PROFILE} />,
+    },
     {
         path: RouteNames.SIGN_IN,
         component: <SignIn />,
@@ -38,18 +43,14 @@ export const publicRoutes: IRoute[] = [
         path: RouteNames.NEW_PASSWORD,
         component: <NewPassword />,
     },
-    {
-        path: RouteNames.START_PAGE,
-        component: <Navigate to={RouteNames.SIGN_IN} />,
-    },
-]
-export const privateRoutes: IRoute[] = [
+
+    //require auth below
     {
         path: RouteNames.PROFILE,
-        component: <Content />,
-    },
-    {
-        path: RouteNames.START_PAGE,
-        component: <Navigate to={RouteNames.PROFILE} />,
+        component: (
+            <RequireAuth>
+                <Profile />
+            </RequireAuth>
+        ),
     },
 ]

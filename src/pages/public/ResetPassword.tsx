@@ -4,22 +4,39 @@ import icon_mail from '../../assets/images/mail_icon.svg'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
+import {
+    resetPasswordActions,
+    resetPasswordThunks,
+    selectResetPassword,
+} from '../../state/slices/resetPasswordSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const ResetPassword = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true)
-    const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
-    const [inputEmail, setInputEmail] = useState<string>('')
+    const { email, isLoading, isMessageSent } =
+        useAppSelector(selectResetPassword)
+    const { setEmail, setIsLoading, setIsMessageSent } =
+        useActions(resetPasswordActions)
+    const { sendResetPasswordRequest } = useActions(resetPasswordThunks)
 
     const onChangeInputEmail = (e: string) => {
-        setInputEmail(e)
+        setEmail({ email: e })
 
         // todo: use regex
         // (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
     }
     const sendInstructions = () => {
-        if (inputEmail.length > 0) {
+        if (email.length > 0) {
             setIsOpen(false)
-            setIsMessageSent(true)
+            sendResetPasswordRequest({
+                email,
+                from: 'test-front-admin <lazlo9ilazlo9i@gmail.com>',
+                message: `<div style='background-color: lime; padding: 15px'>password recovery link:<a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`,
+            })
+                .unwrap()
+                .then(() => {
+                    setIsMessageSent({ isMessageSent: true })
+                })
         }
     }
 
@@ -65,7 +82,7 @@ const ResetPassword = () => {
 
             <Modal
                 isOpen={isMessageSent}
-                setIsOpen={setIsMessageSent}
+                setIsOpen={() => setIsMessageSent({ isMessageSent: true })}
                 title="Cards"
             >
                 <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
