@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import RequireAuth from '../components/BLL/RequireAuth'
+import Main from '../pages/private/Profile/Main/Main'
 import Profile from '../pages/private/Profile/Profile/Profile'
 import NewPassword from '../pages/public/NewPassword'
 import ResetPassword from '../pages/public/ResetPassword'
@@ -20,6 +21,7 @@ export enum RouteNames {
     RESET_PASSWORD = '/reset-password',
     NEW_PASSWORD = '/set-new-password/:token',
     PROFILE = '/profile',
+    MAIN = '/main',
 }
 
 export const routes: IRoute[] = [
@@ -50,6 +52,14 @@ export const routes: IRoute[] = [
         component: (
             <RequireAuth>
                 <Profile />
+            </RequireAuth>
+        ),
+    },
+    {
+        path: RouteNames.MAIN,
+        component: (
+            <RequireAuth>
+                <Main />
             </RequireAuth>
         ),
     },
