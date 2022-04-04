@@ -67,16 +67,12 @@ const ResetPassword = () => {
                         }
                         type="email"
                         alias="email"
+                        error={error}
+                        errorText={'Email invalid!'}
                     >
                         Email
                     </Input>
                 </form>
-                <div>
-                    {/*todo: fix this*/}
-                    {error && (
-                        <h1 className="text-red-500">ERROR! INCORRECT EMAIL</h1>
-                    )}
-                </div>
                 <div className="text-md flex justify-center text-light-gray opacity-40">
                     Enter your email address and we will send you further
                     instructions
