@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import cards from '../../../../../assets/images/cards.svg'
 import user from '../../../../../assets/images/user.svg'
+import { RouteNames } from '../../../../../routes'
 
 type TabsPropsType = {
     tabs: boolean
@@ -19,7 +20,7 @@ const Tabs: React.FC<TabsPropsType> = ({ onTabClickHandler, tabs }) => {
     return (
         <div className="mx-auto flex h-14 w-80">
             <Link
-                to="/main"
+                to={RouteNames.MAIN}
                 className={!tabs ? 'tab-item__active' : 'tab-item'}
                 onClick={onMainClickHandler}
             >
@@ -28,7 +29,7 @@ const Tabs: React.FC<TabsPropsType> = ({ onTabClickHandler, tabs }) => {
             </Link>
 
             <Link
-                to="/profile"
+                to={RouteNames.PROFILE}
                 className={tabs ? 'tab-item__active' : 'tab-item'}
                 onClick={onProfileClickHandler}
             >
