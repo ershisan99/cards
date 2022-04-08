@@ -4,6 +4,7 @@ import { routes } from '../../routes'
 import { selectUser, userThunks } from '../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
 import Layout from '../UI/Layout'
+import Preloader from '../UI/Preloader'
 
 const AppRouter = () => {
     const { getMe } = useActions(userThunks)
@@ -12,7 +13,9 @@ const AppRouter = () => {
         getMe({})
     }, [])
     return isLoading ? (
-        <div>Loading</div>
+        <div className="mt-24">
+            <Preloader />
+        </div>
     ) : (
         <Layout>
             <Routes>
