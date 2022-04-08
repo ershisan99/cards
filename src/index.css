@@ -67,10 +67,11 @@
         cursor-pointer
         items-center
         border-b-4
-        border-b-transparent
+        border-b-pink-50
         align-middle
         transition-all
-        hover:bg-secondary;
+        hover:border-b-secondary
+        hover:bg-secondary-light;
     }
 
     .tab-item__active {
@@ -83,8 +84,7 @@
         border-b-primary
         bg-secondary-light
         align-middle
-        transition-all
-        hover:bg-secondary;
+        transition-all;
     }
 
     .pagination-btn {
