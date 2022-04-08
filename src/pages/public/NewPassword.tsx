@@ -58,13 +58,14 @@ const NewPassword = () => {
                         }
                         type="password"
                         alias="password"
+                        error={error}
+                        errorText={
+                            'Invalid password! Please read the rules below!'
+                        }
                     >
                         Password
                     </Input>
                 </form>
-                {error && (
-                    <h1 className="text-red-500">ERROR! INVALID PASSWORD!</h1>
-                )}
                 <div className="text-md flex justify-center text-light-gray opacity-40">
                     Create a new password
                 </div>
