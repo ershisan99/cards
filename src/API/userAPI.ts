@@ -33,11 +33,12 @@ export type ForgotArgs = {
     email: string // кому восстанавливать пароль
     from: string // от кого придёт письмо
     message: string // письмо, вместо $token$ бэк вставит токен. Пример:
-    // `<div style="background-color: lime; padding: 15px">
-    // password recovery link:
-    // <a href='http://localhost:3000/#/set-new-password/$token$'>
-    // link</a>
-    // </div>`
+    // <div style="background-color: indianred; padding: 15px">
+    //     password recovery link:
+    //   <a href="http://localhost:3000/#/set-new-password/$token$">
+    //     link
+    //   </a>
+    // </div>
 }
 type ForgotRes = {
     info: string
@@ -55,21 +56,10 @@ type SetNewPasswordRes = {
 
 export const UserAPI = {
     signIn: (args: SignInArgs) => {
-        return instance
-            .post<MeRes>('/auth/login', {
-                email: args.email,
-                password: args.password,
-                rememberMe: args.rememberMe,
-            })
-            .then((res) => res.data)
+        return instance.post<MeRes>('/auth/login', args).then((res) => res.data)
     },
     signUp: (args: SignUpArgs) => {
-        return instance
-            .post<SignUpRes>('/auth/register', {
-                email: args.email,
-                password: args.password,
-            })
-            .then((res) => res)
+        return instance.post<SignUpRes>('/auth/register', args)
     },
     signOut: () => {
         return instance.delete('/auth/me').then((res) => res)
@@ -79,19 +69,10 @@ export const UserAPI = {
     },
     forgotPassword: (args: ForgotArgs) => {
         return instance
-            .post<ForgotRes>('/auth/forgot', {
-                email: args.email,
-                from: args.from,
-                message: args.message,
-            })
+            .post<ForgotRes>('/auth/forgot', args)
             .then((res) => res.data)
     },
     setNewPassword: (args: SetNewPasswordArgs) => {
-        return instance
-            .post<SetNewPasswordRes>('/auth/set-new-password', {
-                password: args.password,
-                resetPasswordToken: args.resetPasswordToken,
-            })
-            .then((res) => res)
+        return instance.post<SetNewPasswordRes>('/auth/set-new-password', args)
     },
 }
