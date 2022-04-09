@@ -23,7 +23,7 @@ const CardsSlider = () => {
             <h3 className="text-base font-semibold">Number of cards</h3>
             <div>
                 <div className="relative mt-6 mb-4 flex justify-between text-xs">
-                    <span className="w-9 rounded bg-primary px-2 py-1 text-center text-white">
+                    <span className="w-9 rounded bg-primary py-1 text-center text-white">
                         {values[0]}
                     </span>
                     <span className="w-9 rounded bg-primary px-2 py-1 text-center text-white">
