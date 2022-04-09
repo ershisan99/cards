@@ -18,6 +18,7 @@ const signupSlice = createSlice({
         email: '',
         password: '',
         confirmPassword: '',
+        isLoading: false,
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {
@@ -31,6 +32,9 @@ const signupSlice = createSlice({
             action: PayloadAction<{ confirmPassword: string }>
         ) => {
             state.confirmPassword = action.payload.confirmPassword
+        },
+        setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.isLoading = action.payload.value
         },
     },
 })

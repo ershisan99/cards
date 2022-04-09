@@ -10,13 +10,15 @@ import {
     signupThunks,
 } from '../../state/slices/signUpSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
+import { Spinner } from '../../components/UI/Spinner'
 
 const SignUp = () => {
     const [isOpen, setIsOpen] = useState(true)
-    const { setConfirmPassword, setPassword, setEmail } =
+    const { setConfirmPassword, setPassword, setEmail, setIsLoading } =
         useActions(signupActions)
     const { sendSignUpRequest } = useActions(signupThunks)
-    const { email, password, confirmPassword } = useAppSelector(selectSignup)
+    const { email, password, confirmPassword, isLoading } =
+        useAppSelector(selectSignup)
     const navigate = useNavigate()
     return (
         <div>
@@ -67,21 +69,29 @@ const SignUp = () => {
                     >
                         Cancel
                     </Button>
-                    <Button
-                        color="primary"
-                        className="px-16"
-                        onClick={() =>
-                            sendSignUpRequest({
-                                email,
-                                password,
-                            })
-                                .unwrap()
-                                .then(() => navigate(RouteNames.SIGN_IN))
-                                .catch((err) => console.error(err))
-                        }
-                    >
-                        Sign Up
-                    </Button>
+                    <div className={'flex items-center'}>
+                        <Button
+                            color="primary"
+                            className="px-16"
+                            disabled={isLoading}
+                            onClick={() =>
+                                sendSignUpRequest({
+                                    email,
+                                    password,
+                                })
+                                    .unwrap()
+                                    .then(() => navigate(RouteNames.SIGN_IN))
+                                    .catch((err) => console.error(err))
+                            }
+                        >
+                            Sign Up
+                        </Button>
+                        <Spinner
+                            isLoading={true}
+                            className={'right absolute'}
+                            size={'50px'}
+                        />
+                    </div>
                 </div>
             </Modal>
         </div>
