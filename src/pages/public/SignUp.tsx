@@ -12,12 +12,63 @@ import {
 import { useActions, useAppSelector } from '../../utils/helpers'
 
 const SignUp = () => {
+    const regexPassword = /[A-Za-z0-9]{8,}/
+    const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const [isOpen, setIsOpen] = useState(true)
-    const { setConfirmPassword, setPassword, setEmail } =
-        useActions(signupActions)
+
+    const {
+        setConfirmPassword,
+        setPassword,
+        setEmail,
+        setErrorEmail,
+        setErrorPassword,
+        setErrorPasswordText,
+        setIsLoading,
+    } = useActions(signupActions)
     const { sendSignUpRequest } = useActions(signupThunks)
-    const { email, password, confirmPassword } = useAppSelector(selectSignup)
+    const {
+        email,
+        password,
+        confirmPassword,
+        errorPassword,
+        errorEmail,
+        errorPasswordText,
+        isLoading,
+    } = useAppSelector(selectSignup)
+
     const navigate = useNavigate()
+
+    const sendNewUserHandler = () => {
+        if (!regexPassword.test(password)) {
+            setErrorPassword({ error: true })
+            setErrorPasswordText({
+                errorText: 'Password must follow the rules',
+            })
+        }
+        if (password !== confirmPassword) {
+            setErrorPassword({ error: true })
+            setErrorPasswordText({
+                errorText: 'Passwords do not match',
+            })
+        }
+        if (!regexEmail.test(email)) {
+            setErrorEmail({ error: true })
+        }
+        if (
+            password === confirmPassword &&
+            regexPassword.test(password) &&
+            regexEmail.test(email)
+        ) {
+            sendSignUpRequest({
+                email,
+                password,
+            })
+                .unwrap()
+                .then(() => navigate(RouteNames.SIGN_IN))
+                .catch((err) => console.error(err))
+        }
+    }
+
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -29,6 +80,8 @@ const SignUp = () => {
                         type="email"
                         alias="email"
                         value={email}
+                        error={errorEmail}
+                        errorText={'Invalid email'}
                         onChange={(e) => {
                             setEmail({ email: e.currentTarget.value })
                         }}
@@ -39,6 +92,8 @@ const SignUp = () => {
                         type="password"
                         alias="password"
                         value={password}
+                        error={errorPassword}
+                        errorText={errorPasswordText}
                         onChange={(e) => {
                             setPassword({ password: e.currentTarget.value })
                         }}
@@ -49,6 +104,8 @@ const SignUp = () => {
                         type="password"
                         alias="confirm-password"
                         value={confirmPassword}
+                        error={errorPassword}
+                        errorText={errorPasswordText}
                         onChange={(e) => {
                             setConfirmPassword({
                                 confirmPassword: e.currentTarget.value,
@@ -58,8 +115,15 @@ const SignUp = () => {
                         Confirm password
                     </Input>
                 </form>
-
-                <div className="mt-20 flex justify-around">
+                <div className="text-md mt-3 flex flex-col justify-center text-light-gray opacity-40">
+                    <b>The password must contain:</b>
+                    • at least 8 characters
+                    <br />
+                    • numbers <br />
+                    • upper and lower case
+                    <br />
+                </div>
+                <div className="mt-10 flex justify-around">
                     <Button
                         color="secondary"
                         className="px-8"
@@ -70,15 +134,7 @@ const SignUp = () => {
                     <Button
                         color="primary"
                         className="px-16"
-                        onClick={() =>
-                            sendSignUpRequest({
-                                email,
-                                password,
-                            })
-                                .unwrap()
-                                .then(() => navigate(RouteNames.SIGN_IN))
-                                .catch((err) => console.error(err))
-                        }
+                        onClick={sendNewUserHandler}
                     >
                         Sign Up
                     </Button>
