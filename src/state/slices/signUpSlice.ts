@@ -57,9 +57,6 @@ const signupSlice = createSlice({
         setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
             state.isLoading = action.payload.value
         },
-        setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
-            state.isLoading = action.payload.value
-        },
     },
 })
 
