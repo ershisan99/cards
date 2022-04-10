@@ -1,10 +1,10 @@
+import React from 'react'
 import { useNavigate } from 'react-router'
+import Button from '../../../../components/UI/Button'
 import { RouteNames } from '../../../../routes'
 import { userThunks } from '../../../../state/slices/UserSlice'
 import { useActions } from '../../../../utils/helpers'
 import Tabs from './Tabs/Tabs'
-import Button from '../../../../components/UI/Button'
-import React from 'react'
 
 type HeaderPropsType = {
     tabs: boolean
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderPropsType> = ({ onTabClickHandler, tabs }) => {
                             signOut({}).then(() => navigate(RouteNames.SIGN_IN))
                         }
                     >
-                        Exit
+                        Sign Out
                     </Button>
                 </div>
             </div>
