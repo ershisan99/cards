@@ -88,22 +88,27 @@
     }
 
     .pagination-btn {
-        @apply h-6
+        @apply flex
+        h-8
+        w-8
+        items-center
+        justify-center
         px-2
-        py-1
-        text-center
+        py-2
         hover:cursor-pointer
         hover:bg-secondary
         hover:text-white;
     }
 
     .pagination-btn__active {
-        @apply h-6
-        w-6
+        @apply flex
+        h-8
+        w-8
+        items-center
+        justify-center
         bg-primary
         px-2
-        py-1
-        text-center
+        py-2
         text-white
         hover:cursor-pointer;
     }

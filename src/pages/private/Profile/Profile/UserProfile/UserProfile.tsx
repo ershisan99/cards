@@ -8,7 +8,7 @@ type UserProfileType = {
 
 const UserProfile: React.FC<UserProfileType> = ({ username, work, avatar }) => {
     return (
-        <div className="flex flex-col items-center rounded-b-md bg-secondary py-6 px-6">
+        <div className="bg- flex flex-col items-center rounded-b-md bg-light-purple py-6 px-6">
             <div className="h-24 w-24 overflow-hidden rounded-full">
                 <img
                     src={
@@ -21,7 +21,7 @@ const UserProfile: React.FC<UserProfileType> = ({ username, work, avatar }) => {
             </div>
             <h3 className="text-lg font-semibold">{username}</h3>
             <p className="py-2 text-sm text-slate ">{work}</p>
-            <button className="w-20 rounded border border-slate p-1 text-xs text-primary">
+            <button className="w-20 rounded border border-slate p-1 text-xs font-bold text-primary">
                 Edit profile
             </button>
         </div>

@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import left from '../../../../../assets/images/leftArr.svg'
-import right from '../../../../../assets/images/rightArr.svg'
 import Select from '../../../../../components/UI/Select'
 
 type PaginationPropsType = {
@@ -35,10 +33,15 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
         let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
         let rightPortionPageNumber = portionNumber * portionSize
         return (
-            <div className="my-2 flex w-auto items-center p-2 text-xs">
+            <div className="mt-5 flex w-auto items-center p-0 text-sm">
                 {portionNumber > 1 && (
-                    <button className={'mr-2'} onClick={onBackClickHandler}>
-                        <img src={left} alt="left arrow" />
+                    <button
+                        className={
+                            'pagination-btn rounded transition hover:text-white'
+                        }
+                        onClick={onBackClickHandler}
+                    >
+                        {'<'}
                     </button>
                 )}
 
@@ -51,8 +54,8 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
                     .map((page: number, i: number) => {
                         let currentPageClassName =
                             currentPage === page
-                                ? 'pagination-btn__active'
-                                : 'pagination-btn'
+                                ? 'pagination-btn__active rounded mx-0.5 transition'
+                                : 'pagination-btn rounded mx-0.5 transition'
 
                         return (
                             <span
@@ -68,8 +71,11 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
                     })}
 
                 {portionCount > portionNumber && (
-                    <button className="ml-2" onClick={onForwardClickHandler}>
-                        <img src={right} alt="left arrow" />
+                    <button
+                        className="pagination-btn rounded transition hover:text-white"
+                        onClick={onForwardClickHandler}
+                    >
+                        {'>'}
                     </button>
                 )}
                 <div className="ml-2">
