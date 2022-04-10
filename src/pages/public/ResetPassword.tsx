@@ -10,6 +10,7 @@ import {
     resetPasswordThunks,
     selectResetPassword,
 } from '../../state/slices/resetPasswordSlice'
+import { Spinner } from '../../components/UI/Spinner'
 
 const ResetPassword = () => {
     const customMessage = `
@@ -27,7 +28,7 @@ const ResetPassword = () => {
 
     const { setEmail, setIsLoading } = useActions(resetPasswordActions)
     const { sendResetPasswordRequest } = useActions(resetPasswordThunks)
-    const { email } = useAppSelector(selectResetPassword)
+    const { email, isLoading } = useAppSelector(selectResetPassword)
 
     const onChangeInputEmail = (e: string) => {
         setError(false)
@@ -77,14 +78,21 @@ const ResetPassword = () => {
                     Enter your email address and we will send you further
                     instructions
                 </div>
-                <div className="mt-20 mb-8 flex justify-center">
+
+                <div className="mt-20 mb-8 flex items-center justify-center">
                     <Button
                         color="primary"
-                        className="px-20"
+                        className="px-16"
                         onClick={sendInstructions}
+                        disabled={isLoading}
                     >
                         Send Instructions
                     </Button>
+                    <Spinner
+                        isLoading={isLoading}
+                        className={'absolute right-2'}
+                        size={'50px'}
+                    />
                 </div>
                 <div className="mb-1 text-center text-sm font-semibold text-slate opacity-50">
                     Did you remember your password?
@@ -95,8 +103,11 @@ const ResetPassword = () => {
                     </Link>
                 </div>
             </Modal>
-
-            <Modal isOpen={isMessageSent} setIsOpen={() => {}} title="Cards">
+            <Modal
+                isOpen={isMessageSent}
+                setIsOpen={() => setIsLoading({ value: false })}
+                title="Cards"
+            >
                 <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
                     <img src={icon_mail} alt={'icon_mail'} />
                 </div>
