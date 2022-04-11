@@ -1,10 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, KeyboardEvent } from 'react'
 
 interface PropsType extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string
     alias: string
     error?: boolean
     errorText?: string
+    onKeyPressEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
 }
 
 const Input: FC<PropsType> = ({
@@ -13,8 +14,15 @@ const Input: FC<PropsType> = ({
     error,
     children,
     errorText,
+    onKeyPressEnter,
     ...rest
 }) => {
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && onKeyPressEnter) {
+            onKeyPressEnter(e)
+        }
+    }
+
     return (
         <div className="group relative z-0 mb-6 w-full">
             <input
@@ -48,6 +56,7 @@ const Input: FC<PropsType> = ({
                 `}
                 placeholder=" "
                 name={alias}
+                onKeyPress={(e) => onKeyPressHandler(e)}
                 {...rest}
             />
             <label

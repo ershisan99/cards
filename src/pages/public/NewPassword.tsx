@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { KeyboardEvent, useState } from 'react'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
@@ -44,6 +44,12 @@ const NewPassword = () => {
         if (!regex.test(password)) setError(true)
     }
 
+    const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            sendNewPassword()
+        }
+    }
+
     // return
     return (
         <div>
@@ -62,6 +68,7 @@ const NewPassword = () => {
                         errorText={
                             'Invalid password! Please read the rules below!'
                         }
+                        onKeyPressEnter={(e) => enterKeyHandler(e)}
                     >
                         Password
                     </Input>

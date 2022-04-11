@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { KeyboardEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import icon_mail from '../../assets/images/mail_icon.svg'
 import Button from '../../components/UI/Button'
@@ -55,6 +55,12 @@ const ResetPassword = () => {
         }
     }
 
+    const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            sendInstructions()
+        }
+    }
+
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -70,6 +76,7 @@ const ResetPassword = () => {
                         alias="email"
                         error={error}
                         errorText={'Email invalid!'}
+                        onKeyPressEnter={(e) => enterKeyHandler(e)}
                     >
                         Email
                     </Input>
