@@ -9,6 +9,7 @@ type PaginationPropsType = {
     cardPacksTotalCount: number
     onPageChanged: (page: number) => void
     portionSize?: number
+    onSelectChange?: (value: number) => void
 }
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -20,6 +21,7 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
         cardPacksTotalCount,
         onPageChanged,
         portionSize = 10,
+        onSelectChange,
     }) => {
         let pagesCount = Math.ceil(cardPacksTotalCount / pageSize)
         let pages: Array<number> = []
@@ -74,7 +76,11 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
                 )}
                 <div className="ml-2">
                     <span>Show</span>
-                    <Select options={arr} />
+                    <Select
+                        options={arr}
+                        defaultValue={portionSize}
+                        onChangeOption={onSelectChange}
+                    />
                     <span className="ml-2">Card per page</span>
                 </div>
             </div>
