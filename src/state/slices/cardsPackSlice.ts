@@ -3,10 +3,11 @@ import {
     CardsPackAPI,
     CardsPackType,
     GetCardsType,
+    SetCardsPackType,
 } from '../../API/cardsPackAPI'
 
-export const getCards = createAsyncThunk(
-    'cards/getCards',
+export const getCardsPack = createAsyncThunk(
+    'cards/getCardsPack',
     async (payload: GetCardsType) => {
         return await CardsPackAPI.getAllCards({
             packName: payload?.packName,
@@ -16,6 +17,14 @@ export const getCards = createAsyncThunk(
             page: payload?.page,
             pageCount: payload?.pageCount,
             user_id: payload?.user_id,
+        })
+    }
+)
+export const setCardsPack = createAsyncThunk(
+    'cards/setCardsPack',
+    async (payload: SetCardsPackType) => {
+        return await CardsPackAPI.setCardsPack({
+            cardsPack: payload.cardsPack,
         })
     }
 )
@@ -41,7 +50,7 @@ const getCardsPackSlice = createSlice({
     } as InitialStateType,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getCards.fulfilled, (state, action) => {
+        builder.addCase(getCardsPack.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
             state.maxCardsCount = action.payload.maxCardsCount
