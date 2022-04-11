@@ -62,12 +62,12 @@ export const CardsPackAPI = {
             .get<GetCardsPackResponseType>(
                 '/cards/pack' +
                     (args.packName === undefined
-                        ? ''
-                        : `&packName=${args.packName}`) +
+                        ? '?packName=english'
+                        : `?packName=${args.packName}`) +
                     (args.min === undefined ? '' : `&min=${args.min}`) +
                     (args.max === undefined ? '' : `&max=${args.max}`) +
                     (args.sortPacks === undefined
-                        ? ''
+                        ? '&sortPacks=0updated'
                         : `&sortPacks=${args.sortPacks}`) +
                     (args.page === undefined ? '' : `&page=${args.page}`) +
                     (args.pageCount === undefined
