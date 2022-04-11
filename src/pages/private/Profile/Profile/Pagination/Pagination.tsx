@@ -6,7 +6,7 @@ import Select from '../../../../../components/UI/Select'
 type PaginationPropsType = {
     currentPage: number
     pageSize: number
-    totalUsersCount: number
+    cardPacksTotalCount: number
     onPageChanged: (page: number) => void
     portionSize?: number
 }
@@ -17,11 +17,11 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
     ({
         currentPage,
         pageSize,
-        totalUsersCount,
+        cardPacksTotalCount,
         onPageChanged,
         portionSize = 10,
     }) => {
-        let pagesCount = Math.ceil(totalUsersCount / pageSize)
+        let pagesCount = Math.ceil(cardPacksTotalCount / pageSize)
         let pages: Array<number> = []
         for (let i = 1; i <= pagesCount; i++) {
             pages.push(i)
