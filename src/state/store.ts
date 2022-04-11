@@ -4,7 +4,7 @@ import { signupReducer } from './slices/signUpSlice'
 import { userReducer } from './slices/UserSlice'
 import { resetPasswordReducer } from './slices/resetPasswordSlice'
 import { newPasswordReducer } from './slices/newPasswordSlice'
-import { cardsReducer } from './slices/cardsPackSlice'
+import { cardsPackReducer } from './slices/cardsPackSlice'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
         user: userReducer,
         newPassword: newPasswordReducer,
         resetPassword: resetPasswordReducer,
-        cards: cardsReducer,
+        cardsPack: cardsPackReducer,
     },
 })
 
