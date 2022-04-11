@@ -27,7 +27,7 @@ export type CardsPackType = {
     __v: number
     _id: string
 }
-export type GetCardsResponseType = {
+export type GetCardsPackResponseType = {
     cardPacks: Array<CardsPackType>
     cardPacksTotalCount: number
     maxCardsCount: number
@@ -59,7 +59,7 @@ export type UpdateCardsPackType = {
 export const CardsPackAPI = {
     getAllCards: (args: GetCardsType) => {
         return instance
-            .get<GetCardsResponseType>(
+            .get<GetCardsPackResponseType>(
                 '/cards/pack' +
                     (args.packName === undefined
                         ? ''
@@ -89,3 +89,6 @@ export const CardsPackAPI = {
         return instance.put('/cards/pack', { args })
     },
 }
+
+// То, что приходит с бэка в результате setCardsPack, deleteCardsPack, updateCardsPack
+// - игнорируем и перезапрашиваем колоды заново
