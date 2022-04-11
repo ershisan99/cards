@@ -29,7 +29,7 @@ type InitialStateType = {
     pageCount: number
 }
 
-const getCardsSlice = createSlice({
+const getCardsPackSlice = createSlice({
     name: 'cards',
     initialState: {
         cardPacks: [],
@@ -52,4 +52,4 @@ const getCardsSlice = createSlice({
     },
 })
 
-export const cardsReducer = getCardsSlice.reducer
+export const cardsReducer = getCardsPackSlice.reducer
