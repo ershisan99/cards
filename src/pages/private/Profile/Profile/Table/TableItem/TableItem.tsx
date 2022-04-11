@@ -4,8 +4,8 @@ import Button from '../../../../../../components/UI/Button'
 type TabItemType = {
     name: string
     cards: number
-    lastUpdated: string
-    createdDay: string
+    lastUpdated: Date
+    createdDay: Date
     index: number
 }
 
