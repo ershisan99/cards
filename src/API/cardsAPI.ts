@@ -37,6 +37,24 @@ export type GetCardsResponseType = {
     token: string
     tokenDeathTime: number
 }
+export type PostCardsPackType = {
+    name?: string // если не отправить будет - "no Name"
+    deckCover?: string // не обязателен
+    private?: boolean // если не отправить будет - false
+}
+export type SetCardsPackType = {
+    cardsPack: PostCardsPackType
+}
+export type DeleteCardsPackType = {
+    id: string
+}
+export type PutCardsPackType = {
+    _id: string
+    name?: string
+}
+export type UpdateCardsPackType = {
+    cardsPack: PutCardsPackType
+}
 
 export const CardsAPI = {
     getAllCards: (args: GetCardsType) => {
