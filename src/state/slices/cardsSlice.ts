@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { CardsAPI, GetCardsType } from '../../API/cardsAPI'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { CardsAPI, CardsPackType, GetCardsType } from '../../API/cardsAPI'
 
 export const getCards = createAsyncThunk(
     'cards/getCards',
@@ -15,3 +15,37 @@ export const getCards = createAsyncThunk(
         })
     }
 )
+
+type InitialStateType = {
+    cardPacks: Array<CardsPackType>
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
+}
+
+const getCardsSlice = createSlice({
+    name: 'cards',
+    initialState: {
+        cardPacks: [],
+        cardPacksTotalCount: 0,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        page: 0,
+        pageCount: 0,
+    } as InitialStateType,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(getCards.fulfilled, (state, action) => {
+            state.cardPacks = action.payload.cardPacks
+            state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+            state.maxCardsCount = action.payload.maxCardsCount
+            state.minCardsCount = action.payload.minCardsCount
+            state.page = action.payload.page
+            state.pageCount = action.payload.pageCount
+        })
+    },
+})
+
+export const cardsReducer = getCardsSlice.reducer
