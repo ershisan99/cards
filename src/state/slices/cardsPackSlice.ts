@@ -5,6 +5,7 @@ import {
     DeleteCardsPackType,
     GetCardsType,
     SetCardsPackType,
+    UpdateCardsPackType,
 } from '../../API/cardsPackAPI'
 
 export const getCardsPack = createAsyncThunk(
@@ -34,6 +35,14 @@ export const deleteCardsPack = createAsyncThunk(
     async (payload: DeleteCardsPackType) => {
         return await CardsPackAPI.deleteCardsPack({
             id: payload.id,
+        })
+    }
+)
+export const updateCardsPack = createAsyncThunk(
+    'cards/updateCardsPack',
+    async (payload: UpdateCardsPackType) => {
+        return await CardsPackAPI.updateCardsPack({
+            cardsPack: payload.cardsPack,
         })
     }
 )
