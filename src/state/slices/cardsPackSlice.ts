@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
     CardsPackAPI,
     CardsPackType,
+    DeleteCardsPackType,
     GetCardsType,
     SetCardsPackType,
 } from '../../API/cardsPackAPI'
@@ -25,6 +26,14 @@ export const setCardsPack = createAsyncThunk(
     async (payload: SetCardsPackType) => {
         return await CardsPackAPI.setCardsPack({
             cardsPack: payload.cardsPack,
+        })
+    }
+)
+export const deleteCardsPack = createAsyncThunk(
+    'cards/deleteCardsPack',
+    async (payload: DeleteCardsPackType) => {
+        return await CardsPackAPI.deleteCardsPack({
+            id: payload.id,
         })
     }
 )
