@@ -61,4 +61,13 @@ export const CardsAPI = {
             )
             .then((res) => res.data)
     },
+    setCardsPack: (args: SetCardsPackType) => {
+        return instance.post('/cards/pack', { args })
+    },
+    deleteCardsPack: (args: DeleteCardsPackType) => {
+        return instance.delete(`cards/pack?${args.id}`)
+    },
+    updateCardsPack: (args: UpdateCardsPackType) => {
+        return instance.put('/cards/pack', { args })
+    },
 }
