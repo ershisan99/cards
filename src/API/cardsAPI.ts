@@ -34,6 +34,8 @@ export type GetCardsResponseType = {
     minCardsCount: number
     page: number
     pageCount: number
+    token: string
+    tokenDeathTime: number
 }
 
 export const CardsAPI = {
