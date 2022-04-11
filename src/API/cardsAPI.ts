@@ -40,19 +40,25 @@ export type GetCardsResponseType = {
 
 export const CardsAPI = {
     getAllCards: (args: GetCardsType) => {
-        return instance.get(
-            '/cards/pack' +
-                (args.packName === null ? '' : `&packName=${args.packName}`) +
-                (args.min === null ? '' : `&min=${args.min}`) +
-                (args.max === null ? '' : `&max=${args.max}`) +
-                (args.sortPacks === null
-                    ? ''
-                    : `&sortPacks=${args.sortPacks}`) +
-                (args.page === null ? '' : `&page=${args.page}`) +
-                (args.pageCount === null
-                    ? ''
-                    : `&pageCount=${args.pageCount}`) +
-                (args.user_id === null ? '' : `&user_id=${args.user_id}`)
-        )
+        return instance
+            .get<GetCardsResponseType>(
+                '/cards/pack' +
+                    (args.packName === undefined
+                        ? ''
+                        : `&packName=${args.packName}`) +
+                    (args.min === undefined ? '' : `&min=${args.min}`) +
+                    (args.max === undefined ? '' : `&max=${args.max}`) +
+                    (args.sortPacks === undefined
+                        ? ''
+                        : `&sortPacks=${args.sortPacks}`) +
+                    (args.page === undefined ? '' : `&page=${args.page}`) +
+                    (args.pageCount === undefined
+                        ? ''
+                        : `&pageCount=${args.pageCount}`) +
+                    (args.user_id === undefined
+                        ? ''
+                        : `&user_id=${args.user_id}`)
+            )
+            .then((res) => res.data)
     },
 }
