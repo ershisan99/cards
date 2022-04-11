@@ -10,12 +10,22 @@ export type GetCardsType = {
     user_id?: string
 }
 export type CardsPackType = {
-    _id: string
-    user_id: string
-    name: string
     cardsCount: number
     created: Date
+    deckCover: null | any
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
     updated: Date
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
 }
 export type GetCardsResponseType = {
     cardPacks: Array<CardsPackType>
