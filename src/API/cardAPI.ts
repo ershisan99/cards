@@ -62,18 +62,16 @@ export const CardsAPI = {
             .get<GetCardsResponseType>(
                 '/cards/card' +
                     (args.cardAnswer === undefined
-                        ? ''
+                        ? '?cardAnswer=english'
                         : `?cardAnswer=${args.cardAnswer}`) +
                     (args.cardQuestion === undefined
-                        ? ''
+                        ? '&cardQuestion=english'
                         : `&cardQuestion=${args.cardQuestion}`) +
-                    (args.cardsPack_id === undefined
-                        ? ''
-                        : `&cardsPack_id=${args.cardsPack_id}`) +
+                    `&cardsPack_id=${args.cardsPack_id}` +
                     (args.min === undefined ? '' : `&min=${args.min}`) +
                     (args.max === undefined ? '' : `&max=${args.max}`) +
                     (args.sortCards === undefined
-                        ? ''
+                        ? '&sortCards=0grade'
                         : `&sortCards=${args.sortCards}`) +
                     (args.page === undefined ? '' : `&page=${args.page}`) +
                     (args.pageCount === undefined
