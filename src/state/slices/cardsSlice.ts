@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { CardsAPI, CardsPackType, GetCardsType } from '../../API/cardsAPI'
+import {
+    CardsPackAPI,
+    CardsPackType,
+    GetCardsType,
+} from '../../API/cardsPackAPI'
 
 export const getCards = createAsyncThunk(
     'cards/getCards',
     async (payload: GetCardsType) => {
-        return await CardsAPI.getAllCards({
+        return await CardsPackAPI.getAllCards({
             packName: payload?.packName,
             min: payload?.min,
             max: payload?.max,

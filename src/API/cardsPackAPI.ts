@@ -56,7 +56,7 @@ export type UpdateCardsPackType = {
     cardsPack: PutCardsPackType
 }
 
-export const CardsAPI = {
+export const CardsPackAPI = {
     getAllCards: (args: GetCardsType) => {
         return instance
             .get<GetCardsResponseType>(
