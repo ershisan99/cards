@@ -7,6 +7,7 @@ import {
     SetCardsPackType,
     UpdateCardsPackType,
 } from '../../API/cardsPackAPI'
+import { RootState } from '../store'
 
 export const getCardsPack = createAsyncThunk(
     'cards/getCardsPack',
@@ -79,4 +80,5 @@ const getCardsPackSlice = createSlice({
     },
 })
 
-export const cardsReducer = getCardsPackSlice.reducer
+export const cardsPackReducer = getCardsPackSlice.reducer
+export const selectCardsPack = (state: RootState) => state.cardsPack
