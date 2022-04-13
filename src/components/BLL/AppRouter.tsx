@@ -7,36 +7,49 @@ import Layout from '../UI/Layout'
 import { Spinner } from '../UI/Spinner'
 import { toast, ToastContainer } from 'material-react-toastify'
 import 'material-react-toastify/dist/ReactToastify.css'
-import { selectSignIn } from '../../state/slices/signInSlice'
 
 const AppRouter = memo(() => {
-    console.log('AppRouter render')
-
     const { getMe } = useActions(userThunks)
     const { isLoading } = useAppSelector(selectUser)
-    const { error, errorMessageNotification } = useAppSelector(selectSignIn)
+    const { error, errorMessageNotification, info, infoMessageNotification } =
+        useAppSelector(selectUser)
 
     useEffect(() => {
         getMe({})
     }, [])
 
-    const notify = useCallback((message: string) => {
-        toast.error(`⚠️ ${message}`, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-        })
-    }, [])
+    const notify = useCallback(
+        (message: string, typeNotification: 'info' | 'error') => {
+            if (typeNotification === 'error') {
+                toast.error(`⚠️ ${message}`, {
+                    position: 'bottom-left',
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                })
+            }
+            if (typeNotification === 'info') {
+                toast(`✅️${message}`, {
+                    position: 'bottom-left',
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                })
+            }
+        },
+        []
+    )
 
     useEffect(() => {
-        if (error) {
-            console.log('call! ' + error)
-            notify(errorMessageNotification)
+        if (info) {
+            notify(infoMessageNotification, 'info')
         }
-    }, [error, errorMessageNotification])
-
+        if (error) {
+            notify(errorMessageNotification, 'error')
+        }
+    }, [error, errorMessageNotification, info, infoMessageNotification])
     return isLoading ? (
         <Spinner
             isLoading={true}

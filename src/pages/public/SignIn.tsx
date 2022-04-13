@@ -13,23 +13,22 @@ import {
 } from '../../state/slices/signInSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
 import { Spinner } from '../../components/UI/Spinner'
+import { userActions } from '../../state/slices/UserSlice'
 
 const SignIn = () => {
-    console.log('SignIn render')
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const [isOpen, setIsOpen] = useState(true)
     const {
         setRememberMe,
         setPassword,
         setEmail,
-        setError,
         setErrorEmail,
         setIsLoading,
-        setErrorMessageNotification,
     } = useActions(signInActions)
     const { sendSignInRequest } = useActions(signInThunks)
     const { email, password, rememberMe, errorEmail, isLoading } =
         useAppSelector(selectSignIn)
+    const { setErrorMessageNotification, setError } = useActions(userActions)
     const navigate = useNavigate()
 
     const signInButton = () => {
