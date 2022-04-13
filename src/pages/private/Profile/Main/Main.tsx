@@ -78,7 +78,7 @@ const Main = () => {
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="font-poppins text-xl font-semibold">
-                        My pack list
+                        Pack list
                     </h2>
                     <Search />
                     <Table cardPacks={cardPacks} />
