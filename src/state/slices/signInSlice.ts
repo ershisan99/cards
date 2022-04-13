@@ -19,19 +19,37 @@ const signInSlice = createSlice({
         email: '',
         password: '',
         rememberMe: true,
+        error: false,
+        errorEmail: false,
+        isLoading: false,
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {
+            state.error = false
+            state.errorEmail = false
             state.email = action.payload.email
         },
         setPassword: (state, action: PayloadAction<{ password: string }>) => {
+            state.error = false
+            state.errorEmail = false
             state.password = action.payload.password
         },
         setRememberMe: (
             state,
             action: PayloadAction<{ rememberMe: boolean }>
         ) => {
+            state.error = false
+            state.errorEmail = false
             state.rememberMe = action.payload.rememberMe
+        },
+        setError: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.error = action.payload.value
+        },
+        setErrorEmail: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.errorEmail = action.payload.value
+        },
+        setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.isLoading = action.payload.value
         },
     },
 })
