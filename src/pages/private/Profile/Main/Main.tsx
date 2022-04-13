@@ -9,6 +9,7 @@ import {
     getCardsPack,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
+import Button from '../../../../components/UI/Button'
 
 const Main = () => {
     const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const Main = () => {
 
     return (
         <div className="h-full py-6">
-            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-b-xl">
+            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                 <div className="w-64 bg-light">
                     <div className="p-6">
                         <h3 className="text-base font-semibold">
@@ -77,10 +78,16 @@ const Main = () => {
                     />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
-                    <h2 className="font-poppins text-xl font-semibold">
+                    <h2 className="mb-6 font-poppins text-xl font-semibold">
                         Pack list
                     </h2>
-                    <Search />
+                    <div className="flex justify-between">
+                        <Search />
+                        <Button className="ml-6 w-48 text-sm" color={'primary'}>
+                            Add new pack
+                        </Button>
+                    </div>
+
                     <Table cardPacks={cardPacks} />
                     <Pagination
                         currentPage={page}
