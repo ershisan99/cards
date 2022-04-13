@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { KeyboardEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
@@ -11,11 +11,13 @@ import {
     signupThunks,
 } from '../../state/slices/signUpSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
+import complete_icon from '../../assets/images/complete_icon.svg.png'
 
 const SignUp = () => {
     const regexPassword = /[A-Za-z0-9]{8,}/
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const [isOpen, setIsOpen] = useState(true)
+    const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
 
     const {
         setConfirmPassword,
@@ -40,20 +42,24 @@ const SignUp = () => {
     const navigate = useNavigate()
 
     const sendNewUserHandler = () => {
+        setIsLoading({ value: true })
         if (!regexPassword.test(password)) {
             setErrorPassword({ error: true })
             setErrorPasswordText({
                 errorText: 'Password must follow the rules',
             })
+            setIsLoading({ value: false })
         }
         if (password !== confirmPassword) {
             setErrorPassword({ error: true })
             setErrorPasswordText({
                 errorText: 'Passwords do not match',
             })
+            setIsLoading({ value: false })
         }
         if (!regexEmail.test(email)) {
             setErrorEmail({ error: true })
+            setIsLoading({ value: false })
         }
         if (
             password === confirmPassword &&
@@ -65,9 +71,26 @@ const SignUp = () => {
                 password,
             })
                 .unwrap()
-                .then(() => navigate(RouteNames.SIGN_IN))
+                .then(() => {
+                    setIsLoading({ value: false })
+                    setIsOpen(false)
+                    setIsMessageSent(true)
+                })
                 .catch((err) => console.error(err))
+                .finally(() => {
+                    setIsLoading({ value: false })
+                })
         }
+    }
+
+    const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            sendNewUserHandler()
+        }
+    }
+
+    const navigateBack = () => {
+        navigate(RouteNames.SIGN_IN)
     }
 
     return (
@@ -112,6 +135,7 @@ const SignUp = () => {
                                 confirmPassword: e.currentTarget.value,
                             })
                         }}
+                        onKeyPressEnter={(e) => enterKeyHandler(e)}
                     >
                         Confirm password
                     </Input>
@@ -124,7 +148,7 @@ const SignUp = () => {
                     • upper and lower case
                     <br />
                 </div>
-                <div className="mt-10 flex justify-around">
+                <div className="mt-10 flex items-center justify-around">
                     <Button
                         color="secondary"
                         className="px-8"
@@ -136,14 +160,43 @@ const SignUp = () => {
                         color="primary"
                         className="px-16"
                         onClick={sendNewUserHandler}
+                        disabled={isLoading}
                     >
                         Sign Up
                     </Button>
                     <Spinner
-                        isLoading={true}
-                        className={'right absolute'}
-                        size={'50px'}
+                        isLoading={isLoading}
+                        className={'absolute -right-0.5'}
+                        size={'40px'}
                     />
+                </div>
+            </Modal>
+            <Modal
+                isOpen={isMessageSent}
+                setIsOpen={() => setIsLoading({ value: false })}
+                title="Cards"
+            >
+                <div className="flex-center flex flex-col items-center justify-center">
+                    <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
+                        <img
+                            src={complete_icon}
+                            alt={'icon_mail'}
+                            style={{ width: '100px' }}
+                        />
+                    </div>
+                    <div className="mb-3 text-center text-xl font-bold text-primary">
+                        Are you registered!
+                    </div>
+                    <div className="text-md mb-5 text-center text-light-gray opacity-60">
+                        You can login using your data.
+                    </div>
+                    <Button
+                        color="primary"
+                        className="w-60"
+                        onClick={navigateBack}
+                    >
+                        Go back
+                    </Button>
                 </div>
             </Modal>
         </div>

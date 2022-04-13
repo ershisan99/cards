@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { KeyboardEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import Button from '../../components/UI/Button'
@@ -19,6 +19,24 @@ const SignIn = () => {
     const { sendSignInRequest } = useActions(signInThunks)
     const { email, password, rememberMe } = useAppSelector(selectSignIn)
     const navigate = useNavigate()
+
+    const sendSignInRequestHandler = () => {
+        sendSignInRequest({
+            password,
+            email,
+            rememberMe,
+        })
+            .unwrap()
+            .then(() => navigate('../' + RouteNames.PROFILE))
+            .catch((err) => console.error(err))
+    }
+
+    const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            sendSignInRequestHandler()
+        }
+    }
+
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
@@ -43,6 +61,7 @@ const SignIn = () => {
                         onChange={(e) =>
                             setPassword({ password: e.currentTarget.value })
                         }
+                        onKeyPress={(e) => enterKeyHandler(e)}
                     >
                         Password
                     </Input>
@@ -65,18 +84,7 @@ const SignIn = () => {
                     <Button
                         color="primary"
                         className="px-24"
-                        onClick={() =>
-                            sendSignInRequest({
-                                password,
-                                email,
-                                rememberMe,
-                            })
-                                .unwrap()
-                                .then(() =>
-                                    navigate('../' + RouteNames.PROFILE)
-                                )
-                                .catch((err) => console.error(err))
-                        }
+                        onClick={sendSignInRequestHandler}
                     >
                         Sign In
                     </Button>
