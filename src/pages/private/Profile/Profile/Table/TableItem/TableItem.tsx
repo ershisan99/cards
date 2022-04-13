@@ -5,7 +5,7 @@ type TabItemType = {
     name: string
     cards: number
     lastUpdated: Date
-    createdDay: Date
+    createdBy: string
     index: number
 }
 
@@ -13,21 +13,26 @@ const TableItem: React.FC<TabItemType> = ({
     name,
     cards,
     lastUpdated,
-    createdDay,
+    createdBy,
     index,
 }) => {
     const tabBgStyle = {
         backgroundColor: index % 2 !== 0 ? '#ececf9' : 'transparent',
     }
 
+    const date = new Date(lastUpdated)
+    const transformDate = `${date.getDay()}.${
+        date.getMonth() > 10 ? date.getMonth() : '0' + date.getMonth()
+    }.${date.getFullYear()}`
+
     return (
         <>
             <tr style={tabBgStyle}>
-                <td className="px-4 py-3">{name}</td>
-                <td className="px-4 py-3">{cards}</td>
-                <td className="px-4 py-3">{lastUpdated}</td>
-                <td className="px-4 py-3">{createdDay}</td>
-                <td className="px-4 py-3">
+                <td className="w-48 px-4 py-2">{name}</td>
+                <td className="w-20 px-4 py-2">{cards}</td>
+                <td className="w-20 px-4 py-2">{transformDate}</td>
+                <td className="text-ellipsis px-4 py-2">{createdBy}</td>
+                <td className="w-52 px-4 py-2">
                     <Button className={'ml-1 rounded px-2'} color={'warning'}>
                         Delete
                     </Button>
