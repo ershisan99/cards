@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useState } from 'react'
+import React, { KeyboardEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import Button from '../../components/UI/Button'
@@ -15,6 +15,7 @@ import { useActions, useAppSelector } from '../../utils/helpers'
 import { Spinner } from '../../components/UI/Spinner'
 
 const SignIn = () => {
+    console.log('SignIn render')
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const [isOpen, setIsOpen] = useState(true)
     const {
@@ -24,9 +25,10 @@ const SignIn = () => {
         setError,
         setErrorEmail,
         setIsLoading,
+        setErrorMessageNotification,
     } = useActions(signInActions)
     const { sendSignInRequest } = useActions(signInThunks)
-    const { email, password, rememberMe, error, errorEmail, isLoading } =
+    const { email, password, rememberMe, errorEmail, isLoading } =
         useAppSelector(selectSignIn)
     const navigate = useNavigate()
 
@@ -44,32 +46,43 @@ const SignIn = () => {
             })
                 .unwrap()
                 .then((res) => {
-                    if (res.error) {
-                        setError({ value: true })
-                        setEmail({ email: '' })
-                        setPassword({ password: '' })
-                        // todo: add error handler to notification!!!
-                    }
                     if (!res.error) {
                         navigate('../' + RouteNames.PROFILE)
                     }
                 })
                 .catch((err) => {
                     setIsLoading({ value: false })
+                    setEmail({ email: '' })
+                    setPassword({ password: '' })
+                    setErrorMessageNotification({ message: err.message })
                     setError({ value: true })
-                    console.error(err)
                 })
                 .finally(() => {
                     setIsLoading({ value: false })
+                    setError({ value: false })
                 })
         }
     }
 
-    const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            signInButton()
-        }
-    }
+    const enterKeyHandler = useCallback(
+        (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+                signInButton()
+            }
+        },
+        []
+    )
+
+    const onChangeEmail = useCallback((e: string) => {
+        setEmail({ email: e })
+    }, [])
+    const onChangePassword = useCallback((e: string) => {
+        setPassword({ password: e })
+    }, [])
+
+    const onChangeRememberMe = useCallback((e: boolean) => {
+        setRememberMe({ rememberMe: e })
+    }, [])
 
     return (
         <div>
@@ -84,9 +97,7 @@ const SignIn = () => {
                         value={email}
                         error={errorEmail}
                         errorText={'Incorrect email'}
-                        onChange={(e) =>
-                            setEmail({ email: e.currentTarget.value })
-                        }
+                        onChange={(e) => onChangeEmail(e.currentTarget.value)}
                     >
                         Email
                     </Input>
@@ -95,7 +106,7 @@ const SignIn = () => {
                         alias="password"
                         value={password}
                         onChange={(e) =>
-                            setPassword({ password: e.currentTarget.value })
+                            onChangePassword(e.currentTarget.value)
                         }
                         onKeyPress={(e) => enterKeyHandler(e)}
                     >
@@ -105,9 +116,7 @@ const SignIn = () => {
                         alias="remember me"
                         checked={rememberMe}
                         onChange={(e) =>
-                            setRememberMe({
-                                rememberMe: e.currentTarget.checked,
-                            })
+                            onChangeRememberMe(e.currentTarget.checked)
                         }
                     >
                         Remember Me

@@ -22,6 +22,9 @@ const signInSlice = createSlice({
         error: false,
         errorEmail: false,
         isLoading: false,
+        errorMessageNotification: '',
+        info: '',
+        infoMessage: '',
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {
@@ -50,6 +53,12 @@ const signInSlice = createSlice({
         },
         setIsLoading: (state, action: PayloadAction<{ value: boolean }>) => {
             state.isLoading = action.payload.value
+        },
+        setErrorMessageNotification: (
+            state,
+            action: PayloadAction<{ message: string }>
+        ) => {
+            state.errorMessageNotification = action.payload.message
         },
     },
 })
