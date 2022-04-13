@@ -28,7 +28,6 @@ export type SignUpRes = {
     addedUser: any
     error?: string
 }
-
 export type ForgotArgs = {
     email: string // кому восстанавливать пароль
     from: string // от кого придёт письмо
@@ -44,12 +43,15 @@ type ForgotRes = {
     info: string
     error?: string
 }
-
 export type SetNewPasswordArgs = {
     password: string
     resetPasswordToken: string
 }
 type SetNewPasswordRes = {
+    info: string
+    error?: string
+}
+type SignOutRes = {
     info: string
     error?: string
 }
@@ -62,7 +64,7 @@ export const UserAPI = {
         return instance.post<SignUpRes>('/auth/register', args)
     },
     signOut: () => {
-        return instance.delete('/auth/me').then((res) => res)
+        return instance.delete<SignOutRes>('/auth/me').then((res) => res.data)
     },
     getMe: () => {
         return instance.post<MeRes>('/auth/me').then((res) => res.data)
