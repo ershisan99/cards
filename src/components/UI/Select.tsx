@@ -32,7 +32,7 @@ const Select: React.FC<SuperSelectPropsType> = ({
         <select
             onChange={onChangeCallback}
             {...restProps}
-            className="ml-2 h-auto w-auto cursor-pointer border hover:border-primary"
+            className="ml-2 h-auto w-auto cursor-pointer rounded border p-1 transition hover:border-primary "
         >
             {mappedOptions}
         </select>

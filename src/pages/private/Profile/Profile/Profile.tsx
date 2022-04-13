@@ -8,7 +8,7 @@ import UserProfile from './UserProfile/UserProfile'
 const Profile: FC = () => {
     return (
         <div className="h-full py-6">
-            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-b-xl">
+            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                 <div className="w-64 bg-light">
                     <UserProfile
                         username={'Ivan Ivanov'}
