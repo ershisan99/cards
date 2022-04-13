@@ -8,8 +8,11 @@ import { useAppSelector } from '../../../../utils/helpers'
 import {
     getCardsPack,
     selectCardsPack,
+    setCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import Button from '../../../../components/UI/Button'
+import CardModal from '../../../../components/UI/CardChangeModal'
+import Input from '../../../../components/UI/Input'
 
 const Main = () => {
     const dispatch = useDispatch()
@@ -23,6 +26,7 @@ const Main = () => {
     } = useAppSelector(selectCardsPack)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     const changeActiveButton = () => {
         activeButton === 'all' ? setActiveButton('my') : setActiveButton('all')
@@ -40,9 +44,40 @@ const Main = () => {
         dispatch(getCardsPack({ pageCount }))
     }, [])
 
+    const onCardPackHandler = () => setShowModal(!showModal)
+
+    const addCardPackHandler = useCallback((title: string) => {
+        dispatch(setCardsPack({ cardsPack: { name: title } }))
+    }, [])
+
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
+                <CardModal
+                    isOpen={showModal}
+                    setIsOpen={onCardPackHandler}
+                    title={'Add new pack'}
+                >
+                    <Input alias={'Name pack'} className="my-6">
+                        Name pack
+                    </Input>
+                    <div className="my-4 flex justify-between">
+                        <Button
+                            className="w-1/3"
+                            color={'secondary'}
+                            onClick={onCardPackHandler}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            className="w-1/3"
+                            color={'primary'}
+                            onClick={() => alert('kek')}
+                        >
+                            Save
+                        </Button>
+                    </div>
+                </CardModal>
                 <div className="w-64 bg-light">
                     <div className="p-6">
                         <h3 className="text-base font-semibold">
@@ -83,7 +118,11 @@ const Main = () => {
                     </h2>
                     <div className="flex justify-between">
                         <Search />
-                        <Button className="ml-6 w-48 text-sm" color={'primary'}>
+                        <Button
+                            className="ml-6 w-48 text-sm"
+                            color={'primary'}
+                            onClick={onCardPackHandler}
+                        >
                             Add new pack
                         </Button>
                     </div>
