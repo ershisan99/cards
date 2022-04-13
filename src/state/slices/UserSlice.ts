@@ -29,18 +29,21 @@ const signInSlice = createSlice({
                 state.isAuth = !!state.user
                 state.isLoading = false
             })
+            .addCase(sendSignInRequest.pending, (state) => {
+                state.isLoading = false
+            })
+            .addCase(sendSignInRequest.rejected, (state) => {
+                state.isLoading = false
+            })
             .addCase(getMe.fulfilled, (state, action) => {
                 state.user = action.payload
                 state.isAuth = !!state.user
                 state.isLoading = false
             })
-            .addCase(sendSignInRequest.pending, (state, action) => {
+            .addCase(getMe.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(getMe.pending, (state, action) => {
-                state.isLoading = true
-            })
-            .addCase(getMe.rejected, (state, action) => {
+            .addCase(getMe.rejected, (state) => {
                 state.isLoading = false
                 state.isAuth = false
             })
