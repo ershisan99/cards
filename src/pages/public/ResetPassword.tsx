@@ -60,6 +60,7 @@ const ResetPassword = () => {
                 })
                 .finally(() => {
                     setError({ value: false })
+                    setInfo({ value: false })
                 })
         }
         if (!regex.test(email)) {

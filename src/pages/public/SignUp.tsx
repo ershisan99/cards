@@ -12,12 +12,16 @@ import {
 } from '../../state/slices/signUpSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
 import complete_icon from '../../assets/images/complete_icon.svg.png'
+import { userActions } from '../../state/slices/UserSlice'
 
 const SignUp = () => {
     const regexPassword = /[A-Za-z0-9]{8,}/
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     const [isOpen, setIsOpen] = useState(true)
     const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
+
+    const { setInfo, setInfoMessage, setError, setErrorMessageNotification } =
+        useActions(userActions)
 
     const {
         setConfirmPassword,
@@ -71,14 +75,21 @@ const SignUp = () => {
                 password,
             })
                 .unwrap()
-                .then(() => {
+                .then((res) => {
                     setIsLoading({ value: false })
                     setIsOpen(false)
                     setIsMessageSent(true)
+                    setInfoMessage({ message: res.statusText })
+                    setInfo({ value: true })
                 })
-                .catch((err) => console.error(err))
+                .catch((err) => {
+                    setErrorMessageNotification({ message: err.error })
+                    setError({ value: true })
+                })
                 .finally(() => {
                     setIsLoading({ value: false })
+                    setError({ value: false })
+                    setInfo({ value: false })
                 })
         }
     }

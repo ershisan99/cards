@@ -10,19 +10,22 @@ import {
 } from '../../state/slices/newPasswordSlice'
 import { useNavigate, useParams } from 'react-router'
 import { RouteNames } from '../../routes'
+import { userActions } from '../../state/slices/UserSlice'
 
 const NewPassword = () => {
     const regex = /[A-Za-z0-9]{8,}/
     const { token } = useParams()
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState<boolean>(true)
-    const [error, setError] = useState<boolean>(false)
+    const [errorLocal, setErrorLocal] = useState<boolean>(false)
     const { setPassword } = useActions(newPasswordActions)
     const { sendNewPasswordRequest } = useActions(newPasswordThunks)
     const { password } = useAppSelector(selectNewPassword)
+    const { setInfo, setInfoMessage, setError, setErrorMessageNotification } =
+        useActions(userActions)
 
     const onChangeInputPassword = (e: string) => {
-        setError(false)
+        setErrorLocal(false)
         setPassword({ password: e })
     }
 
@@ -33,15 +36,22 @@ const NewPassword = () => {
                 resetPasswordToken: token,
             })
                 .unwrap()
-                .then(() => {
+                .then((res) => {
+                    setInfoMessage({ message: res.statusText })
+                    setInfo({ value: true })
                     navigate(RouteNames.SIGN_IN)
                 })
-                .catch((res) => {
-                    console.log(res.error)
+                .catch((err) => {
+                    setErrorMessageNotification({ message: err.message })
+                    setError({ value: true })
+                })
+                .finally(() => {
+                    setInfo({ value: false })
+                    setError({ value: false })
                 })
         }
 
-        if (!regex.test(password)) setError(true)
+        if (!regex.test(password)) setErrorLocal(true)
     }
 
     const enterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -64,7 +74,7 @@ const NewPassword = () => {
                         }
                         type="password"
                         alias="password"
-                        error={error}
+                        error={errorLocal}
                         errorText={
                             'Invalid password! Please read the rules below!'
                         }
