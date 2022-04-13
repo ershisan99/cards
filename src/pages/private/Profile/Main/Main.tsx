@@ -2,15 +2,42 @@ import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 import { Pagination } from '../Profile/Pagination/Pagination'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '../../../../utils/helpers'
+import {
+    getCardsPack,
+    selectCardsPack,
+} from '../../../../state/slices/cardsPackSlice'
 
 const Main = () => {
+    const dispatch = useDispatch()
+    const {
+        cardPacks,
+        cardPacksTotalCount,
+        maxCardsCount,
+        minCardsCount,
+        page,
+        pageCount,
+    } = useAppSelector(selectCardsPack)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
 
     const changeActiveButton = () => {
         activeButton === 'all' ? setActiveButton('my') : setActiveButton('all')
     }
+
+    useEffect(() => {
+        dispatch(getCardsPack({}))
+    }, [])
+
+    const onPageChanged = useCallback((pageNumber: number) => {
+        dispatch(getCardsPack({ page: pageNumber, pageCount }))
+    }, [])
+
+    const onSelectChange = useCallback((pageCount: number) => {
+        dispatch(getCardsPack({ pageCount }))
+    }, [])
 
     return (
         <div className="h-full py-6">
@@ -44,19 +71,24 @@ const Main = () => {
                         </div>
                     </div>
 
-                    <CardsSlider />
+                    <CardsSlider
+                        minCardsCount={minCardsCount}
+                        maxCardsCount={maxCardsCount}
+                    />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="font-poppins text-xl font-semibold">
                         My pack list
                     </h2>
                     <Search />
-                    <Table />
+                    <Table cardPacks={cardPacks} />
                     <Pagination
-                        currentPage={1}
-                        pageSize={10}
-                        totalUsersCount={1000}
-                        onPageChanged={() => alert('changed')}
+                        currentPage={page}
+                        pageSize={pageCount}
+                        portionSize={pageCount}
+                        cardPacksTotalCount={cardPacksTotalCount}
+                        onPageChanged={onPageChanged}
+                        onSelectChange={onSelectChange}
                     />
                 </div>
             </div>
