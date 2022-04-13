@@ -48,7 +48,7 @@ const Profile: FC = () => {
                     />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
-                    <h2 className="font-poppins text-xl font-semibold">
+                    <h2 className="mb-6 font-poppins text-xl font-semibold">
                         My pack list
                     </h2>
                     <Search />
