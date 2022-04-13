@@ -1,4 +1,6 @@
 import TableItem from './TableItem/TableItem'
+import { CardsPackType } from '../../../../../API/cardsPackAPI'
+import React from 'react'
 
 type DataType = {
     name: string
@@ -58,7 +60,11 @@ const data = [
     },
 ] as Array<DataType>
 
-const Table = () => {
+type TablePropsType = {
+    cardPacks: Array<CardsPackType>
+}
+
+const Table: React.FC<TablePropsType> = ({ cardPacks }) => {
     return (
         <div className="h-fit rounded text-xs shadow-md">
             <table className="w-full">
@@ -72,15 +78,15 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((t, i) => {
+                    {cardPacks.map((c, i) => {
                         return (
                             <TableItem
                                 key={i}
                                 index={i}
-                                name={t.name}
-                                cards={t.cards}
-                                lastUpdated={t.lastUpdated}
-                                createdDay={t.createdBy}
+                                name={c.name}
+                                cards={c.cardsCount}
+                                lastUpdated={c.updated}
+                                createdDay={c.created}
                             />
                         )
                     })}

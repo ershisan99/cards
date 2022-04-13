@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import RangeSlider from '../../../../../components/UI/DoubleRangeSlider'
 
-const MIN_VALUE: number = 0
-const MAX_VALUE: number = 100
 const STEP_VALUE: number = 1
 const ALLOW_CROSS: boolean = false
 
-const CardsSlider = () => {
-    const [value1, setValue1] = useState<number | number[]>(MIN_VALUE)
-    const [value2, setValue2] = useState<number | number[]>(MAX_VALUE)
+type CardsSliderPropsType = {
+    maxCardsCount: number
+    minCardsCount: number
+}
+
+const CardsSlider: React.FC<CardsSliderPropsType> = ({
+    maxCardsCount,
+    minCardsCount,
+}) => {
+    const [value1, setValue1] = useState<number | number[]>(minCardsCount)
+    const [value2, setValue2] = useState<number | number[]>(maxCardsCount)
     const [values, setValues] = useState<any>([value1, value2])
 
     useEffect(() => {
