@@ -70,6 +70,9 @@ const getCardsPackSlice = createSlice({
         pageCount: 0,
         cardsPackName: '',
         isPersonalCardsPack: false,
+
+        // search
+        nameCards: '',
     } as InitialStateType,
     reducers: {
         addCardsPackTitle: (
