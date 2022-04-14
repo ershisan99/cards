@@ -15,7 +15,7 @@ import CardModal from '../../../../components/UI/CardChangeModal'
 import Input from '../../../../components/UI/Input'
 
 const Main = () => {
-    const dispatch = useDispatch()
+    const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
     const {
         cardPacks,
         cardPacksTotalCount,
