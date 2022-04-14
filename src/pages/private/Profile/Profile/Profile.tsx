@@ -10,6 +10,7 @@ import {
 } from '../../../../state/slices/cardsPackSlice'
 import { useActions, useAppSelector } from '../../../../utils/helpers'
 import { selectUser } from '../../../../state/slices/UserSlice'
+import { Spinner } from '../../../../components/UI/Spinner'
 
 const Profile: FC = () => {
     const {
@@ -19,6 +20,7 @@ const Profile: FC = () => {
         minCardsCount,
         page,
         pageCount,
+        isLoading,
     } = useAppSelector(selectCardsPack)
 
     const { user } = useAppSelector(selectUser)
@@ -49,6 +51,13 @@ const Profile: FC = () => {
                         minCardsCount={minCardsCount}
                         maxCardsCount={maxCardsCount}
                     />
+                    <div className=" flex justify-center ">
+                        <Spinner
+                            isLoading={isLoading}
+                            size={'150px'}
+                            className="bottom-0"
+                        />
+                    </div>
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="mb-6 font-poppins text-xl font-semibold">

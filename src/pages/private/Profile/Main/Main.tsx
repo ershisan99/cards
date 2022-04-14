@@ -13,6 +13,7 @@ import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import { Pagination } from '../Profile/Pagination/Pagination'
 import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
+import { Spinner } from '../../../../components/UI/Spinner'
 
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
@@ -25,20 +26,22 @@ const Main = () => {
         pageCount,
         cardsPackName,
         isPersonalCardsPack,
+        isLoading,
     } = useAppSelector(selectCardsPack)
 
     const { user } = useAppSelector(selectUser)
-
     const { addCardsPackTitle, getPersonalCardsPack } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
 
     useEffect(() => {
-        isPersonalCardsPack
-            ? getCardsPack({ user_id: user._id })
-            : getCardsPack({})
+        if (isPersonalCardsPack) {
+            getCardsPack({ user_id: user._id })
+        }
+        if (!isPersonalCardsPack) {
+            getCardsPack({})
+        }
     }, [isPersonalCardsPack])
 
     const changeActiveButton = () => {
@@ -47,28 +50,23 @@ const Main = () => {
             ? getPersonalCardsPack({ isPersonalCardsPack: false })
             : getPersonalCardsPack({ isPersonalCardsPack: true })
     }
-
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
-
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })
         setAddCardPack(false)
         addCardsPackTitle({ cardsPackName: '' })
     }, [])
-
     const onInputChangeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             addCardsPackTitle({ cardsPackName: e.currentTarget.value })
         },
         []
     )
-
     const onPageChanged = useCallback((pageNumber: number) => {
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
             : getCardsPack({ page: pageNumber, pageCount })
     }, [])
-
     const onSelectChange = useCallback((pageCount: number) => {
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, pageCount })
@@ -141,6 +139,13 @@ const Main = () => {
                         minCardsCount={minCardsCount}
                         maxCardsCount={maxCardsCount}
                     />
+                    <div className=" flex justify-center ">
+                        <Spinner
+                            isLoading={isLoading}
+                            size={'150px'}
+                            className="bottom-0"
+                        />
+                    </div>
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="mb-6 font-poppins text-xl font-semibold">
@@ -158,6 +163,7 @@ const Main = () => {
                     </div>
 
                     <Table cardPacks={cardPacks} />
+
                     <Pagination
                         currentPage={page}
                         pageSize={pageCount}

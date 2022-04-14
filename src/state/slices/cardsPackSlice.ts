@@ -57,6 +57,7 @@ type InitialStateType = {
     pageCount: number
     cardsPackName: string
     isPersonalCardsPack: boolean
+    isLoading: boolean
 }
 
 const getCardsPackSlice = createSlice({
@@ -70,6 +71,7 @@ const getCardsPackSlice = createSlice({
         pageCount: 0,
         cardsPackName: '',
         isPersonalCardsPack: false,
+        isLoading: false,
     } as InitialStateType,
     reducers: {
         addCardsPackTitle: (
@@ -86,14 +88,22 @@ const getCardsPackSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getCardsPack.fulfilled, (state, action) => {
-            state.cardPacks = action.payload.cardPacks
-            state.cardPacksTotalCount = action.payload.cardPacksTotalCount
-            state.maxCardsCount = action.payload.maxCardsCount
-            state.minCardsCount = action.payload.minCardsCount
-            state.page = action.payload.page
-            state.pageCount = action.payload.pageCount
-        })
+        builder
+            .addCase(getCardsPack.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getCardsPack.fulfilled, (state, action) => {
+                state.cardPacks = action.payload.cardPacks
+                state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+                state.maxCardsCount = action.payload.maxCardsCount
+                state.minCardsCount = action.payload.minCardsCount
+                state.page = action.payload.page
+                state.pageCount = action.payload.pageCount
+                state.isLoading = false
+            })
+            .addCase(getCardsPack.rejected, (state) => {
+                state.isLoading = false
+            })
     },
 })
 

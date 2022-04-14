@@ -25,7 +25,7 @@ const CardsSlider: React.FC<CardsSliderPropsType> = ({
         setValues(value)
     }
     return (
-        <div className="h-full p-6">
+        <div className="h-50 p-6">
             <h3 className="text-base font-semibold">Number of cards</h3>
             <div>
                 <div className="relative mt-6 mb-4 flex justify-between text-xs">
