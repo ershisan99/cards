@@ -12,6 +12,7 @@ import {
 import Button from '../../../../components/UI/Button'
 import CardModal from '../../../../components/UI/CardChangeModal'
 import Input from '../../../../components/UI/Input'
+import { selectUser } from '../../../../state/slices/UserSlice'
 
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
@@ -26,31 +27,32 @@ const Main = () => {
         isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
 
+    const { user } = useAppSelector(selectUser)
+
     const { addCardsPackTitle, getPersonalCardsPack } =
         useActions(cardPackActions)
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [addCardPack, setAddCardPack] = useState<boolean>(false)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
-    const USER_ID = '' // сюда можно вставить свой айди
 
     useEffect(() => {
         isPersonalCardsPack
-            ? getCardsPack({ user_id: USER_ID })
+            ? getCardsPack({ user_id: user._id })
             : getCardsPack({})
     }, [isPersonalCardsPack])
 
     const changeActiveButton = () => {
-        activeButton === 'all' ? setActiveButton('my') : setActiveButton('all')
+        isPersonalCardsPack ? setActiveButton('all') : setActiveButton('my')
         isPersonalCardsPack
             ? getPersonalCardsPack({ isPersonalCardsPack: false })
             : getPersonalCardsPack({ isPersonalCardsPack: true })
     }
 
-    const onCardPackHandler = () => setShowModal(!showModal)
+    const onCardPackHandler = () => setAddCardPack(!addCardPack)
 
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })
-        setShowModal(false)
+        setAddCardPack(false)
         addCardsPackTitle({ cardsPackName: '' })
     }, [])
 
@@ -63,13 +65,13 @@ const Main = () => {
 
     const onPageChanged = useCallback((pageNumber: number) => {
         isPersonalCardsPack
-            ? getCardsPack({ user_id: USER_ID, page: pageNumber, pageCount })
+            ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
             : getCardsPack({})
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
         isPersonalCardsPack
-            ? getCardsPack({ user_id: USER_ID, pageCount })
+            ? getCardsPack({ user_id: user._id, pageCount })
             : getCardsPack({})
     }, [])
 
@@ -77,7 +79,7 @@ const Main = () => {
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                 <CardModal
-                    isOpen={showModal}
+                    isOpen={addCardPack}
                     setIsOpen={onCardPackHandler}
                     title={'Add new pack'}
                 >
@@ -105,6 +107,7 @@ const Main = () => {
                         </Button>
                     </div>
                 </CardModal>
+
                 <div className="w-64 bg-light">
                     <div className="p-6">
                         <h3 className="text-base font-semibold">
