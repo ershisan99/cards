@@ -4,15 +4,13 @@ import { Pagination } from './Pagination/Pagination'
 import Search from './Search/Search'
 import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
-import { useDispatch } from 'react-redux'
 import {
-    getCardsPack,
+    cardsPackThunks,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
-import { useAppSelector } from '../../../../utils/helpers'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
 
 const Profile: FC = () => {
-    const dispatch = useDispatch()
     const {
         cardPacks,
         cardPacksTotalCount,
@@ -22,16 +20,18 @@ const Profile: FC = () => {
         pageCount,
     } = useAppSelector(selectCardsPack)
 
+    const { getCardsPack } = useActions(cardsPackThunks)
+
     useEffect(() => {
-        dispatch(getCardsPack({}))
+        getCardsPack({})
     }, [])
 
     const onPageChanged = useCallback((pageNumber: number) => {
-        dispatch(getCardsPack({ page: pageNumber, pageCount }))
+        getCardsPack({ page: pageNumber, pageCount })
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
-        dispatch(getCardsPack({ pageCount }))
+        getCardsPack({ pageCount })
     }, [])
 
     return (
