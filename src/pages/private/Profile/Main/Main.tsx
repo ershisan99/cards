@@ -2,13 +2,12 @@ import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 import { Pagination } from '../Profile/Pagination/Pagination'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../../utils/helpers'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
 import {
-    getCardsPack,
+    cardPackActions,
+    cardsPackThunks,
     selectCardsPack,
-    setCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import Button from '../../../../components/UI/Button'
 import CardModal from '../../../../components/UI/CardChangeModal'
@@ -23,7 +22,13 @@ const Main = () => {
         minCardsCount,
         page,
         pageCount,
+        cardsPackName,
+        isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
+
+    const { addCardsPackTitle, getPersonalCardsPack } =
+        useActions(cardPackActions)
+    const [showModal, setShowModal] = useState<boolean>(false)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
     const [showModal, setShowModal] = useState<boolean>(false)
