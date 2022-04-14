@@ -81,13 +81,13 @@ export const CardsAPI = {
             .then((res) => res.data)
     },
     setCard: (args: SetCardType) => {
-        return instance.post('/cards/card', { args })
+        return instance.post('/cards/card', args)
     },
     deleteCard: (args: DeleteCardType) => {
         return instance.delete(`cards/card?${args.id}`)
     },
     updateCard: (args: UpdateCardType) => {
-        return instance.put('/cards/card', { args })
+        return instance.put('/cards/card', args)
     },
 }
 

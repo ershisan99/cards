@@ -2,16 +2,20 @@ import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 import { Pagination } from '../Profile/Pagination/Pagination'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../../utils/helpers'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
 import {
-    getCardsPack,
+    cardPackActions,
+    cardsPackThunks,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
+import Button from '../../../../components/UI/Button'
+import CardModal from '../../../../components/UI/CardChangeModal'
+import Input from '../../../../components/UI/Input'
+import { selectUser } from '../../../../state/slices/UserSlice'
 
 const Main = () => {
-    const dispatch = useDispatch()
+    const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
     const {
         cardPacks,
         cardPacksTotalCount,
@@ -19,29 +23,91 @@ const Main = () => {
         minCardsCount,
         page,
         pageCount,
+        cardsPackName,
+        isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
+
+    const { user } = useAppSelector(selectUser)
+
+    const { addCardsPackTitle, getPersonalCardsPack } =
+        useActions(cardPackActions)
+    const [addCardPack, setAddCardPack] = useState<boolean>(false)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
 
+    useEffect(() => {
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: user._id })
+            : getCardsPack({})
+    }, [isPersonalCardsPack])
+
     const changeActiveButton = () => {
-        activeButton === 'all' ? setActiveButton('my') : setActiveButton('all')
+        isPersonalCardsPack ? setActiveButton('all') : setActiveButton('my')
+        isPersonalCardsPack
+            ? getPersonalCardsPack({ isPersonalCardsPack: false })
+            : getPersonalCardsPack({ isPersonalCardsPack: true })
     }
 
-    useEffect(() => {
-        dispatch(getCardsPack({}))
+    const onCardPackHandler = () => setAddCardPack(!addCardPack)
+
+    const addCardPackHandler = useCallback((title: string) => {
+        setCardsPack({ cardsPack: { name: title } })
+        setAddCardPack(false)
+        addCardsPackTitle({ cardsPackName: '' })
     }, [])
 
+    const onInputChangeHandler = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            addCardsPackTitle({ cardsPackName: e.currentTarget.value })
+        },
+        []
+    )
+
     const onPageChanged = useCallback((pageNumber: number) => {
-        dispatch(getCardsPack({ page: pageNumber, pageCount }))
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
+            : getCardsPack({})
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
-        dispatch(getCardsPack({ pageCount }))
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: user._id, pageCount })
+            : getCardsPack({})
     }, [])
 
     return (
         <div className="h-full py-6">
-            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-b-xl">
+            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
+                <CardModal
+                    isOpen={addCardPack}
+                    setIsOpen={onCardPackHandler}
+                    title={'Add new pack'}
+                >
+                    <Input
+                        alias={'Name pack'}
+                        className="my-6"
+                        onChange={(e) => onInputChangeHandler(e)}
+                    >
+                        Name pack
+                    </Input>
+                    <div className="my-4 flex justify-between">
+                        <Button
+                            className="w-1/3"
+                            color={'secondary'}
+                            onClick={onCardPackHandler}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            className="w-1/3"
+                            color={'primary'}
+                            onClick={() => addCardPackHandler(cardsPackName)}
+                        >
+                            Save
+                        </Button>
+                    </div>
+                </CardModal>
+
                 <div className="w-64 bg-light">
                     <div className="p-6">
                         <h3 className="text-base font-semibold">
@@ -77,10 +143,20 @@ const Main = () => {
                     />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
-                    <h2 className="font-poppins text-xl font-semibold">
-                        My pack list
+                    <h2 className="mb-6 font-poppins text-xl font-semibold">
+                        Pack list
                     </h2>
-                    <Search />
+                    <div className="flex justify-between">
+                        <Search />
+                        <Button
+                            className="ml-6 w-48 text-sm"
+                            color={'primary'}
+                            onClick={onCardPackHandler}
+                        >
+                            Add new pack
+                        </Button>
+                    </div>
+
                     <Table cardPacks={cardPacks} />
                     <Pagination
                         currentPage={page}

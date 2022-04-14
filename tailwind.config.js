@@ -13,6 +13,7 @@ module.exports = {
                 slate: '#2d2e46',
                 'light-gray': '#24254a',
                 white: '#fff',
+                cardModal: 'rgba(26, 26, 26, 0.8)',
             },
             fontFamily: {
                 sans: ['SF UI Display'],

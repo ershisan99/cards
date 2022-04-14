@@ -4,15 +4,14 @@ import { Pagination } from './Pagination/Pagination'
 import Search from './Search/Search'
 import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
-import { useDispatch } from 'react-redux'
 import {
-    getCardsPack,
+    cardsPackThunks,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
-import { useAppSelector } from '../../../../utils/helpers'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
+import { selectUser } from '../../../../state/slices/UserSlice'
 
 const Profile: FC = () => {
-    const dispatch = useDispatch()
     const {
         cardPacks,
         cardPacksTotalCount,
@@ -22,16 +21,20 @@ const Profile: FC = () => {
         pageCount,
     } = useAppSelector(selectCardsPack)
 
+    const { user } = useAppSelector(selectUser)
+
+    const { getCardsPack } = useActions(cardsPackThunks)
+
     useEffect(() => {
-        dispatch(getCardsPack({}))
+        getCardsPack({ user_id: user._id })
     }, [])
 
     const onPageChanged = useCallback((pageNumber: number) => {
-        dispatch(getCardsPack({ page: pageNumber, pageCount }))
+        getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
-        dispatch(getCardsPack({ pageCount }))
+        getCardsPack({ user_id: user._id, pageCount })
     }, [])
 
     return (
@@ -48,7 +51,7 @@ const Profile: FC = () => {
                     />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
-                    <h2 className="font-poppins text-xl font-semibold">
+                    <h2 className="mb-6 font-poppins text-xl font-semibold">
                         My pack list
                     </h2>
                     <Search />
