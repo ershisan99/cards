@@ -19,9 +19,9 @@ const signInSlice = createSlice({
         email: '',
         password: '',
         rememberMe: true,
-        error: false,
         errorEmail: false,
         isLoading: false,
+        error: false,
     },
     reducers: {
         setEmail: (state, action: PayloadAction<{ email: string }>) => {

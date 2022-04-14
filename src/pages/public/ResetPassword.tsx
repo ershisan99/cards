@@ -11,6 +11,7 @@ import {
     selectResetPassword,
 } from '../../state/slices/resetPasswordSlice'
 import { Spinner } from '../../components/UI/Spinner'
+import { userActions } from '../../state/slices/UserSlice'
 
 const ResetPassword = () => {
     const customMessage = `
@@ -24,14 +25,16 @@ const ResetPassword = () => {
 
     const [isOpen, setIsOpen] = useState<boolean>(true)
     const [isMessageSent, setIsMessageSent] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
+    const [errorLocal, setErrorLocal] = useState<boolean>(false)
 
     const { setEmail, setIsLoading } = useActions(resetPasswordActions)
     const { sendResetPasswordRequest } = useActions(resetPasswordThunks)
     const { email, isLoading } = useAppSelector(selectResetPassword)
+    const { setInfo, setInfoMessage, setError, setErrorMessageNotification } =
+        useActions(userActions)
 
     const onChangeInputEmail = (e: string) => {
-        setError(false)
+        setErrorLocal(false)
         setEmail({ email: e })
     }
 
@@ -44,14 +47,24 @@ const ResetPassword = () => {
                 message: customMessage,
             })
                 .unwrap()
-                .then(() => {
+                .then((res) => {
                     setIsLoading({ value: true })
                     setIsOpen(false)
                     setIsMessageSent(true)
+                    setInfoMessage({ message: res.info })
+                    setInfo({ value: true })
+                })
+                .catch((err) => {
+                    setErrorMessageNotification({ message: err.message })
+                    setError({ value: true })
+                })
+                .finally(() => {
+                    setError({ value: false })
+                    setInfo({ value: false })
                 })
         }
         if (!regex.test(email)) {
-            setError(true)
+            setErrorLocal(true)
         }
     }
 
@@ -74,7 +87,7 @@ const ResetPassword = () => {
                         }
                         type="email"
                         alias="email"
-                        error={error}
+                        error={errorLocal}
                         errorText={'Email invalid!'}
                         onKeyPressEnter={(e) => enterKeyHandler(e)}
                     >

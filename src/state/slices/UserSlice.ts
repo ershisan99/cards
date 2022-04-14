@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { MeRes, UserAPI } from '../../API/userAPI'
 import { RootState } from '../store'
 import { sendSignInRequest } from './signInSlice'
@@ -14,14 +14,41 @@ type InitialState = {
     user: MeRes
     isAuth: boolean
     isLoading: boolean
+
+    error: boolean
+    errorMessageNotification: string
+    info: boolean
+    infoMessageNotification: string
 }
 const signInSlice = createSlice({
     name: 'user',
     initialState: {
         isAuth: false,
         isLoading: true,
+        // error notification
+        error: false,
+        errorMessageNotification: '',
+        // info notification
+        info: false,
+        infoMessageNotification: '',
     } as InitialState,
-    reducers: {},
+    reducers: {
+        setInfo: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.info = action.payload.value
+        },
+        setInfoMessage: (state, action: PayloadAction<{ message: string }>) => {
+            state.infoMessageNotification = action.payload.message
+        },
+        setError: (state, action: PayloadAction<{ value: boolean }>) => {
+            state.error = action.payload.value
+        },
+        setErrorMessageNotification: (
+            state,
+            action: PayloadAction<{ message: string }>
+        ) => {
+            state.errorMessageNotification = action.payload.message
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(sendSignInRequest.fulfilled, (state, action) => {
