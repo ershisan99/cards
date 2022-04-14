@@ -1,18 +1,18 @@
-import CardsSlider from '../Profile/CardsSlider/CardsSlider'
-import Search from '../Profile/Search/Search'
-import Table from '../Profile/Table/Table'
-import { Pagination } from '../Profile/Pagination/Pagination'
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useActions, useAppSelector } from '../../../../utils/helpers'
+import Button from '../../../../components/UI/Button'
+import CardModal from '../../../../components/UI/CardChangeModal'
+import Input from '../../../../components/UI/Input'
 import {
     cardPackActions,
     cardsPackThunks,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
-import Button from '../../../../components/UI/Button'
-import CardModal from '../../../../components/UI/CardChangeModal'
-import Input from '../../../../components/UI/Input'
 import { selectUser } from '../../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
+import CardsSlider from '../Profile/CardsSlider/CardsSlider'
+import { Pagination } from '../Profile/Pagination/Pagination'
+import Search from '../Profile/Search/Search'
+import Table from '../Profile/Table/Table'
 
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
@@ -66,13 +66,13 @@ const Main = () => {
     const onPageChanged = useCallback((pageNumber: number) => {
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
-            : getCardsPack({})
+            : getCardsPack({ page: pageNumber, pageCount })
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, pageCount })
-            : getCardsPack({})
+            : getCardsPack({ pageCount })
     }, [])
 
     return (
