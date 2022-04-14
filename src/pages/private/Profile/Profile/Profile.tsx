@@ -9,6 +9,7 @@ import {
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import { useActions, useAppSelector } from '../../../../utils/helpers'
+import { selectUser } from '../../../../state/slices/UserSlice'
 
 const Profile: FC = () => {
     const {
@@ -20,18 +21,20 @@ const Profile: FC = () => {
         pageCount,
     } = useAppSelector(selectCardsPack)
 
+    const { user } = useAppSelector(selectUser)
+
     const { getCardsPack } = useActions(cardsPackThunks)
 
     useEffect(() => {
-        getCardsPack({})
+        getCardsPack({ user_id: user._id })
     }, [])
 
     const onPageChanged = useCallback((pageNumber: number) => {
-        getCardsPack({ page: pageNumber, pageCount })
+        getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
     }, [])
 
     const onSelectChange = useCallback((pageCount: number) => {
-        getCardsPack({ pageCount })
+        getCardsPack({ user_id: user._id, pageCount })
     }, [])
 
     return (
