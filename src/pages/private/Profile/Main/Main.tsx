@@ -3,7 +3,11 @@ import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 import { Pagination } from '../Profile/Pagination/Pagination'
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useActions, useAppSelector } from '../../../../utils/helpers'
+import {
+    useActions,
+    useAppSelector,
+    useDebounce,
+} from '../../../../utils/helpers'
 import {
     cardPackActions,
     cardsPackThunks,
@@ -13,7 +17,6 @@ import Button from '../../../../components/UI/Button'
 import CardModal from '../../../../components/UI/CardChangeModal'
 import Input from '../../../../components/UI/Input'
 import { selectUser } from '../../../../state/slices/UserSlice'
-import { useDebounce } from '../Profile/Search/useDebounce'
 
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
