@@ -59,24 +59,7 @@ export type UpdateCardsPackType = {
 export const CardsPackAPI = {
     getAllCards: (args: GetCardsType) => {
         return instance
-            .get<GetCardsPackResponseType>(
-                '/cards/pack' +
-                    (args.packName === undefined
-                        ? '?packName=english'
-                        : `?packName=${args.packName}`) +
-                    (args.min === undefined ? '' : `&min=${args.min}`) +
-                    (args.max === undefined ? '' : `&max=${args.max}`) +
-                    (args.sortPacks === undefined
-                        ? '&sortPacks=0updated'
-                        : `&sortPacks=${args.sortPacks}`) +
-                    (args.page === undefined ? '' : `&page=${args.page}`) +
-                    (args.pageCount === undefined
-                        ? ''
-                        : `&pageCount=${args.pageCount}`) +
-                    (args.user_id === undefined
-                        ? ''
-                        : `&user_id=${args.user_id}`)
-            )
+            .get<GetCardsPackResponseType>('/cards/pack', { params: { args } })
             .then((res) => res.data)
     },
     setCardsPack: (args: SetCardsPackType) => {
