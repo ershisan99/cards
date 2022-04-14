@@ -6,7 +6,7 @@ type TablePropsType = {
     cardPacks: Array<CardsPackType>
 }
 
-const Table: React.FC<TablePropsType> = ({ cardPacks }) => {
+const Table: React.FC<TablePropsType> = React.memo(({ cardPacks }) => {
     return (
         <div className="mt-6 h-fit rounded text-xs shadow-md">
             <table className="w-full">
@@ -36,6 +36,6 @@ const Table: React.FC<TablePropsType> = ({ cardPacks }) => {
             </table>
         </div>
     )
-}
+})
 
 export default Table
