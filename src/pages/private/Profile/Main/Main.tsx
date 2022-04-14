@@ -31,28 +31,46 @@ const Main = () => {
     const [showModal, setShowModal] = useState<boolean>(false)
     // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const USER_ID = '' // сюда можно вставить свой айди
+
+    useEffect(() => {
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: USER_ID })
+            : getCardsPack({})
+    }, [isPersonalCardsPack])
 
     const changeActiveButton = () => {
         activeButton === 'all' ? setActiveButton('my') : setActiveButton('all')
+        isPersonalCardsPack
+            ? getPersonalCardsPack({ isPersonalCardsPack: false })
+            : getPersonalCardsPack({ isPersonalCardsPack: true })
     }
-
-    useEffect(() => {
-        dispatch(getCardsPack({}))
-    }, [])
-
-    const onPageChanged = useCallback((pageNumber: number) => {
-        dispatch(getCardsPack({ page: pageNumber, pageCount }))
-    }, [])
-
-    const onSelectChange = useCallback((pageCount: number) => {
-        dispatch(getCardsPack({ pageCount }))
-    }, [])
 
     const onCardPackHandler = () => setShowModal(!showModal)
 
     const addCardPackHandler = useCallback((title: string) => {
-        dispatch(setCardsPack({ cardsPack: { name: title } }))
+        setCardsPack({ cardsPack: { name: title } })
+        setShowModal(false)
+        addCardsPackTitle({ cardsPackName: '' })
+    }, [])
+
+    const onInputChangeHandler = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            addCardsPackTitle({ cardsPackName: e.currentTarget.value })
+        },
+        []
+    )
+
+    const onPageChanged = useCallback((pageNumber: number) => {
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: USER_ID, page: pageNumber, pageCount })
+            : getCardsPack({})
+    }, [])
+
+    const onSelectChange = useCallback((pageCount: number) => {
+        isPersonalCardsPack
+            ? getCardsPack({ user_id: USER_ID, pageCount })
+            : getCardsPack({})
     }, [])
 
     return (
@@ -63,7 +81,11 @@ const Main = () => {
                     setIsOpen={onCardPackHandler}
                     title={'Add new pack'}
                 >
-                    <Input alias={'Name pack'} className="my-6">
+                    <Input
+                        alias={'Name pack'}
+                        className="my-6"
+                        onChange={(e) => onInputChangeHandler(e)}
+                    >
                         Name pack
                     </Input>
                     <div className="my-4 flex justify-between">
@@ -77,7 +99,7 @@ const Main = () => {
                         <Button
                             className="w-1/3"
                             color={'primary'}
-                            onClick={() => alert('kek')}
+                            onClick={() => addCardPackHandler(cardsPackName)}
                         >
                             Save
                         </Button>
