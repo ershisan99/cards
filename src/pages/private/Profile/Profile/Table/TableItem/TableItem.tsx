@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import Button from '../../../../../../components/UI/Button'
 import CardModal from '../../../../../../components/UI/CardChangeModal'
-import { useActions } from '../../../../../../utils/helpers'
 import { cardsPackThunks } from '../../../../../../state/slices/cardsPackSlice'
+import { selectUser } from '../../../../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../../../../utils/helpers'
 
 type TabItemType = {
     name: string
@@ -10,6 +11,7 @@ type TabItemType = {
     lastUpdated: Date
     createdBy: string
     index: number
+    id: string
 }
 
 const TableItem: React.FC<TabItemType> = ({
@@ -18,15 +20,15 @@ const TableItem: React.FC<TabItemType> = ({
     lastUpdated,
     createdBy,
     index,
+    id,
 }) => {
     const tabBgStyle = {
         backgroundColor: index % 2 !== 0 ? '#ececf9' : 'transparent',
     }
 
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
-
     const { deleteCardsPack } = useActions(cardsPackThunks)
-
+    const { user } = useAppSelector(selectUser)
     const deleteCardPackHandler = useCallback((cardPackId: string) => {
         deleteCardsPack({ id: cardPackId })
         setDeleteCardPack(false)
@@ -73,13 +75,15 @@ const TableItem: React.FC<TabItemType> = ({
                 <td className="w-20 px-4 py-2">{transformDate}</td>
                 <td className="text-ellipsis px-4 py-2">{createdBy}</td>
                 <td className="w-52 px-4 py-2">
-                    <Button
-                        className={'ml-1 rounded px-2'}
-                        color={'warning'}
-                        onClick={onDeleteCardPackHandler}
-                    >
-                        Delete
-                    </Button>
+                    {user._id === id && (
+                        <Button
+                            className={'ml-1 rounded px-2'}
+                            color={'warning'}
+                            onClick={onDeleteCardPackHandler}
+                        >
+                            Delete
+                        </Button>
+                    )}
                     <Button className={'ml-1 rounded px-2'} color={'secondary'}>
                         Edit
                     </Button>

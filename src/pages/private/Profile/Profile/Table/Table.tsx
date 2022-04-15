@@ -39,6 +39,7 @@ const Table: React.FC = () => {
                                         cards={c.cardsCount}
                                         lastUpdated={c.updated}
                                         createdBy={c.user_name}
+                                        id={c.user_id}
                                     />
                                 )
                             })
