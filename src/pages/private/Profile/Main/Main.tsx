@@ -24,11 +24,18 @@ const Main = () => {
     const { addCardsPackTitle, setPersonalCardsPack, setSearch } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    const { page, pageCount, minCardsCount, maxCardsCount } =
+    const { page, pageCount, minCardsCount, maxCardsCount, search } =
         useAppSelector(selectCardsPack)
     useEffect(() => {
         getCardsPack({})
-    }, [page, pageCount, minCardsCount, maxCardsCount, isPersonalCardsPack])
+    }, [
+        page,
+        pageCount,
+        minCardsCount,
+        maxCardsCount,
+        isPersonalCardsPack,
+        search,
+    ])
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })

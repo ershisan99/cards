@@ -23,6 +23,7 @@ export const getCardsPack = createAsyncThunk(
         } = state.cardsPack
         const [min, max] = [minCardsCount, maxCardsCount]
         const user_id = state.user.user._id
+        const packName = state.cardsPack.search
         const finalPayload = isPersonalCardsPack
             ? {
                   user_id,
@@ -30,9 +31,10 @@ export const getCardsPack = createAsyncThunk(
                   min,
                   max,
                   page,
+                  packName,
                   ...payload,
               }
-            : { pageCount, min, max, page, ...payload }
+            : { pageCount, min, max, page, packName, ...payload }
         return await CardsPackAPI.getAllCards({
             ...finalPayload,
         })
