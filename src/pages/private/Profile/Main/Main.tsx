@@ -1,4 +1,9 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import {
+    useActions,
+    useAppSelector,
+    useDebounce,
+} from '../../../../utils/helpers'
 import Button from '../../../../components/UI/Button'
 import CardModal from '../../../../components/UI/CardChangeModal'
 import Input from '../../../../components/UI/Input'
@@ -8,7 +13,6 @@ import {
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import { selectUser } from '../../../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../../../utils/helpers'
 import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import { Pagination } from '../Profile/Pagination/Pagination'
 import Search from '../Profile/Search/Search'
@@ -26,13 +30,10 @@ const Main = () => {
         cardsPackName,
         isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
-
     const { user } = useAppSelector(selectUser)
-
     const { addCardsPackTitle, getPersonalCardsPack } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    // temporary state
     const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
 
     useEffect(() => {
@@ -47,33 +48,48 @@ const Main = () => {
             ? getPersonalCardsPack({ isPersonalCardsPack: false })
             : getPersonalCardsPack({ isPersonalCardsPack: true })
     }
-
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
-
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })
         setAddCardPack(false)
         addCardsPackTitle({ cardsPackName: '' })
     }, [])
-
     const onInputChangeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             addCardsPackTitle({ cardsPackName: e.currentTarget.value })
         },
         []
     )
-
     const onPageChanged = useCallback((pageNumber: number) => {
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
             : getCardsPack({ page: pageNumber, pageCount })
     }, [])
-
     const onSelectChange = useCallback((pageCount: number) => {
+        console.log(pageCount)
         isPersonalCardsPack
             ? getCardsPack({ user_id: user._id, pageCount })
             : getCardsPack({ pageCount })
     }, [])
+
+    // search
+    const [searchValue, setSearchValue] = useState<string>('')
+    const searchHandler = useCallback(
+        (value: string) => {
+            setSearchValue(value)
+        },
+        [searchValue, setSearchValue]
+    )
+    const debouncedState = useDebounce(searchValue, 300)
+
+    useEffect(() => {
+        if (debouncedState) {
+            getCardsPack({ packName: debouncedState })
+        }
+        if (debouncedState === '') {
+            getCardsPack({})
+        }
+    }, [debouncedState, getCardsPack])
 
     return (
         <div className="h-full py-6">
@@ -147,7 +163,7 @@ const Main = () => {
                         Pack list
                     </h2>
                     <div className="flex justify-between">
-                        <Search />
+                        <Search callback={searchHandler} />
                         <Button
                             className="ml-6 w-48 text-sm"
                             color={'primary'}

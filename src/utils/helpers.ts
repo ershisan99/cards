@@ -1,5 +1,5 @@
 import { ActionCreatorsMapObject, bindActionCreators } from '@reduxjs/toolkit'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../state/store'
 
@@ -27,4 +27,18 @@ export const useActions = <T extends ActionCreatorsMapObject>(actions: T) => {
         () => bindActionCreators<T, RemapActionCreators<T>>(actions, dispatch),
         [actions, dispatch]
     )
+}
+
+export function useDebounce(value: any, delay: number) {
+    const [debouncedValue, setDebouncedValue] = useState(value)
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value)
+        }, delay)
+
+        return () => clearTimeout(handler)
+    }, [value, delay])
+
+    return debouncedValue
 }
