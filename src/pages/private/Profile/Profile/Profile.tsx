@@ -1,7 +1,6 @@
-import React, { FC, useEffect } from 'react'
-import { cardsPackThunks } from '../../../../state/slices/cardsPackSlice'
+import React, { FC } from 'react'
 import { selectUser } from '../../../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../../../utils/helpers'
+import { useAppSelector } from '../../../../utils/helpers'
 import CardsSlider from './CardsSlider/CardsSlider'
 import { Pagination } from './Pagination/Pagination'
 import Search from './Search/Search'
@@ -10,25 +9,20 @@ import UserProfile from './UserProfile/UserProfile'
 
 const Profile: FC = () => {
     const { user } = useAppSelector(selectUser)
-    const { getCardsPack } = useActions(cardsPackThunks)
-
-    useEffect(() => {
-        getCardsPack({ user_id: user._id })
-    }, [])
 
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                 <div className="w-64 bg-light">
                     <UserProfile
-                        username={'Ivan Ivanov'}
+                        username={user.name}
                         work={'Front-end developer'}
                     />
                     <CardsSlider />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="mb-6 font-poppins text-xl font-semibold">
-                        My pack list
+                        My card packs
                     </h2>
                     <Search />
                     <Table />

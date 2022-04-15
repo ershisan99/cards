@@ -18,8 +18,9 @@ import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 
 const Main = () => {
+    const [isFirstLoad, setFirstLoad] = useState(true)
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
-    const { page, pageCount, cardsPackName, isPersonalCardsPack } =
+    const { cardsPackName, isPersonalCardsPack } =
         useAppSelector(selectCardsPack)
     const { addCardsPackTitle, setPersonalCardsPack } =
         useActions(cardPackActions)
@@ -27,7 +28,7 @@ const Main = () => {
 
     useEffect(() => {
         if (isPersonalCardsPack !== null) {
-            getCardsPack({ page, pageCount })
+            getCardsPack({}).then(() => setFirstLoad(false))
         }
     }, [isPersonalCardsPack])
 
@@ -55,11 +56,13 @@ const Main = () => {
     const debouncedState = useDebounce(searchValue, 300)
 
     useEffect(() => {
-        if (debouncedState) {
-            getCardsPack({ packName: debouncedState })
-        }
-        if (debouncedState === '') {
-            getCardsPack({})
+        if (!isFirstLoad) {
+            if (debouncedState) {
+                getCardsPack({ packName: debouncedState })
+            }
+            if (debouncedState === '') {
+                getCardsPack({})
+            }
         }
     }, [debouncedState])
 

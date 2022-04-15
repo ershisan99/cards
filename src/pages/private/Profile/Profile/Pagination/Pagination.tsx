@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import Select from '../../../../../components/UI/Select'
 import {
+    cardPackActions,
     cardsPackThunks,
     selectCardsPack,
 } from '../../../../../state/slices/cardsPackSlice'
@@ -12,9 +13,7 @@ export const Pagination = () => {
     const { cardPacksTotalCount, page, pageCount } =
         useAppSelector(selectCardsPack)
     const { getCardsPack } = useActions(cardsPackThunks)
-    const onSelectChange = useCallback((pageCount: number) => {
-        getCardsPack({ page, pageCount })
-    }, [])
+    const { setPage } = useActions(cardPackActions)
     const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
     const pages: Array<number> = []
     for (let i = 1; i <= pagesCount; i++) {
@@ -25,7 +24,9 @@ export const Pagination = () => {
     const onPageChanged = useCallback((page: number) => {
         getCardsPack({ page })
     }, [])
-
+    const onSelectChange = (page: number) => {
+        setPage({ page })
+    }
     const onBackClickHandler = () => setPortionNumber(portionNumber - 1)
     const onForwardClickHandler = () => setPortionNumber(portionNumber + 1)
 

@@ -13,12 +13,12 @@ export const getCardsPack = createAsyncThunk(
     'cards/getCardsPack',
     async (payload: GetCardsType, { getState }) => {
         const state = getState() as RootState
-        const isPersonalCardsPack = state.cardsPack.isPersonalCardsPack
-        const pageCount = state.cardsPack.pageCount
+        const { isPersonalCardsPack, pageCount, min, max } = state.cardsPack
+
         const user_id = state.user.user._id
         const finalPayload = isPersonalCardsPack
-            ? { user_id, pageCount, ...payload }
-            : { pageCount, ...payload }
+            ? { user_id, pageCount, min, max, ...payload }
+            : { pageCount, min, max, ...payload }
         return await CardsPackAPI.getAllCards({
             ...finalPayload,
         })
@@ -27,25 +27,19 @@ export const getCardsPack = createAsyncThunk(
 export const setCardsPack = createAsyncThunk(
     'cards/setCardsPack',
     async (payload: SetCardsPackType) => {
-        return await CardsPackAPI.setCardsPack({
-            cardsPack: payload.cardsPack,
-        })
+        return await CardsPackAPI.setCardsPack({ ...payload })
     }
 )
 export const deleteCardsPack = createAsyncThunk(
     'cards/deleteCardsPack',
     async (payload: DeleteCardsPackType) => {
-        return await CardsPackAPI.deleteCardsPack({
-            id: payload.id,
-        })
+        return await CardsPackAPI.deleteCardsPack({ ...payload })
     }
 )
 export const updateCardsPack = createAsyncThunk(
     'cards/updateCardsPack',
     async (payload: UpdateCardsPackType) => {
-        return await CardsPackAPI.updateCardsPack({
-            cardsPack: payload.cardsPack,
-        })
+        return await CardsPackAPI.updateCardsPack({ ...payload })
     }
 )
 
@@ -60,6 +54,8 @@ type InitialStateType = {
     isPersonalCardsPack: boolean | null
     nameCards: string
     isLoading: boolean
+    min?: number
+    max?: number
 }
 
 const getCardsPackSlice = createSlice({
@@ -75,6 +71,8 @@ const getCardsPackSlice = createSlice({
         isPersonalCardsPack: null,
         nameCards: '',
         isLoading: false,
+        min: 0,
+        max: 100,
     } as InitialStateType,
     reducers: {
         addCardsPackTitle: (
@@ -88,6 +86,16 @@ const getCardsPackSlice = createSlice({
             action: PayloadAction<{ isPersonalCardsPack: boolean }>
         ) => {
             state.isPersonalCardsPack = action.payload.isPersonalCardsPack
+        },
+        setMinMax: (
+            state,
+            action: PayloadAction<{ min: number; max: number }>
+        ) => {
+            state.min = action.payload.min
+            state.max = action.payload.max
+        },
+        setPage: (state, action: PayloadAction<{ page: number }>) => {
+            state.page = action.payload.page
         },
     },
     extraReducers: (builder) => {

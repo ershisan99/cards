@@ -10,12 +10,14 @@ import { Spinner } from '../UI/Spinner'
 
 const AppRouter = memo(() => {
     const { getMe } = useActions(userThunks)
-    const { isLoading } = useAppSelector(selectUser)
+    const { user, isLoading } = useAppSelector(selectUser)
     const { error, errorMessageNotification, info, infoMessageNotification } =
         useAppSelector(selectUser)
 
     useEffect(() => {
-        getMe({})
+        if (!user) {
+            getMe({})
+        }
     }, [])
 
     const notify = useCallback(
