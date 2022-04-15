@@ -23,8 +23,8 @@ const Profile: FC = () => {
         getCardsPack({ user_id: user._id })
     }, [page, pageCount, minCardsCount, maxCardsCount])
     return (
-        <div className="h-full py-6">
-            <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
+        <div className=" pt-6">
+            <div className=" mx-auto flex w-4/6 overflow-hidden rounded-xl">
                 <div className="w-64 bg-light">
                     <UserProfile
                         username={user.name}
