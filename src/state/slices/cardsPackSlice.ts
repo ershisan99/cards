@@ -13,12 +13,26 @@ export const getCardsPack = createAsyncThunk(
     'cards/getCardsPack',
     async (payload: GetCardsType, { getState }) => {
         const state = getState() as RootState
-        const { isPersonalCardsPack, pageCount, min, max } = state.cardsPack
 
+        const {
+            isPersonalCardsPack,
+            pageCount,
+            minCardsCount,
+            maxCardsCount,
+            page,
+        } = state.cardsPack
+        const [min, max] = [minCardsCount, maxCardsCount]
         const user_id = state.user.user._id
         const finalPayload = isPersonalCardsPack
-            ? { user_id, pageCount, min, max, ...payload }
-            : { pageCount, min, max, ...payload }
+            ? {
+                  user_id,
+                  pageCount,
+                  min,
+                  max,
+                  page,
+                  ...payload,
+              }
+            : { pageCount, min, max, page, ...payload }
         return await CardsPackAPI.getAllCards({
             ...finalPayload,
         })
@@ -54,8 +68,6 @@ type InitialStateType = {
     isPersonalCardsPack: boolean | null
     nameCards: string
     isLoading: boolean
-    min?: number
-    max?: number
     search?: string
 }
 
@@ -64,7 +76,7 @@ const getCardsPackSlice = createSlice({
     initialState: {
         cardPacks: [],
         cardPacksTotalCount: 0,
-        maxCardsCount: 10,
+        maxCardsCount: 100,
         minCardsCount: 0,
         page: 1,
         pageCount: 10,
@@ -72,8 +84,6 @@ const getCardsPackSlice = createSlice({
         isPersonalCardsPack: null,
         nameCards: '',
         isLoading: false,
-        min: 0,
-        max: 100,
     } as InitialStateType,
     reducers: {
         addCardsPackTitle: (
@@ -90,10 +100,13 @@ const getCardsPackSlice = createSlice({
         },
         setMinMax: (
             state,
-            action: PayloadAction<{ min: number; max: number }>
+            action: PayloadAction<{
+                minCardsCount: number
+                maxCardsCount: number
+            }>
         ) => {
-            state.min = action.payload.min
-            state.max = action.payload.max
+            state.minCardsCount = action.payload.minCardsCount
+            state.maxCardsCount = action.payload.maxCardsCount
         },
         setPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
@@ -109,8 +122,6 @@ const getCardsPackSlice = createSlice({
         builder.addCase(getCardsPack.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
-            state.maxCardsCount = action.payload.maxCardsCount
-            state.minCardsCount = action.payload.minCardsCount
             state.page = action.payload.page
             state.pageCount = action.payload.pageCount
             state.isLoading = false

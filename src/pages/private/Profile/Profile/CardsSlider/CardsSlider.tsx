@@ -25,16 +25,16 @@ const CardsSlider = () => {
     ])
     const debouncedState = useDebounce(values, 2000)
     useEffect(() => {
-        const [min, max] = values
-        setMinMax({ min, max })
+        const [minCardsCount, maxCardsCount] = values
+        setMinMax({ minCardsCount, maxCardsCount })
         setFirstLoad(false)
     }, [])
 
     useEffect(() => {
         if (!isFirstLoad) {
             if (debouncedState) {
-                const [min, max] = values
-                setMinMax({ min, max })
+                const [minCardsCount, maxCardsCount] = values
+                setMinMax({ minCardsCount, maxCardsCount })
             }
             if (debouncedState === '') {
                 getCardsPack({})

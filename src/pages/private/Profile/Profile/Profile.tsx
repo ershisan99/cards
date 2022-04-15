@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react'
 import {
     cardPackActions,
     cardsPackThunks,
+    selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import { selectUser } from '../../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../../utils/helpers'
@@ -15,10 +16,12 @@ const Profile: FC = () => {
     const { user } = useAppSelector(selectUser)
     const { getCardsPack } = useActions(cardsPackThunks)
     const { setPersonalCardsPack } = useActions(cardPackActions)
+    const { page, pageCount, minCardsCount, maxCardsCount } =
+        useAppSelector(selectCardsPack)
     useEffect(() => {
         setPersonalCardsPack({ isPersonalCardsPack: true })
         getCardsPack({ user_id: user._id })
-    }, [])
+    }, [page, pageCount, minCardsCount, maxCardsCount])
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
