@@ -70,7 +70,7 @@ type InitialStateType = {
     isPersonalCardsPack: boolean | null
     nameCards: string
     isLoading: boolean
-    search?: string
+    search?: string | undefined
 }
 
 const getCardsPackSlice = createSlice({

@@ -7,13 +7,14 @@ import { cardPackActions } from '../../../../../state/slices/cardsPackSlice'
 import { useActions } from '../../../../../utils/helpers'
 
 const Tabs: React.FC = () => {
-    const { setPersonalCardsPack } = useActions(cardPackActions)
+    const { setPersonalCardsPack, setSearch } = useActions(cardPackActions)
     return (
         <div className="mx-auto flex h-14 w-80">
             <NavLink
-                onClick={() =>
+                onClick={() => {
                     setPersonalCardsPack({ isPersonalCardsPack: false })
-                }
+                    setSearch({ search: '' })
+                }}
                 to={RouteNames.MAIN}
                 className={({ isActive }) =>
                     isActive ? 'tab-item__active' : 'tab-item'
@@ -24,9 +25,10 @@ const Tabs: React.FC = () => {
             </NavLink>
 
             <NavLink
-                onClick={() =>
+                onClick={() => {
                     setPersonalCardsPack({ isPersonalCardsPack: true })
-                }
+                    setSearch({ search: '' })
+                }}
                 to={RouteNames.PROFILE}
                 className={({ isActive }) =>
                     isActive ? 'tab-item__active' : 'tab-item'
