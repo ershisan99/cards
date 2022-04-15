@@ -1,15 +1,15 @@
 import React, { FC, useCallback, useEffect } from 'react'
+import {
+    cardsPackThunks,
+    selectCardsPack,
+} from '../../../../state/slices/cardsPackSlice'
+import { selectUser } from '../../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../../utils/helpers'
 import CardsSlider from './CardsSlider/CardsSlider'
 import { Pagination } from './Pagination/Pagination'
 import Search from './Search/Search'
 import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
-import {
-    cardsPackThunks,
-    selectCardsPack,
-} from '../../../../state/slices/cardsPackSlice'
-import { useActions, useAppSelector } from '../../../../utils/helpers'
-import { selectUser } from '../../../../state/slices/UserSlice'
 
 const Profile: FC = () => {
     const {
@@ -20,9 +20,7 @@ const Profile: FC = () => {
         page,
         pageCount,
     } = useAppSelector(selectCardsPack)
-
     const { user } = useAppSelector(selectUser)
-
     const { getCardsPack } = useActions(cardsPackThunks)
 
     useEffect(() => {

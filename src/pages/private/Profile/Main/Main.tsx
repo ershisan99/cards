@@ -1,9 +1,4 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import {
-    useActions,
-    useAppSelector,
-    useDebounce,
-} from '../../../../utils/helpers'
 import Button from '../../../../components/UI/Button'
 import CardModal from '../../../../components/UI/CardChangeModal'
 import Input from '../../../../components/UI/Input'
@@ -13,6 +8,11 @@ import {
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
 import { selectUser } from '../../../../state/slices/UserSlice'
+import {
+    useActions,
+    useAppSelector,
+    useDebounce,
+} from '../../../../utils/helpers'
 import CardsSlider from '../Profile/CardsSlider/CardsSlider'
 import { Pagination } from '../Profile/Pagination/Pagination'
 import Search from '../Profile/Search/Search'
@@ -30,24 +30,18 @@ const Main = () => {
         cardsPackName,
         isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
+
     const { user } = useAppSelector(selectUser)
-    const { addCardsPackTitle, getPersonalCardsPack } =
+    const { addCardsPackTitle, setPersonalCardsPack } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    const [activeButton, setActiveButton] = useState<'all' | 'my'>('all')
 
     useEffect(() => {
-        isPersonalCardsPack
-            ? getCardsPack({ user_id: user._id })
-            : getCardsPack({})
+        if (isPersonalCardsPack !== null) {
+            getCardsPack({ page, pageCount })
+        }
     }, [isPersonalCardsPack])
 
-    const changeActiveButton = () => {
-        isPersonalCardsPack ? setActiveButton('all') : setActiveButton('my')
-        isPersonalCardsPack
-            ? getPersonalCardsPack({ isPersonalCardsPack: false })
-            : getPersonalCardsPack({ isPersonalCardsPack: true })
-    }
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })
@@ -132,21 +126,29 @@ const Main = () => {
                         <div className="mt-2 flex flex-row items-center justify-center p-0">
                             <button
                                 className={
-                                    activeButton === 'my'
+                                    isPersonalCardsPack
                                         ? 'w-full bg-secondary px-6 py-1.5  text-white'
                                         : 'w-full bg-white px-6 py-1.5'
                                 }
-                                onClick={changeActiveButton}
+                                onClick={() =>
+                                    setPersonalCardsPack({
+                                        isPersonalCardsPack: true,
+                                    })
+                                }
                             >
                                 My
                             </button>
                             <button
                                 className={
-                                    activeButton === 'all'
+                                    !isPersonalCardsPack
                                         ? 'w-full bg-secondary px-6 py-1.5  text-white'
                                         : 'w-full bg-white px-6 py-1.5'
                                 }
-                                onClick={changeActiveButton}
+                                onClick={() =>
+                                    setPersonalCardsPack({
+                                        isPersonalCardsPack: false,
+                                    })
+                                }
                             >
                                 All
                             </button>

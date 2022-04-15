@@ -11,15 +11,15 @@ import { RootState } from '../store'
 
 export const getCardsPack = createAsyncThunk(
     'cards/getCardsPack',
-    async (payload: GetCardsType) => {
+    async (payload: GetCardsType, { getState }) => {
+        const state = getState() as RootState
+        const isPersonalCardsPack = state.cardsPack.isPersonalCardsPack
+        const user_id = state.user.user._id
+        const finalPayload = isPersonalCardsPack
+            ? { user_id, ...payload }
+            : { ...payload }
         return await CardsPackAPI.getAllCards({
-            packName: payload?.packName,
-            min: payload?.min,
-            max: payload?.max,
-            sortPacks: payload?.sortPacks,
-            page: payload?.page,
-            pageCount: payload?.pageCount,
-            user_id: payload?.user_id,
+            ...finalPayload,
         })
     }
 )
@@ -56,7 +56,7 @@ type InitialStateType = {
     page: number
     pageCount: number
     cardsPackName: string
-    isPersonalCardsPack: boolean
+    isPersonalCardsPack: boolean | null
 }
 
 const getCardsPackSlice = createSlice({
@@ -64,13 +64,12 @@ const getCardsPackSlice = createSlice({
     initialState: {
         cardPacks: [],
         cardPacksTotalCount: 0,
-        maxCardsCount: 0,
+        maxCardsCount: 10,
         minCardsCount: 0,
-        page: 0,
-        pageCount: 0,
+        page: 1,
+        pageCount: 10,
         cardsPackName: '',
-        isPersonalCardsPack: false,
-
+        isPersonalCardsPack: null,
         // search
         nameCards: '',
     } as InitialStateType,
@@ -81,7 +80,7 @@ const getCardsPackSlice = createSlice({
         ) => {
             state.cardsPackName = action.payload.cardsPackName
         },
-        getPersonalCardsPack: (
+        setPersonalCardsPack: (
             state,
             action: PayloadAction<{ isPersonalCardsPack: boolean }>
         ) => {

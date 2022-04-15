@@ -36,16 +36,15 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
         let rightPortionPageNumber = portionNumber * portionSize
         return (
             <div className="mt-5 flex w-auto items-center p-0 text-sm">
-                {portionNumber > 1 && (
-                    <button
-                        className={
-                            'pagination-btn rounded transition hover:text-white'
-                        }
-                        onClick={onBackClickHandler}
-                    >
-                        {'<'}
-                    </button>
-                )}
+                <button
+                    disabled={portionNumber <= 1}
+                    className={
+                        'pagination-btn rounded transition hover:text-white'
+                    }
+                    onClick={onBackClickHandler}
+                >
+                    {'<'}
+                </button>
 
                 {pages
                     .filter(
@@ -71,15 +70,13 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
                             </span>
                         )
                     })}
-
-                {portionCount > portionNumber && (
-                    <button
-                        className="pagination-btn rounded transition hover:text-white"
-                        onClick={onForwardClickHandler}
-                    >
-                        {'>'}
-                    </button>
-                )}
+                <button
+                    disabled={portionCount <= portionNumber}
+                    className="pagination-btn rounded transition hover:text-white"
+                    onClick={onForwardClickHandler}
+                >
+                    {'>'}
+                </button>
                 <div className="ml-2">
                     <span>Show</span>
                     <Select
@@ -87,7 +84,7 @@ export const Pagination: React.FC<PaginationPropsType> = React.memo(
                         value={portionSize}
                         onChangeOption={onSelectChange}
                     />
-                    <span className="ml-2">Card per page</span>
+                    <span className="ml-2">cards per page</span>
                 </div>
             </div>
         )
