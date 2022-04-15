@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
     cardsPackThunks,
     selectCardsPack,
@@ -12,27 +12,13 @@ import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
 
 const Profile: FC = () => {
-    const {
-        cardPacks,
-        cardPacksTotalCount,
-        maxCardsCount,
-        minCardsCount,
-        page,
-        pageCount,
-    } = useAppSelector(selectCardsPack)
+    const { cardPacks, maxCardsCount, minCardsCount } =
+        useAppSelector(selectCardsPack)
     const { user } = useAppSelector(selectUser)
     const { getCardsPack } = useActions(cardsPackThunks)
 
     useEffect(() => {
         getCardsPack({ user_id: user._id })
-    }, [])
-
-    const onPageChanged = useCallback((pageNumber: number) => {
-        getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
-    }, [])
-
-    const onSelectChange = useCallback((pageCount: number) => {
-        getCardsPack({ user_id: user._id, pageCount })
     }, [])
 
     return (
@@ -54,14 +40,7 @@ const Profile: FC = () => {
                     </h2>
                     <Search />
                     <Table cardPacks={cardPacks} />
-                    <Pagination
-                        currentPage={page}
-                        pageSize={pageCount}
-                        portionSize={pageCount}
-                        cardPacksTotalCount={cardPacksTotalCount}
-                        onPageChanged={onPageChanged}
-                        onSelectChange={onSelectChange}
-                    />
+                    <Pagination />
                 </div>
             </div>
         </div>

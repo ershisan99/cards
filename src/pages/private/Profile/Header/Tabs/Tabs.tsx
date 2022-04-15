@@ -1,41 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import cards from '../../../../../assets/images/cards.svg'
 import user from '../../../../../assets/images/user.svg'
 import { RouteNames } from '../../../../../routes'
 
-type TabsPropsType = {
-    tabs: boolean
-    onTabClickHandler: (value: boolean) => void
-}
-
-const Tabs: React.FC<TabsPropsType> = ({ onTabClickHandler, tabs }) => {
-    const onMainClickHandler = () => {
-        onTabClickHandler(false)
-    }
-    const onProfileClickHandler = () => {
-        onTabClickHandler(true)
-    }
-
+const Tabs: React.FC = () => {
     return (
         <div className="mx-auto flex h-14 w-80">
-            <Link
+            <NavLink
                 to={RouteNames.MAIN}
-                className={!tabs ? 'tab-item__active' : 'tab-item'}
-                onClick={onMainClickHandler}
+                className={({ isActive }) =>
+                    isActive ? 'tab-item__active' : 'tab-item'
+                }
             >
                 <img className="ml-4" src={cards} alt="cards icon" />
                 <span className="mx-1.5 text-sm font-thin">Packs list</span>
-            </Link>
+            </NavLink>
 
-            <Link
+            <NavLink
                 to={RouteNames.PROFILE}
-                className={tabs ? 'tab-item__active' : 'tab-item'}
-                onClick={onProfileClickHandler}
+                className={({ isActive }) =>
+                    isActive ? 'tab-item__active' : 'tab-item'
+                }
             >
                 <img className="ml-6" src={user} alt="user icon" />
                 <span className="mx-1.5 text-sm font-thin">Profile</span>
-            </Link>
+            </NavLink>
         </div>
     )
 }

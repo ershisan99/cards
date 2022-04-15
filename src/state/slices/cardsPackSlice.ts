@@ -14,10 +14,11 @@ export const getCardsPack = createAsyncThunk(
     async (payload: GetCardsType, { getState }) => {
         const state = getState() as RootState
         const isPersonalCardsPack = state.cardsPack.isPersonalCardsPack
+        const pageCount = state.cardsPack.pageCount
         const user_id = state.user.user._id
         const finalPayload = isPersonalCardsPack
-            ? { user_id, ...payload }
-            : { ...payload }
+            ? { user_id, pageCount, ...payload }
+            : { pageCount, ...payload }
         return await CardsPackAPI.getAllCards({
             ...finalPayload,
         })

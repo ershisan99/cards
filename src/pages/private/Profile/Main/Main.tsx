@@ -7,7 +7,6 @@ import {
     cardsPackThunks,
     selectCardsPack,
 } from '../../../../state/slices/cardsPackSlice'
-import { selectUser } from '../../../../state/slices/UserSlice'
 import {
     useActions,
     useAppSelector,
@@ -22,7 +21,6 @@ const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
     const {
         cardPacks,
-        cardPacksTotalCount,
         maxCardsCount,
         minCardsCount,
         page,
@@ -30,8 +28,6 @@ const Main = () => {
         cardsPackName,
         isPersonalCardsPack,
     } = useAppSelector(selectCardsPack)
-
-    const { user } = useAppSelector(selectUser)
     const { addCardsPackTitle, setPersonalCardsPack } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
@@ -54,17 +50,6 @@ const Main = () => {
         },
         []
     )
-    const onPageChanged = useCallback((pageNumber: number) => {
-        isPersonalCardsPack
-            ? getCardsPack({ user_id: user._id, page: pageNumber, pageCount })
-            : getCardsPack({ page: pageNumber, pageCount })
-    }, [])
-    const onSelectChange = useCallback((pageCount: number) => {
-        console.log(pageCount)
-        isPersonalCardsPack
-            ? getCardsPack({ user_id: user._id, pageCount })
-            : getCardsPack({ pageCount })
-    }, [])
 
     // search
     const [searchValue, setSearchValue] = useState<string>('')
@@ -81,9 +66,9 @@ const Main = () => {
             getCardsPack({ packName: debouncedState })
         }
         if (debouncedState === '') {
-            getCardsPack({})
+            getCardsPack({ page })
         }
-    }, [debouncedState, getCardsPack])
+    }, [debouncedState])
 
     return (
         <div className="h-full py-6">
@@ -176,14 +161,7 @@ const Main = () => {
                     </div>
 
                     <Table cardPacks={cardPacks} />
-                    <Pagination
-                        currentPage={page}
-                        pageSize={pageCount}
-                        portionSize={pageCount}
-                        cardPacksTotalCount={cardPacksTotalCount}
-                        onPageChanged={onPageChanged}
-                        onSelectChange={onSelectChange}
-                    />
+                    <Pagination />
                 </div>
             </div>
         </div>

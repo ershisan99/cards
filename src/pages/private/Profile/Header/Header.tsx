@@ -6,12 +6,7 @@ import { userActions, userThunks } from '../../../../state/slices/UserSlice'
 import { useActions } from '../../../../utils/helpers'
 import Tabs from './Tabs/Tabs'
 
-type HeaderPropsType = {
-    tabs: boolean
-    onTabClickHandler: (value: boolean) => void
-}
-
-const Header: React.FC<HeaderPropsType> = ({ onTabClickHandler, tabs }) => {
+const Header: React.FC = () => {
     const { signOut } = useActions(userThunks)
     const { setInfo, setInfoMessage, setError, setErrorMessageNotification } =
         useActions(userActions)
@@ -44,7 +39,7 @@ const Header: React.FC<HeaderPropsType> = ({ onTabClickHandler, tabs }) => {
                     </span>
                 </div>
                 <div className="flex grow items-center">
-                    <Tabs tabs={tabs} onTabClickHandler={onTabClickHandler} />
+                    <Tabs />
                 </div>
                 <div className="flex items-center">
                     <Button
