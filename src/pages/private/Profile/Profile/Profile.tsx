@@ -1,8 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import {
-    cardsPackThunks,
-    selectCardsPack,
-} from '../../../../state/slices/cardsPackSlice'
+import { cardsPackThunks } from '../../../../state/slices/cardsPackSlice'
 import { selectUser } from '../../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../../utils/helpers'
 import CardsSlider from './CardsSlider/CardsSlider'
@@ -12,7 +9,6 @@ import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
 
 const Profile: FC = () => {
-    const { maxCardsCount, minCardsCount } = useAppSelector(selectCardsPack)
     const { user } = useAppSelector(selectUser)
     const { getCardsPack } = useActions(cardsPackThunks)
 
@@ -28,10 +24,7 @@ const Profile: FC = () => {
                         username={'Ivan Ivanov'}
                         work={'Front-end developer'}
                     />
-                    <CardsSlider
-                        minCardsCount={minCardsCount}
-                        maxCardsCount={maxCardsCount}
-                    />
+                    <CardsSlider />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="mb-6 font-poppins text-xl font-semibold">

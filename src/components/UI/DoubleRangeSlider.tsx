@@ -1,6 +1,6 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 
 type DefaultInputPropsType = DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
@@ -13,7 +13,7 @@ type SuperDoubleRangePropsType = DefaultInputPropsType & {
     min?: number
     max?: number
     step?: number
-    value?: number[]
+    values?: number[]
 }
 
 const RangeSlider: React.FC<SuperDoubleRangePropsType> = ({
@@ -23,7 +23,7 @@ const RangeSlider: React.FC<SuperDoubleRangePropsType> = ({
     min,
     max,
     step,
-    value,
+    values,
 }) => {
     return (
         <>
@@ -34,7 +34,7 @@ const RangeSlider: React.FC<SuperDoubleRangePropsType> = ({
                 step={step}
                 allowCross={disable}
                 defaultValue={defaultValue}
-                value={value}
+                value={values}
                 onChange={onChangeRange}
                 tabIndex={max}
                 pushable={false}

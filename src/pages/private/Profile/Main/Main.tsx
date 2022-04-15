@@ -19,14 +19,8 @@ import Table from '../Profile/Table/Table'
 
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
-    const {
-        maxCardsCount,
-        minCardsCount,
-        page,
-        pageCount,
-        cardsPackName,
-        isPersonalCardsPack,
-    } = useAppSelector(selectCardsPack)
+    const { page, pageCount, cardsPackName, isPersonalCardsPack } =
+        useAppSelector(selectCardsPack)
     const { addCardsPackTitle, setPersonalCardsPack } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
@@ -65,7 +59,7 @@ const Main = () => {
             getCardsPack({ packName: debouncedState })
         }
         if (debouncedState === '') {
-            getCardsPack({ page })
+            getCardsPack({})
         }
     }, [debouncedState])
 
@@ -138,11 +132,7 @@ const Main = () => {
                             </button>
                         </div>
                     </div>
-
-                    <CardsSlider
-                        minCardsCount={minCardsCount}
-                        maxCardsCount={maxCardsCount}
-                    />
+                    <CardsSlider />
                 </div>
                 <div className="w-full bg-white px-12 py-6">
                     <h2 className="mb-6 font-poppins text-xl font-semibold">
@@ -158,7 +148,6 @@ const Main = () => {
                             Add new pack
                         </Button>
                     </div>
-
                     <Table />
                     <Pagination />
                 </div>

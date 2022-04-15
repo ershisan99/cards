@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import RangeSlider from '../../../../../components/UI/DoubleRangeSlider'
+import { selectCardsPack } from '../../../../../state/slices/cardsPackSlice'
+import { useAppSelector } from '../../../../../utils/helpers'
 
-const STEP_VALUE: number = 1
-const ALLOW_CROSS: boolean = false
+const STEP_VALUE = 1
+const ALLOW_CROSS = false
 
-type CardsSliderPropsType = {
-    maxCardsCount: number
-    minCardsCount: number
-}
-
-const CardsSlider: React.FC<CardsSliderPropsType> = ({
-    maxCardsCount,
-    minCardsCount,
-}) => {
-    const [value1, setValue1] = useState<number | number[]>(minCardsCount)
-    const [value2, setValue2] = useState<number | number[]>(maxCardsCount)
-    const [values, setValues] = useState<any>([value1, value2])
-
-    useEffect(() => {
-        setValues([value1, value2])
-    }, [value1, value2])
+const CardsSlider = () => {
+    const { maxCardsCount, minCardsCount } = useAppSelector(selectCardsPack)
+    const [values, setValues] = useState<number[]>([
+        minCardsCount,
+        maxCardsCount,
+    ])
 
     const onChangeRangeSecondHandler = (value: number | number[]) => {
-        setValues(value)
+        if (typeof value === 'number') setValues([value, value])
+        if (typeof value !== 'number') setValues(value)
+        console.log({ value, values })
     }
     return (
         <div className="h-full p-6">
@@ -40,7 +34,7 @@ const CardsSlider: React.FC<CardsSliderPropsType> = ({
                 <RangeSlider
                     step={STEP_VALUE}
                     disable={ALLOW_CROSS}
-                    value={values}
+                    values={values}
                     onChangeRange={onChangeRangeSecondHandler}
                 />
             </div>
