@@ -12,8 +12,7 @@ import Table from './Table/Table'
 import UserProfile from './UserProfile/UserProfile'
 
 const Profile: FC = () => {
-    const { cardPacks, maxCardsCount, minCardsCount } =
-        useAppSelector(selectCardsPack)
+    const { maxCardsCount, minCardsCount } = useAppSelector(selectCardsPack)
     const { user } = useAppSelector(selectUser)
     const { getCardsPack } = useActions(cardsPackThunks)
 
@@ -39,7 +38,7 @@ const Profile: FC = () => {
                         My pack list
                     </h2>
                     <Search />
-                    <Table cardPacks={cardPacks} />
+                    <Table />
                     <Pagination />
                 </div>
             </div>

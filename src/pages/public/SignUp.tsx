@@ -1,5 +1,6 @@
 import React, { KeyboardEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
+import complete_icon from '../../assets/images/complete_icon.svg.png'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
@@ -10,9 +11,8 @@ import {
     signupActions,
     signupThunks,
 } from '../../state/slices/signUpSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
-import complete_icon from '../../assets/images/complete_icon.svg.png'
 import { userActions } from '../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const SignUp = () => {
     const regexPassword = /[A-Za-z0-9]{8,}/
@@ -175,11 +175,12 @@ const SignUp = () => {
                     >
                         Sign Up
                     </Button>
-                    <Spinner
-                        isLoading={isLoading}
-                        className={'absolute -right-0.5'}
-                        size={'40px'}
-                    />
+                    {isLoading && (
+                        <Spinner
+                            className={'absolute -right-0.5'}
+                            size={'40px'}
+                        />
+                    )}
                 </div>
             </Modal>
             <Modal

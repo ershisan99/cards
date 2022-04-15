@@ -20,7 +20,6 @@ import Table from '../Profile/Table/Table'
 const Main = () => {
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
     const {
-        cardPacks,
         maxCardsCount,
         minCardsCount,
         page,
@@ -160,7 +159,7 @@ const Main = () => {
                         </Button>
                     </div>
 
-                    <Table cardPacks={cardPacks} />
+                    <Table />
                     <Pagination />
                 </div>
             </div>

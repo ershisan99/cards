@@ -1,3 +1,5 @@
+import { toast, ToastContainer } from 'material-react-toastify'
+import 'material-react-toastify/dist/ReactToastify.css'
 import React, { memo, useCallback, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { routes } from '../../routes'
@@ -5,8 +7,6 @@ import { selectUser, userThunks } from '../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
 import Layout from '../UI/Layout'
 import { Spinner } from '../UI/Spinner'
-import { toast, ToastContainer } from 'material-react-toastify'
-import 'material-react-toastify/dist/ReactToastify.css'
 
 const AppRouter = memo(() => {
     const { getMe } = useActions(userThunks)
@@ -52,7 +52,6 @@ const AppRouter = memo(() => {
     }, [error, errorMessageNotification, info, infoMessageNotification])
     return isLoading ? (
         <Spinner
-            isLoading={true}
             className={
                 'flex h-screen w-screen items-center justify-center bg-gradient'
             }

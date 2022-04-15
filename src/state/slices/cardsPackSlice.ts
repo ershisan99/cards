@@ -58,6 +58,8 @@ type InitialStateType = {
     pageCount: number
     cardsPackName: string
     isPersonalCardsPack: boolean | null
+    nameCards: string
+    isLoading: boolean
 }
 
 const getCardsPackSlice = createSlice({
@@ -71,8 +73,8 @@ const getCardsPackSlice = createSlice({
         pageCount: 10,
         cardsPackName: '',
         isPersonalCardsPack: null,
-        // search
         nameCards: '',
+        isLoading: false,
     } as InitialStateType,
     reducers: {
         addCardsPackTitle: (
@@ -96,6 +98,13 @@ const getCardsPackSlice = createSlice({
             state.minCardsCount = action.payload.minCardsCount
             state.page = action.payload.page
             state.pageCount = action.payload.pageCount
+            state.isLoading = false
+        })
+        builder.addCase(getCardsPack.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(getCardsPack.rejected, (state) => {
+            state.isLoading = false
         })
     },
 })

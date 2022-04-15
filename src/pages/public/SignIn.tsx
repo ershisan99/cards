@@ -5,15 +5,15 @@ import Button from '../../components/UI/Button'
 import Checkbox from '../../components/UI/Checkbox'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
+import { Spinner } from '../../components/UI/Spinner'
 import { RouteNames } from '../../routes'
 import {
     selectSignIn,
     signInActions,
     signInThunks,
 } from '../../state/slices/signInSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
-import { Spinner } from '../../components/UI/Spinner'
 import { userActions } from '../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const SignIn = () => {
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
@@ -133,11 +133,9 @@ const SignIn = () => {
                     >
                         Sign In
                     </Button>
-                    <Spinner
-                        isLoading={isLoading}
-                        size={'40px'}
-                        className="absolute right-8"
-                    />
+                    {isLoading && (
+                        <Spinner size={'40px'} className="absolute right-8" />
+                    )}
                 </div>
                 <div className="mb-1 text-center text-sm font-semibold text-slate opacity-50">
                     Don't have an account?

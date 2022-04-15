@@ -4,20 +4,20 @@ import icon_mail from '../../assets/images/mail_icon.svg'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import Modal from '../../components/UI/Modal'
-import { useActions, useAppSelector } from '../../utils/helpers'
+import { Spinner } from '../../components/UI/Spinner'
 import {
     resetPasswordActions,
     resetPasswordThunks,
     selectResetPassword,
 } from '../../state/slices/resetPasswordSlice'
-import { Spinner } from '../../components/UI/Spinner'
 import { userActions } from '../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
 
 const ResetPassword = () => {
     const customMessage = `
-                  <div style="background-color: indianred; padding: 15px">
+                  <div style='background-color: indianred; padding: 15px'>
                       password recovery link: 
-                    <a href="http://localhost:3000/#/set-new-password/$token$">
+                    <a href='http://localhost:3000/#/set-new-password/$token$'>
                       link
                     </a>
                   </div>`
@@ -108,11 +108,9 @@ const ResetPassword = () => {
                     >
                         Send Instructions
                     </Button>
-                    <Spinner
-                        isLoading={isLoading}
-                        className={'absolute right-2'}
-                        size={'50px'}
-                    />
+                    {isLoading && (
+                        <Spinner className={'absolute right-2'} size={'50px'} />
+                    )}
                 </div>
                 <div className="mb-1 text-center text-sm font-semibold text-slate opacity-50">
                     Did you remember your password?
