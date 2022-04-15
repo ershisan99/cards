@@ -56,6 +56,7 @@ type InitialStateType = {
     isLoading: boolean
     min?: number
     max?: number
+    search?: string
 }
 
 const getCardsPackSlice = createSlice({
@@ -96,6 +97,12 @@ const getCardsPackSlice = createSlice({
         },
         setPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
+        },
+        setPageCount: (state, action: PayloadAction<{ pageCount: number }>) => {
+            state.pageCount = action.payload.pageCount
+        },
+        setSearch: (state, action: PayloadAction<{ search: string }>) => {
+            state.search = action.payload.search
         },
     },
     extraReducers: (builder) => {

@@ -18,20 +18,16 @@ import Search from '../Profile/Search/Search'
 import Table from '../Profile/Table/Table'
 
 const Main = () => {
-    const [isFirstLoad, setFirstLoad] = useState(true)
     const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
     const { cardsPackName, isPersonalCardsPack } =
         useAppSelector(selectCardsPack)
-    const { addCardsPackTitle, setPersonalCardsPack } =
+    const { addCardsPackTitle, setPersonalCardsPack, setSearch } =
         useActions(cardPackActions)
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-
     useEffect(() => {
-        if (isPersonalCardsPack !== null) {
-            getCardsPack({}).then(() => setFirstLoad(false))
-        }
-    }, [isPersonalCardsPack])
-
+        setPersonalCardsPack({ isPersonalCardsPack: false })
+        getCardsPack({})
+    }, [])
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
     const addCardPackHandler = useCallback((title: string) => {
         setCardsPack({ cardsPack: { name: title } })
@@ -56,14 +52,7 @@ const Main = () => {
     const debouncedState = useDebounce(searchValue, 300)
 
     useEffect(() => {
-        if (!isFirstLoad) {
-            if (debouncedState) {
-                getCardsPack({ packName: debouncedState })
-            }
-            if (debouncedState === '') {
-                getCardsPack({})
-            }
-        }
+        setSearch({ search: debouncedState })
     }, [debouncedState])
 
     return (
