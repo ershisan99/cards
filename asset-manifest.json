@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/cards/static/css/main.27425587.css",
-    "main.js": "/cards/static/js/main.53e0b408.js",
-    "static/media/sf-ui-display-semibold.otf": "/cards/static/media/sf-ui-display-semibold.994501842b1005adb6f9.otf",
-    "static/media/sf-ui-display-bold.otf": "/cards/static/media/sf-ui-display-bold.4ac567b4926ac8d6459d.otf",
-    "static/media/sf-ui-display-medium.otf": "/cards/static/media/sf-ui-display-medium.32f938759a1b1b8ce03b.otf",
-    "static/media/sf-ui-display-light.otf": "/cards/static/media/sf-ui-display-light.b4ca712946a31ed82045.otf",
-    "static/media/Poppins-Medium.ttf": "/cards/static/media/Poppins-Medium.673ed42382ab264e0bf5.ttf",
-    "static/media/Poppins-SemiBold.ttf": "/cards/static/media/Poppins-SemiBold.ac8d04b620e54be9b0f0.ttf",
-    "static/media/Lato-Regular.ttf": "/cards/static/media/Lato-Regular.9d883d540ee2b4de8024.ttf",
-    "static/media/complete_icon.svg.png": "/cards/static/media/complete_icon.svg.96861d685fd67fa55881.png",
+    "main.css": "/cards/static/css/main.4a98d1df.css",
+    "main.js": "/cards/static/js/main.b7146a3c.js",
     "static/media/cards.svg": "/cards/static/media/cards.d0e182f265e252a38c011c4d1cd89eb8.svg",
     "static/media/mail_icon.svg": "/cards/static/media/mail_icon.27258fd7ce44ba75a8d1db315438e603.svg",
-    "static/media/search.svg": "/cards/static/media/search.de67dd6b8cfe3e55be67a5c11428b3f2.svg",
+    "static/media/search.svg": "/cards/static/media/search.6158cb0922b030a57596a54d87e619dc.svg",
     "static/media/user.svg": "/cards/static/media/user.6d0d1535ae56194b9fd5c8fc8fd50ce2.svg",
     "index.html": "/cards/index.html",
     "static/media/cross.svg": "/cards/static/media/cross.45fc2a18a856ec9dcb9f26ae1f5917a6.svg",
-    "main.27425587.css.map": "/cards/static/css/main.27425587.css.map",
-    "main.53e0b408.js.map": "/cards/static/js/main.53e0b408.js.map"
+    "static/media/clearIcon.svg": "/cards/static/media/clearIcon.ec55f837a4ca93d39e2d84677237179c.svg",
+    "static/media/Lato-Regular.ttf": "/cards/static/media/Lato-Regular.31d6cfe0d16ae931b73c.ttf",
+    "static/media/Poppins-Medium.ttf": "/cards/static/media/Poppins-Medium.31d6cfe0d16ae931b73c.ttf",
+    "static/media/Poppins-SemiBold.ttf": "/cards/static/media/Poppins-SemiBold.31d6cfe0d16ae931b73c.ttf",
+    "static/media/sf-ui-display-bold.otf": "/cards/static/media/sf-ui-display-bold.31d6cfe0d16ae931b73c.otf",
+    "static/media/sf-ui-display-light.otf": "/cards/static/media/sf-ui-display-light.31d6cfe0d16ae931b73c.otf",
+    "static/media/sf-ui-display-medium.otf": "/cards/static/media/sf-ui-display-medium.31d6cfe0d16ae931b73c.otf",
+    "static/media/sf-ui-display-semibold.otf": "/cards/static/media/sf-ui-display-semibold.31d6cfe0d16ae931b73c.otf",
+    "main.4a98d1df.css.map": "/cards/static/css/main.4a98d1df.css.map",
+    "main.b7146a3c.js.map": "/cards/static/js/main.b7146a3c.js.map"
   },
   "entrypoints": [
-    "static/css/main.27425587.css",
-    "static/js/main.53e0b408.js"
+    "static/css/main.4a98d1df.css",
+    "static/js/main.b7146a3c.js"
   ]
 }
