@@ -1,12 +1,13 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import RequireAuth from '../components/BLL/RequireAuth'
-import Main from '../pages/private/Profile/Main/Main'
-import Profile from '../pages/private/Profile/Profile/Profile'
-import NewPassword from '../pages/public/NewPassword'
-import ResetPassword from '../pages/public/ResetPassword'
-import SignIn from '../pages/public/SignIn'
-import SignUp from '../pages/public/SignUp'
+import CardsList from '../pages/private/CardsList/CardsList'
+import Packs from '../pages/private/Packs/Packs'
+import Profile from '../pages/private/Profile/Profile'
+import NewPassword from '../pages/public/ResetPassword/NewPassword'
+import ResetPassword from '../pages/public/ResetPassword/ResetPassword'
+import SignIn from '../pages/public/SignIn/SignIn'
+import SignUp from '../pages/public/SignUp/SignUp'
 
 export interface IRoute {
     path: string
@@ -20,14 +21,15 @@ export enum RouteNames {
     SIGN_UP = '/sign-up',
     RESET_PASSWORD = '/reset-password',
     NEW_PASSWORD = '/set-new-password/:token',
-    PROFILE = '/profile',
+    PROFILE = '/profile/:userId',
     MAIN = '/main',
+    PACK = '/pack/:id',
 }
 
 export const routes: IRoute[] = [
     {
         path: RouteNames.START_PAGE,
-        component: <Navigate to={RouteNames.PROFILE} />,
+        component: <Navigate to={RouteNames.MAIN} />,
     },
     {
         path: RouteNames.SIGN_IN,
@@ -59,7 +61,15 @@ export const routes: IRoute[] = [
         path: RouteNames.MAIN,
         component: (
             <RequireAuth>
-                <Main />
+                <Packs />
+            </RequireAuth>
+        ),
+    },
+    {
+        path: RouteNames.PACK,
+        component: (
+            <RequireAuth>
+                <CardsList />
             </RequireAuth>
         ),
     },

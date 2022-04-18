@@ -1,19 +1,18 @@
 import React, { KeyboardEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import Button from '../../components/UI/Button'
-import Checkbox from '../../components/UI/Checkbox'
-import Input from '../../components/UI/Input'
-import Modal from '../../components/UI/Modal'
-import { Spinner } from '../../components/UI/Spinner'
-import { RouteNames } from '../../routes'
+import Button from '../../../components/UI/Button'
+import Checkbox from '../../../components/UI/Checkbox'
+import Input from '../../../components/UI/Input'
+import Modal from '../../../components/UI/Modal'
+import { Spinner } from '../../../components/UI/Spinner'
 import {
     selectSignIn,
     signInActions,
     signInThunks,
-} from '../../state/slices/signInSlice'
-import { userActions } from '../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
+} from '../../../state/slices/signInSlice'
+import { userActions } from '../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
 
 const SignIn = () => {
     const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
@@ -46,7 +45,8 @@ const SignIn = () => {
                 .unwrap()
                 .then((res) => {
                     if (!res.error) {
-                        navigate('../' + RouteNames.PROFILE)
+                        setIsLoading({ value: false })
+                        navigate('../profile/' + res._id)
                     }
                 })
                 .catch((err) => {
@@ -55,10 +55,6 @@ const SignIn = () => {
                     setPassword({ password: '' })
                     setErrorMessageNotification({ message: err.message })
                     setError({ value: true })
-                })
-                .finally(() => {
-                    setIsLoading({ value: false })
-                    setError({ value: false })
                 })
         }
     }

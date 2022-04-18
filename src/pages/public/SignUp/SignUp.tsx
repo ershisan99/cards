@@ -1,18 +1,18 @@
 import React, { KeyboardEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
-import complete_icon from '../../assets/images/complete_icon.svg.png'
-import Button from '../../components/UI/Button'
-import Input from '../../components/UI/Input'
-import Modal from '../../components/UI/Modal'
-import { Spinner } from '../../components/UI/Spinner'
-import { RouteNames } from '../../routes'
+import complete_icon from '../../../assets/images/complete_icon.svg.png'
+import Button from '../../../components/UI/Button'
+import Input from '../../../components/UI/Input'
+import Modal from '../../../components/UI/Modal'
+import { Spinner } from '../../../components/UI/Spinner'
+import { RouteNames } from '../../../routes'
 import {
     selectSignup,
     signupActions,
     signupThunks,
-} from '../../state/slices/signUpSlice'
-import { userActions } from '../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
+} from '../../../state/slices/signUpSlice'
+import { userActions } from '../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
 
 const SignUp = () => {
     const regexPassword = /[A-Za-z0-9]{8,}/

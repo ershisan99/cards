@@ -1,16 +1,16 @@
 import React, { KeyboardEvent, useState } from 'react'
-import Button from '../../components/UI/Button'
-import Input from '../../components/UI/Input'
-import Modal from '../../components/UI/Modal'
-import { useActions, useAppSelector } from '../../utils/helpers'
+import { useNavigate, useParams } from 'react-router'
+import Button from '../../../components/UI/Button'
+import Input from '../../../components/UI/Input'
+import Modal from '../../../components/UI/Modal'
+import { RouteNames } from '../../../routes'
 import {
     newPasswordActions,
     newPasswordThunks,
     selectNewPassword,
-} from '../../state/slices/newPasswordSlice'
-import { useNavigate, useParams } from 'react-router'
-import { RouteNames } from '../../routes'
-import { userActions } from '../../state/slices/UserSlice'
+} from '../../../state/slices/newPasswordSlice'
+import { userActions } from '../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
 
 const NewPassword = () => {
     const regex = /[A-Za-z0-9]{8,}/

@@ -59,32 +59,14 @@ export type UpdateCardType = {
 export const CardsAPI = {
     getCard: (args: GetCardType) => {
         return instance
-            .get<GetCardsResponseType>(
-                '/cards/card' +
-                    (args.cardAnswer === undefined
-                        ? '?cardAnswer=english'
-                        : `?cardAnswer=${args.cardAnswer}`) +
-                    (args.cardQuestion === undefined
-                        ? '&cardQuestion=english'
-                        : `&cardQuestion=${args.cardQuestion}`) +
-                    `&cardsPack_id=${args.cardsPack_id}` +
-                    (args.min === undefined ? '' : `&min=${args.min}`) +
-                    (args.max === undefined ? '' : `&max=${args.max}`) +
-                    (args.sortCards === undefined
-                        ? '&sortCards=0grade'
-                        : `&sortCards=${args.sortCards}`) +
-                    (args.page === undefined ? '' : `&page=${args.page}`) +
-                    (args.pageCount === undefined
-                        ? ''
-                        : `&pageCount=${args.pageCount}`)
-            )
+            .get<GetCardsResponseType>('/cards/card', { params: args })
             .then((res) => res.data)
     },
     setCard: (args: SetCardType) => {
         return instance.post('/cards/card', args)
     },
     deleteCard: (args: DeleteCardType) => {
-        return instance.delete(`cards/card?${args.id}`)
+        return instance.delete(`/cards/card`, { params: args })
     },
     updateCard: (args: UpdateCardType) => {
         return instance.put('/cards/card', args)

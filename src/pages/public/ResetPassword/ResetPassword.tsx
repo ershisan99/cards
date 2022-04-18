@@ -1,17 +1,17 @@
 import React, { KeyboardEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
-import icon_mail from '../../assets/images/mail_icon.svg'
-import Button from '../../components/UI/Button'
-import Input from '../../components/UI/Input'
-import Modal from '../../components/UI/Modal'
-import { Spinner } from '../../components/UI/Spinner'
+import icon_mail from '../../../assets/images/mail_icon.svg'
+import Button from '../../../components/UI/Button'
+import Input from '../../../components/UI/Input'
+import Modal from '../../../components/UI/Modal'
+import { Spinner } from '../../../components/UI/Spinner'
 import {
     resetPasswordActions,
     resetPasswordThunks,
     selectResetPassword,
-} from '../../state/slices/resetPasswordSlice'
-import { userActions } from '../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
+} from '../../../state/slices/resetPasswordSlice'
+import { userActions } from '../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
 
 const ResetPassword = () => {
     const customMessage = `

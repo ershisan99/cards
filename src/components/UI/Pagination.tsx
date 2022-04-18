@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import Select from '../../../../../components/UI/Select'
-import {
-    cardPackActions,
-    selectCardsPack,
-} from '../../../../../state/slices/cardsPackSlice'
-import { useActions, useAppSelector } from '../../../../../utils/helpers'
+import { packsActions, selectPacks } from '../../state/slices/packsSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
+import Select from './Select'
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 export const Pagination = () => {
-    const { cardPacksTotalCount, page, pageCount } =
-        useAppSelector(selectCardsPack)
-    const { setPage, setPageCount } = useActions(cardPackActions)
+    const { cardPacksTotalCount, page, pageCount } = useAppSelector(selectPacks)
+    const { updatedPage, updatedPageCount } = useActions(packsActions)
     const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
     const pages: Array<number> = []
 
@@ -21,10 +17,10 @@ export const Pagination = () => {
     let portionCount = Math.ceil(pagesCount / pageCount)
     const [portionNumber, setPortionNumber] = useState<number>(1)
     const onPageChanged = (page: number) => {
-        setPage({ page })
+        updatedPage({ page })
     }
     const onSelectChange = (pageCount: number) => {
-        setPageCount({ pageCount })
+        updatedPageCount({ pageCount })
     }
     const onBackClickHandler = () => setPortionNumber(portionNumber - 1)
     const onForwardClickHandler = () => setPortionNumber(portionNumber + 1)

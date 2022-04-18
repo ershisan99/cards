@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { newPasswordReducer } from './slices/newPasswordSlice'
+import { packsReducer } from './slices/packsSlice'
+import { resetPasswordReducer } from './slices/resetPasswordSlice'
 import { signInReducer } from './slices/signInSlice'
 import { signupReducer } from './slices/signUpSlice'
 import { userReducer } from './slices/UserSlice'
-import { resetPasswordReducer } from './slices/resetPasswordSlice'
-import { newPasswordReducer } from './slices/newPasswordSlice'
-import { cardsPackReducer } from './slices/cardsPackSlice'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
         user: userReducer,
         newPassword: newPasswordReducer,
         resetPassword: resetPasswordReducer,
-        cardsPack: cardsPackReducer,
+        packs: packsReducer,
     },
 })
 

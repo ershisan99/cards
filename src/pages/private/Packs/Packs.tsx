@@ -1,68 +1,69 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import Button from '../../../../components/UI/Button'
-import CardModal from '../../../../components/UI/CardChangeModal'
-import Input from '../../../../components/UI/Input'
+import { useSearchParams } from 'react-router-dom'
+import Button from '../../../components/UI/Button'
+import CardModal from '../../../components/UI/CardChangeModal'
+import CardsSlider from '../../../components/UI/CardsSlider'
+import Input from '../../../components/UI/Input'
+import Table from '../../../components/UI/PacksTable'
+import { Pagination } from '../../../components/UI/Pagination'
+import search from '../../../components/UI/Search'
+import Search from '../../../components/UI/Search'
 import {
-    cardPackActions,
-    cardsPackThunks,
-    selectCardsPack,
-} from '../../../../state/slices/cardsPackSlice'
-import {
-    useActions,
-    useAppSelector,
-    useDebounce,
-} from '../../../../utils/helpers'
-import CardsSlider from '../Profile/CardsSlider/CardsSlider'
-import { Pagination } from '../Profile/Pagination/Pagination'
-import Search from '../Profile/Search/Search'
-import Table from '../Profile/Table/Table'
+    packsActions,
+    packsThunks,
+    selectPacks,
+} from '../../../state/slices/packsSlice'
+import { selectUser } from '../../../state/slices/UserSlice'
 
-const Main = () => {
-    const { getCardsPack, setCardsPack } = useActions(cardsPackThunks)
-    const { cardsPackName, isPersonalCardsPack } =
-        useAppSelector(selectCardsPack)
-    const { addCardsPackTitle, setPersonalCardsPack, setSearch } =
-        useActions(cardPackActions)
+import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
+
+const Packs = () => {
+    const { getPacks, addPack, updatedPackTitle, updatedSearch } = useActions({
+        ...packsThunks,
+        ...packsActions,
+    })
+
+    const { cardsPackName, page, pageCount, minCardsCount, maxCardsCount } =
+        useAppSelector(selectPacks)
+    const { user } = useAppSelector(selectUser)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const userId = searchParams.get('userId')
+    const searchValue = searchParams.get('search')
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    const { page, pageCount, minCardsCount, maxCardsCount, search } =
-        useAppSelector(selectCardsPack)
-    useEffect(() => {
-        getCardsPack({})
-    }, [
-        page,
-        pageCount,
-        minCardsCount,
-        maxCardsCount,
-        isPersonalCardsPack,
-        search,
-    ])
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
+
     const addCardPackHandler = useCallback((title: string) => {
-        setCardsPack({ cardsPack: { name: title } })
+        addPack({ cardsPack: { name: title } })
         setAddCardPack(false)
-        addCardsPackTitle({ cardsPackName: '' })
+        updatedPackTitle({ cardsPackName: '' })
     }, [])
+
     const onInputChangeHandler = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
-            addCardsPackTitle({ cardsPackName: e.currentTarget.value })
+            updatedPackTitle({ cardsPackName: e.currentTarget.value })
         },
         []
     )
-
-    // search
-    const [searchValue, setSearchValue] = useState<string>('')
-    const searchHandler = useCallback(
-        (value: string) => {
-            setSearchValue(value)
-        },
-        [searchValue, setSearchValue]
-    )
-    const debouncedState = useDebounce(searchValue, 300)
-
+    const resetSearch = () => {
+        delete searchParamsObject.search
+        setSearchParams({ ...searchParamsObject })
+        updatedSearch({ search: '' })
+    }
+    const setSearch = (search: string) =>
+        setSearchParams({ ...searchParamsObject, search })
+    const searchParamsObject = Object.fromEntries(searchParams)
+    const searchHandler = (value: string) => {
+        if (value) setSearch(value)
+        else resetSearch()
+    }
+    const debouncedState = useDebounce(searchValue, 1500)
     useEffect(() => {
-        setSearch({ search: debouncedState })
+        updatedSearch({ search: debouncedState || '' })
     }, [debouncedState])
-
+    useEffect(() => {
+        userId ? getPacks({ user_id: userId }) : getPacks({})
+    }, [page, pageCount, minCardsCount, maxCardsCount, debouncedState, userId])
+    console.log(Object.fromEntries(searchParams))
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
@@ -104,13 +105,14 @@ const Main = () => {
                         <div className="mt-2 flex flex-row items-center justify-center p-0">
                             <button
                                 className={
-                                    isPersonalCardsPack
+                                    userId
                                         ? 'w-full bg-secondary px-6 py-1.5  text-white'
                                         : 'w-full bg-white px-6 py-1.5'
                                 }
                                 onClick={() =>
-                                    setPersonalCardsPack({
-                                        isPersonalCardsPack: true,
+                                    setSearchParams({
+                                        ...Object.fromEntries(searchParams),
+                                        userId: user._id,
                                     })
                                 }
                             >
@@ -118,15 +120,18 @@ const Main = () => {
                             </button>
                             <button
                                 className={
-                                    !isPersonalCardsPack
+                                    !userId
                                         ? 'w-full bg-secondary px-6 py-1.5  text-white'
                                         : 'w-full bg-white px-6 py-1.5'
                                 }
-                                onClick={() =>
-                                    setPersonalCardsPack({
-                                        isPersonalCardsPack: false,
+                                onClick={() => {
+                                    const searchParamsObj =
+                                        Object.fromEntries(searchParams)
+                                    delete searchParamsObj.userId
+                                    setSearchParams({
+                                        ...searchParamsObj,
                                     })
-                                }
+                                }}
                             >
                                 All
                             </button>
@@ -139,7 +144,11 @@ const Main = () => {
                         Pack list
                     </h2>
                     <div className="flex justify-between">
-                        <Search callback={searchHandler} />
+                        <Search
+                            resetSearch={resetSearch}
+                            searchHandler={searchHandler}
+                            value={searchValue || ''}
+                        />
                         <Button
                             className="ml-6 w-48 text-sm"
                             color={'primary'}
@@ -156,4 +165,4 @@ const Main = () => {
     )
 }
 
-export default Main
+export default Packs

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Spinner } from '../../../../../components/UI/Spinner'
-import { selectCardsPack } from '../../../../../state/slices/cardsPackSlice'
-import { useAppSelector } from '../../../../../utils/helpers'
-import TableItem from './TableItem/TableItem'
+import { selectPacks } from '../../state/slices/packsSlice'
+import { useAppSelector } from '../../utils/helpers'
+import TableItem from './PacksTableItem'
+import { Spinner } from './Spinner'
 
-const Table: React.FC = () => {
-    const { isLoading, cardPacks } = useAppSelector(selectCardsPack)
+const PacksTable: React.FC = () => {
+    const { isLoading, cardPacks } = useAppSelector(selectPacks)
     return (
         <>
             <div className="mt-6 h-fit rounded text-xs shadow-md">
@@ -39,7 +39,8 @@ const Table: React.FC = () => {
                                         cards={c.cardsCount}
                                         lastUpdated={c.updated}
                                         createdBy={c.user_name}
-                                        id={c.user_id}
+                                        user_id={c.user_id}
+                                        id={c._id}
                                     />
                                 )
                             })
@@ -59,4 +60,4 @@ const Table: React.FC = () => {
     )
 }
 
-export default Table
+export default PacksTable

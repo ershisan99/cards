@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import RangeSlider from '../../../../../components/UI/DoubleRangeSlider'
 import {
-    cardPackActions,
-    cardsPackThunks,
-    selectCardsPack,
-} from '../../../../../state/slices/cardsPackSlice'
-import {
-    useActions,
-    useAppSelector,
-    useDebounce,
-} from '../../../../../utils/helpers'
+    packsActions,
+    packsThunks,
+    selectPacks,
+} from '../../state/slices/packsSlice'
+import { useActions, useAppSelector, useDebounce } from '../../utils/helpers'
+import RangeSlider from './DoubleRangeSlider'
 
 const STEP_VALUE = 1
 const ALLOW_CROSS = false
 
 const CardsSlider = () => {
     const [isFirstLoad, setFirstLoad] = useState(true)
-    const { getCardsPack } = useActions(cardsPackThunks)
-    const { setMinMax } = useActions(cardPackActions)
-    const { maxCardsCount, minCardsCount } = useAppSelector(selectCardsPack)
+    const { getPacks, updatedMinMax } = useActions({
+        ...packsThunks,
+        ...packsActions,
+    })
+    const { maxCardsCount, minCardsCount } = useAppSelector(selectPacks)
     const [values, setValues] = useState<number[]>([
         minCardsCount,
         maxCardsCount,
@@ -26,7 +24,7 @@ const CardsSlider = () => {
     const debouncedState = useDebounce(values, 2000)
     useEffect(() => {
         const [minCardsCount, maxCardsCount] = values
-        setMinMax({ minCardsCount, maxCardsCount })
+        updatedMinMax({ minCardsCount, maxCardsCount })
         setFirstLoad(false)
     }, [])
 
@@ -34,10 +32,10 @@ const CardsSlider = () => {
         if (!isFirstLoad) {
             if (debouncedState) {
                 const [minCardsCount, maxCardsCount] = values
-                setMinMax({ minCardsCount, maxCardsCount })
+                updatedMinMax({ minCardsCount, maxCardsCount })
             }
             if (debouncedState === '') {
-                getCardsPack({})
+                getPacks({})
             }
         }
     }, [debouncedState])

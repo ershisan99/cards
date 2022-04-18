@@ -1,12 +1,18 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import Button from '../../../../components/UI/Button'
-import { RouteNames } from '../../../../routes'
-import { userActions, userThunks } from '../../../../state/slices/UserSlice'
-import { useActions } from '../../../../utils/helpers'
-import Tabs from './Tabs/Tabs'
+import { NavLink } from 'react-router-dom'
+import cards from '../../assets/images/cards.svg'
+import profileIcon from '../../assets/images/user.svg'
+import { RouteNames } from '../../routes'
+import {
+    selectUser,
+    userActions,
+    userThunks,
+} from '../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../utils/helpers'
+import Button from './Button'
 
-const Header: React.FC = () => {
+const Header = () => {
     const { signOut } = useActions(userThunks)
     const { setInfo, setInfoMessage, setError, setErrorMessageNotification } =
         useActions(userActions)
@@ -52,6 +58,35 @@ const Header: React.FC = () => {
                 </div>
             </div>
         </div>
+    )
+}
+
+const Tabs = () => {
+    const { user } = useAppSelector(selectUser)
+    return (
+        user && (
+            <div className="mx-auto flex h-14 w-80">
+                <NavLink
+                    to={RouteNames.MAIN}
+                    className={({ isActive }) =>
+                        isActive ? 'tab-item__active' : 'tab-item'
+                    }
+                >
+                    <img className="ml-4" src={cards} alt="cards icon" />
+                    <span className="mx-1.5 text-sm font-thin">Packs list</span>
+                </NavLink>
+
+                <NavLink
+                    to={`/profile/${user._id}`}
+                    className={({ isActive }) =>
+                        isActive ? 'tab-item__active' : 'tab-item'
+                    }
+                >
+                    <img className="ml-6" src={profileIcon} alt="user icon" />
+                    <span className="mx-1.5 text-sm font-thin">Profile</span>
+                </NavLink>
+            </div>
+        )
     )
 }
 export default Header

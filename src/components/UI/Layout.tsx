@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import Header from '../../pages/private/Profile/Header/Header'
+import Header from './Header'
 
 const Layout: FC = ({ children }) => {
     return (

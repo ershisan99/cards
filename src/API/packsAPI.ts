@@ -56,21 +56,21 @@ export type UpdateCardsPackType = {
     cardsPack: PutCardsPackType
 }
 
-export const CardsPackAPI = {
-    getAllCards: (args: GetCardsType) => {
+export const PacksAPI = {
+    getPacks: (args: GetCardsType) => {
         return instance
             .get<GetCardsPackResponseType>('/cards/pack', {
-                params: { ...args },
+                params: args,
             })
             .then((res) => res.data)
     },
-    setCardsPack: (args: SetCardsPackType) => {
+    addPack: (args: SetCardsPackType) => {
         return instance.post('/cards/pack', args)
     },
-    deleteCardsPack: (args: DeleteCardsPackType) => {
-        return instance.delete(`cards/pack`, { params: { ...args } })
+    deletePack: (args: DeleteCardsPackType) => {
+        return instance.delete(`cards/pack`, { params: args })
     },
-    updateCardsPack: (args: UpdateCardsPackType) => {
+    updatePack: (args: UpdateCardsPackType) => {
         return instance.put('/cards/pack', args)
     },
 }

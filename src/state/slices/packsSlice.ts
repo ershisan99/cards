@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
-    CardsPackAPI,
     CardsPackType,
     DeleteCardsPackType,
     GetCardsType,
+    PacksAPI,
     SetCardsPackType,
     UpdateCardsPackType,
-} from '../../API/cardsPackAPI'
+} from '../../API/packsAPI'
 import { RootState } from '../store'
 
-export const getCardsPack = createAsyncThunk(
-    'cards/getCardsPack',
+export const getPacks = createAsyncThunk(
+    'packs/getPacks',
     async (payload: GetCardsType, { getState }) => {
         const state = getState() as RootState
 
@@ -20,42 +20,42 @@ export const getCardsPack = createAsyncThunk(
             minCardsCount,
             maxCardsCount,
             page,
-        } = state.cardsPack
+        } = state.packs
         const [min, max] = [minCardsCount, maxCardsCount]
         const user_id = state.user.user._id
-        const packName = state.cardsPack.search
-        const finalPayload = isPersonalCardsPack
-            ? {
-                  user_id,
-                  pageCount,
-                  min,
-                  max,
-                  page,
-                  packName,
-                  ...payload,
-              }
-            : { pageCount, min, max, page, packName, ...payload }
-        return await CardsPackAPI.getAllCards({
+        const packName = state.packs.search
+        const finalPayload = {
+            pageCount,
+            min,
+            max,
+            page,
+            ...payload,
+        }
+        isPersonalCardsPack && (finalPayload.user_id = user_id)
+        packName && (finalPayload.packName = packName)
+        return await PacksAPI.getPacks({
             ...finalPayload,
         })
     }
 )
-export const setCardsPack = createAsyncThunk(
-    'cards/setCardsPack',
-    async (payload: SetCardsPackType) => {
-        return await CardsPackAPI.setCardsPack({ ...payload })
+export const addPack = createAsyncThunk(
+    'packs/addPack',
+    async (payload: SetCardsPackType, { dispatch }) => {
+        return await PacksAPI.addPack({ ...payload }).then(() =>
+            dispatch(getPacks({}))
+        )
     }
 )
-export const deleteCardsPack = createAsyncThunk(
-    'cards/deleteCardsPack',
+export const deletePack = createAsyncThunk(
+    'packs/deletePack',
     async (payload: DeleteCardsPackType) => {
-        return await CardsPackAPI.deleteCardsPack({ ...payload })
+        return await PacksAPI.deletePack({ ...payload })
     }
 )
-export const updateCardsPack = createAsyncThunk(
-    'cards/updateCardsPack',
+export const updatePack = createAsyncThunk(
+    'packs/updatePack',
     async (payload: UpdateCardsPackType) => {
-        return await CardsPackAPI.updateCardsPack({ ...payload })
+        return await PacksAPI.updatePack({ ...payload })
     }
 )
 
@@ -88,19 +88,13 @@ const getCardsPackSlice = createSlice({
         isLoading: false,
     } as InitialStateType,
     reducers: {
-        addCardsPackTitle: (
+        updatedPackTitle: (
             state,
             action: PayloadAction<{ cardsPackName: string }>
         ) => {
             state.cardsPackName = action.payload.cardsPackName
         },
-        setPersonalCardsPack: (
-            state,
-            action: PayloadAction<{ isPersonalCardsPack: boolean }>
-        ) => {
-            state.isPersonalCardsPack = action.payload.isPersonalCardsPack
-        },
-        setMinMax: (
+        updatedMinMax: (
             state,
             action: PayloadAction<{
                 minCardsCount: number
@@ -110,39 +104,42 @@ const getCardsPackSlice = createSlice({
             state.minCardsCount = action.payload.minCardsCount
             state.maxCardsCount = action.payload.maxCardsCount
         },
-        setPage: (state, action: PayloadAction<{ page: number }>) => {
+        updatedPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
         },
-        setPageCount: (state, action: PayloadAction<{ pageCount: number }>) => {
+        updatedPageCount: (
+            state,
+            action: PayloadAction<{ pageCount: number }>
+        ) => {
             state.pageCount = action.payload.pageCount
         },
-        setSearch: (state, action: PayloadAction<{ search: string }>) => {
+        updatedSearch: (state, action: PayloadAction<{ search: string }>) => {
             state.search = action.payload.search
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getCardsPack.fulfilled, (state, action) => {
+        builder.addCase(getPacks.fulfilled, (state, action) => {
             state.cardPacks = action.payload.cardPacks
             state.cardPacksTotalCount = action.payload.cardPacksTotalCount
             state.page = action.payload.page
             state.pageCount = action.payload.pageCount
             state.isLoading = false
         })
-        builder.addCase(getCardsPack.pending, (state) => {
+        builder.addCase(getPacks.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(getCardsPack.rejected, (state) => {
+        builder.addCase(getPacks.rejected, (state) => {
             state.isLoading = false
         })
     },
 })
 
-export const cardsPackReducer = getCardsPackSlice.reducer
-export const cardPackActions = getCardsPackSlice.actions
-export const cardsPackThunks = {
-    getCardsPack,
-    setCardsPack,
-    deleteCardsPack,
-    updateCardsPack,
+export const packsReducer = getCardsPackSlice.reducer
+export const packsActions = getCardsPackSlice.actions
+export const packsThunks = {
+    getPacks,
+    addPack,
+    deletePack,
+    updatePack,
 }
-export const selectCardsPack = (state: RootState) => state.cardsPack
+export const selectPacks = (state: RootState) => state.packs
