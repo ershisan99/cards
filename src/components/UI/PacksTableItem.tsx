@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { RouteNames } from '../../routes'
 import { packsThunks } from '../../state/slices/packsSlice'
 import { selectUser } from '../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../utils/helpers'
@@ -97,7 +96,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                             </Button>
                         </>
                     )}
-                    <Link to={`${RouteNames.PACK}/${id}`}>
+                    <Link to={`/pack/${id}`}>
                         <Button
                             className={'ml-1 rounded px-2'}
                             color={'secondary'}

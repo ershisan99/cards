@@ -13,7 +13,11 @@ export const getPacks = createAsyncThunk(
     'packs/getPacks',
     async (payload: GetCardsType, { getState }) => {
         const state = getState() as RootState
+        let params = new URL(document.location.href.replace('#', '/'))
+            .searchParams
 
+        let url_user_id = params.get('userId')
+        console.log(url_user_id)
         const {
             isPersonalCardsPack,
             pageCount,
@@ -33,6 +37,7 @@ export const getPacks = createAsyncThunk(
         }
         isPersonalCardsPack && (finalPayload.user_id = user_id)
         packName && (finalPayload.packName = packName)
+        url_user_id && (finalPayload.user_id = url_user_id)
         return await PacksAPI.getPacks({
             ...finalPayload,
         })

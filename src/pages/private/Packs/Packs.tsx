@@ -6,7 +6,6 @@ import CardsSlider from '../../../components/UI/CardsSlider'
 import Input from '../../../components/UI/Input'
 import Table from '../../../components/UI/PacksTable'
 import { Pagination } from '../../../components/UI/Pagination'
-import search from '../../../components/UI/Search'
 import Search from '../../../components/UI/Search'
 import {
     packsActions,
@@ -22,13 +21,13 @@ const Packs = () => {
         ...packsThunks,
         ...packsActions,
     })
-
     const { cardsPackName, page, pageCount, minCardsCount, maxCardsCount } =
         useAppSelector(selectPacks)
     const { user } = useAppSelector(selectUser)
     const [searchParams, setSearchParams] = useSearchParams()
     const userId = searchParams.get('userId')
     const searchValue = searchParams.get('search')
+
     const [addCardPack, setAddCardPack] = useState<boolean>(false)
     const onCardPackHandler = () => setAddCardPack(!addCardPack)
 
@@ -44,18 +43,7 @@ const Packs = () => {
         },
         []
     )
-    const resetSearch = () => {
-        delete searchParamsObject.search
-        setSearchParams({ ...searchParamsObject })
-        updatedSearch({ search: '' })
-    }
-    const setSearch = (search: string) =>
-        setSearchParams({ ...searchParamsObject, search })
-    const searchParamsObject = Object.fromEntries(searchParams)
-    const searchHandler = (value: string) => {
-        if (value) setSearch(value)
-        else resetSearch()
-    }
+
     const debouncedState = useDebounce(searchValue, 1500)
     useEffect(() => {
         updatedSearch({ search: debouncedState || '' })
@@ -144,11 +132,7 @@ const Packs = () => {
                         Pack list
                     </h2>
                     <div className="flex justify-between">
-                        <Search
-                            resetSearch={resetSearch}
-                            searchHandler={searchHandler}
-                            value={searchValue || ''}
-                        />
+                        <Search />
                         <Button
                             className="ml-6 w-48 text-sm"
                             color={'primary'}

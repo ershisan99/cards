@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import CardsSlider from '../../../components/UI/CardsSlider'
 import Table from '../../../components/UI/PacksTable'
 import { Pagination } from '../../../components/UI/Pagination'
+import Search from '../../../components/UI/Search'
 import {
     packsActions,
     packsThunks,
@@ -30,7 +31,7 @@ const Profile: FC = () => {
     }, [debouncedState])
     useEffect(() => {
         getPacks({ user_id: userId })
-    }, [page, pageCount, minCardsCount, maxCardsCount, debouncedState])
+    }, [page, pageCount, minCardsCount, maxCardsCount])
 
     return (
         <div className="h-full py-6">
@@ -43,7 +44,7 @@ const Profile: FC = () => {
                     <h2 className="mb-6 font-poppins text-xl font-semibold">
                         My card packs
                     </h2>
-                    {/*<Search />*/}
+                    <Search />
                     <Table />
                     <Pagination />
                 </div>

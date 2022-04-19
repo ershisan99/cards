@@ -1,14 +1,26 @@
-import React, { FC } from 'react'
+import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import clearIcon from '../../assets/images/clearIcon.svg'
 import searchIcon from '../../assets/images/search.svg'
+import { packsActions } from '../../state/slices/packsSlice'
+import { useActions } from '../../utils/helpers'
 
-type Props = {
-    value: string
-    searchHandler: (search: string) => void
-    resetSearch: () => void
-}
-
-const Search: FC<Props> = ({ value, searchHandler, resetSearch }) => {
+const Search = () => {
+    const { updatedSearch } = useActions(packsActions)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const searchValue = searchParams.get('search')
+    const resetSearch = () => {
+        delete searchParamsObject.search
+        setSearchParams({ ...searchParamsObject })
+        updatedSearch({ search: '' })
+    }
+    const setSearch = (search: string) =>
+        setSearchParams({ ...searchParamsObject, search })
+    const searchParamsObject = Object.fromEntries(searchParams)
+    const searchHandler = (value: string) => {
+        if (value) setSearch(value)
+        else resetSearch()
+    }
     return (
         <div className="relative grow">
             <img
@@ -20,7 +32,7 @@ const Search: FC<Props> = ({ value, searchHandler, resetSearch }) => {
                 className="w-full rounded-sm border bg-light py-2 px-8 text-xs outline-0 transition-all hover:border-secondary focus:border-secondary"
                 type="text"
                 placeholder="Search..."
-                value={value}
+                value={searchValue || ''}
                 onChange={(e) => searchHandler(e.currentTarget.value)}
             />
             <img
