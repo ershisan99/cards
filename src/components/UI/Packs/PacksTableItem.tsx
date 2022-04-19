@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { packsThunks } from '../../../state/slices/packsSlice'
+import { packsThunks, updatePack } from '../../../state/slices/packsSlice'
 import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../utils/helpers'
 import Button from '../Button'
 import CardModal from '../CardChangeModal'
+import editPackModal from './EditPackModal'
+import EditPackModal from './EditPackModal'
 
 type TabItemType = {
     name: string
@@ -31,13 +33,21 @@ const PackTableItem: React.FC<TabItemType> = ({
     }
 
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
-    const { deletePack, getPacks } = useActions(packsThunks)
+    const [editPackModal, setEditPackModal] = useState<boolean>(false)
+    const { deletePack, getPacks, updatePack } = useActions(packsThunks)
     const { user } = useAppSelector(selectUser)
+
     const deleteCardPackHandler = useCallback(() => {
-        deletePack({ id }).then(() => getPacks({}))
+        deletePack({ id })
         setDeleteCardPack(false)
     }, [])
 
+    const editCardsPackName = useCallback((cardsPackName: string) => {
+        updatePack({ cardsPack: { _id: id, name: cardsPackName } })
+        setEditPackModal(false)
+    }, [])
+
+    const changeEditPackModalMode = () => setEditPackModal(!editPackModal)
     const onDeleteCardPackHandler = () => setDeleteCardPack(!deleteCardPack)
     const navigate = useNavigate()
     const date = new Date(lastUpdated)
@@ -75,6 +85,12 @@ const PackTableItem: React.FC<TabItemType> = ({
                     </Button>
                 </div>
             </CardModal>
+            <EditPackModal
+                isOpen={editPackModal}
+                changeMode={changeEditPackModalMode}
+                titlePack={name}
+                savePackTitleCallback={editCardsPackName}
+            />
             <tr style={tabBgStyle}>
                 <td
                     className="w-48 cursor-pointer px-4 py-2"
@@ -106,6 +122,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                             <Button
                                 className={'ml-1 rounded px-2'}
                                 color={'secondary'}
+                                onClick={() => changeEditPackModalMode()}
                             >
                                 Edit
                             </Button>
