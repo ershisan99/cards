@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { packsThunks } from '../../state/slices/packsSlice'
-import { selectUser } from '../../state/slices/UserSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
-import Button from './Button'
-import CardModal from './CardChangeModal'
+import { packsThunks } from '../../../state/slices/packsSlice'
+import { selectUser } from '../../../state/slices/UserSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
+import Button from '../Button'
+import CardModal from '../CardChangeModal'
 
 type TabItemType = {
     name: string
@@ -77,9 +77,25 @@ const PackTableItem: React.FC<TabItemType> = ({
                 <td className="w-20 px-4 py-2">{cards}</td>
                 <td className="w-20 px-4 py-2">{transformDate}</td>
                 <td className="text-ellipsis px-4 py-2">{createdBy}</td>
-                <td className="flex w-52 justify-end px-4 py-2">
+                <td className="flex w-52 px-4 py-2">
+                    {cards > 0 && (
+                        <Link to={`/learn/${id}`}>
+                            <Button
+                                className={'ml-1 rounded px-2'}
+                                color={'secondary'}
+                            >
+                                Learn
+                            </Button>
+                        </Link>
+                    )}
                     {user._id === user_id && (
                         <>
+                            <Button
+                                className={'ml-1 rounded px-2'}
+                                color={'secondary'}
+                            >
+                                Edit
+                            </Button>
                             <Button
                                 className={'ml-1 rounded px-2'}
                                 color={'warning'}
@@ -87,23 +103,8 @@ const PackTableItem: React.FC<TabItemType> = ({
                             >
                                 Delete
                             </Button>
-
-                            <Button
-                                className={'ml-1 rounded px-2'}
-                                color={'secondary'}
-                            >
-                                Edit
-                            </Button>
                         </>
                     )}
-                    <Link to={`/pack/${id}`}>
-                        <Button
-                            className={'ml-1 rounded px-2'}
-                            color={'secondary'}
-                        >
-                            Learn
-                        </Button>
-                    </Link>
                 </td>
             </tr>
         </>

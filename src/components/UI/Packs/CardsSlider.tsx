@@ -3,9 +3,9 @@ import {
     packsActions,
     packsThunks,
     selectPacks,
-} from '../../state/slices/packsSlice'
-import { useActions, useAppSelector, useDebounce } from '../../utils/helpers'
-import RangeSlider from './DoubleRangeSlider'
+} from '../../../state/slices/packsSlice'
+import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
+import RangeSlider from '../DoubleRangeSlider'
 
 const STEP_VALUE = 1
 const ALLOW_CROSS = false

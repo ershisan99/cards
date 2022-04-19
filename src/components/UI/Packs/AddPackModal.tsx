@@ -3,11 +3,11 @@ import {
     packsActions,
     packsThunks,
     selectPacks,
-} from '../../state/slices/packsSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
-import Button from './Button'
-import CardModal from './CardChangeModal'
-import Input from './Input'
+} from '../../../state/slices/packsSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
+import Button from '../Button'
+import CardModal from '../CardChangeModal'
+import Input from '../Input'
 
 const AddPackModal = () => {
     const { cardsPackName } = useAppSelector(selectPacks)

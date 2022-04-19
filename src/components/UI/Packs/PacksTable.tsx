@@ -1,8 +1,8 @@
 import React from 'react'
-import { selectPacks } from '../../state/slices/packsSlice'
-import { useAppSelector } from '../../utils/helpers'
+import { selectPacks } from '../../../state/slices/packsSlice'
+import { useAppSelector } from '../../../utils/helpers'
+import { Spinner } from '../Spinner'
 import TableItem from './PacksTableItem'
-import { Spinner } from './Spinner'
 
 const PacksTable: React.FC = () => {
     const { isLoading, cardPacks } = useAppSelector(selectPacks)
