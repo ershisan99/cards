@@ -24,8 +24,10 @@ export const getCards = createAsyncThunk(
 )
 export const addCard = createAsyncThunk(
     'cards/addCard',
-    async (payload: AddCardType) => {
-        return await CardsAPI.addCard({ ...payload })
+    async (payload: AddCardType, { dispatch }) => {
+        return await CardsAPI.addCard({ ...payload }).then(() =>
+            dispatch(getCards({ cardsPack_id: payload.card.cardsPack_id }))
+        )
     }
 )
 export const deleteCard = createAsyncThunk(

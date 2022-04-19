@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import AddPackModal from '../../../components/UI/Packs/AddPackModal'
 import { Pagination } from '../../../components/UI/Pagination'
 import Search from '../../../components/UI/Search'
 import {
@@ -9,6 +8,7 @@ import {
     selectCards,
 } from '../../../state/slices/cardsSlice'
 import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
+import AddCardModal from './AddCardModal'
 import CardsTable from './CardsTable'
 
 const CardsList = () => {
@@ -45,7 +45,7 @@ const CardsList = () => {
                         </h2>
                         <div className="flex justify-between">
                             <Search />
-                            <AddPackModal />
+                            <AddCardModal />
                         </div>
                         <CardsTable />
                         <Pagination
