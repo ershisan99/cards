@@ -15,6 +15,8 @@ const AddPackModal = () => {
     const { id: cardsPack_id } = useParams()
     const addCardHandler = () => {
         cardsPack_id && addCard({ card: { cardsPack_id, question, answer } })
+        setAnswer('')
+        setQuestion('')
         setAddCardPack(false)
     }
 
@@ -47,6 +49,7 @@ const AddPackModal = () => {
                 <Input
                     alias={'Card Name'}
                     className="my-6"
+                    value={question}
                     onChange={(e) => onQuestionChangeHandler(e)}
                 >
                     Question
@@ -54,6 +57,7 @@ const AddPackModal = () => {
                 <Input
                     alias={'Card Name'}
                     className="my-6"
+                    value={answer}
                     onChange={(e) => onAnswerChangeHandler(e)}
                 >
                     Answer

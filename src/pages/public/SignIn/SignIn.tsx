@@ -46,7 +46,7 @@ const SignIn = () => {
                 .then((res) => {
                     if (!res.error) {
                         setIsLoading({ value: false })
-                        navigate('../profile/' + res._id)
+                        navigate('../profile/?userId=' + res._id)
                     }
                 })
                 .catch((err) => {

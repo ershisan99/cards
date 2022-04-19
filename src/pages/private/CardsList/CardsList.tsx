@@ -7,13 +7,16 @@ import {
     cardsThunks,
     selectCards,
 } from '../../../state/slices/cardsSlice'
+import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
 import AddCardModal from './AddCardModal'
 import CardsTable from './CardsTable'
 
 const CardsList = () => {
     const { updatedPage, updatedPageCount } = useActions(cardsActions)
-    const { page, pageCount, cardsTotalCount } = useAppSelector(selectCards)
+    const { page, pageCount, cardsTotalCount, packUserId } =
+        useAppSelector(selectCards)
+    const { user } = useAppSelector(selectUser)
     const onPageChange = (page: number) => {
         updatedPage({ page })
     }
@@ -45,7 +48,7 @@ const CardsList = () => {
                         </h2>
                         <div className="flex justify-between">
                             <Search />
-                            <AddCardModal />
+                            {packUserId === user._id && <AddCardModal />}
                         </div>
                         <CardsTable />
                         <Pagination

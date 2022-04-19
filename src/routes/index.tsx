@@ -21,7 +21,7 @@ export enum RouteNames {
     SIGN_UP = '/sign-up',
     RESET_PASSWORD = '/reset-password',
     NEW_PASSWORD = '/set-new-password/:token',
-    PROFILE = '/profile/:userId',
+    PROFILE = '/profile',
     MAIN = '/main',
     PACK = '/pack/:id',
 }

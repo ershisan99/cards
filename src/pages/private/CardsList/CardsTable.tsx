@@ -8,6 +8,7 @@ import CardsTableItem from './CardsTableItem'
 const CardsTable: React.FC = () => {
     const { isLoading, cards, packUserId } = useAppSelector(selectCards)
     const { user } = useAppSelector(selectUser)
+    console.log({ packUserId, user })
     return (
         <>
             <div className="mt-6 h-fit rounded text-xs shadow-md">

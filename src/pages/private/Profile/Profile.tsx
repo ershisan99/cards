@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react'
-import { useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import PacksContainer from '../../../components/UI/Packs/PacksContainer'
 import {
@@ -20,15 +19,16 @@ const Profile: FC = () => {
     })
     const { page, pageCount, minCardsCount, maxCardsCount } =
         useAppSelector(selectPacks)
-    const { userId } = useParams()
+
     const [urlSearch] = useSearchParams()
     const debouncedSearch = urlSearch.get('search')
+    const userId = urlSearch.get('userId')
     const debouncedState = useDebounce(debouncedSearch, 1500)
     useEffect(() => {
         updatedSearch({ search: debouncedState || '' })
     }, [debouncedState])
     useEffect(() => {
-        getPacks({ user_id: userId })
+        userId && getPacks({ user_id: userId })
     }, [page, pageCount, minCardsCount, maxCardsCount])
 
     return (

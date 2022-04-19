@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { packsThunks, updatePack } from '../../../state/slices/packsSlice'
+import { packsThunks } from '../../../state/slices/packsSlice'
 import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../utils/helpers'
 import Button from '../Button'
 import CardModal from '../CardChangeModal'
-import editPackModal from './EditPackModal'
 import EditPackModal from './EditPackModal'
 
 type TabItemType = {
@@ -100,7 +99,12 @@ const PackTableItem: React.FC<TabItemType> = ({
                 </td>
                 <td className="w-20 px-4 py-2">{cards}</td>
                 <td className="w-20 px-4 py-2">{transformDate}</td>
-                <td className="text-ellipsis px-4 py-2">{createdBy}</td>
+                <td
+                    className="text-ellipsis px-4 py-2"
+                    onClick={() => navigate(`/profile?userId=${user_id}`)}
+                >
+                    {createdBy}
+                </td>
                 <td
                     className={
                         'flex w-52 px-4 py-2' +

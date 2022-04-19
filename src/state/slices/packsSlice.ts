@@ -51,16 +51,18 @@ export const addPack = createAsyncThunk(
         )
     }
 )
+export const updatePack = createAsyncThunk(
+    'packs/updatePack',
+    async (payload: UpdateCardsPackType, { dispatch }) => {
+        return await PacksAPI.updatePack({ ...payload }).then(() => {
+            dispatch(getPacks({}))
+        })
+    }
+)
 export const deletePack = createAsyncThunk(
     'packs/deletePack',
     async (payload: DeleteCardsPackType) => {
         return await PacksAPI.deletePack({ ...payload })
-    }
-)
-export const updatePack = createAsyncThunk(
-    'packs/updatePack',
-    async (payload: UpdateCardsPackType) => {
-        return await PacksAPI.updatePack({ ...payload })
     }
 )
 
@@ -120,6 +122,15 @@ const getCardsPackSlice = createSlice({
         },
         updatedSearch: (state, action: PayloadAction<{ search: string }>) => {
             state.search = action.payload.search
+        },
+        addedPack: (state, action: PayloadAction<CardsPackType>) => {
+            state.cardPacks.push(action.payload)
+        },
+        setIsLoading: (
+            state,
+            action: PayloadAction<{ isLoading: boolean }>
+        ) => {
+            state.isLoading = action.payload.isLoading
         },
     },
     extraReducers: (builder) => {

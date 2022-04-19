@@ -77,7 +77,7 @@ const Tabs = () => {
                 </NavLink>
 
                 <NavLink
-                    to={`/profile/${user._id}`}
+                    to={`/profile?userId=${user._id}`}
                     className={({ isActive }) =>
                         isActive ? 'tab-item__active' : 'tab-item'
                     }

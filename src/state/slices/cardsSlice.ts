@@ -83,6 +83,7 @@ const cardsSlice = createSlice({
             state.page = action.payload.page
             state.pageCount = action.payload.pageCount
             state.isLoading = false
+            state.packUserId = action.payload.packUserId
         })
         builder.addCase(getCards.pending, (state) => {
             state.isLoading = true

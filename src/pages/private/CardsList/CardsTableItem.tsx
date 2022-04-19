@@ -80,7 +80,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                 <td className="px-4 py-2">{grade}</td>
 
                 {user._id === packUserId && (
-                    <td className="flex w-52 justify-end px-4 py-2">
+                    <td className="flex w-32 px-4 py-2">
                         <Button
                             className={'ml-1 rounded px-2'}
                             color={'warning'}
@@ -88,7 +88,6 @@ const PackTableItem: React.FC<TabItemType> = ({
                         >
                             Delete
                         </Button>
-
                         <Button
                             className={'ml-1 rounded px-2'}
                             color={'secondary'}
