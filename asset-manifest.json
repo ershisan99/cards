@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cards/static/css/main.528ec3da.css",
-    "main.js": "/cards/static/js/main.fd4a541f.js",
+    "main.css": "/cards/static/css/main.cf982fff.css",
+    "main.js": "/cards/static/js/main.c3483600.js",
     "static/media/cards.svg": "/cards/static/media/cards.d0e182f265e252a38c011c4d1cd89eb8.svg",
     "static/media/mail_icon.svg": "/cards/static/media/mail_icon.27258fd7ce44ba75a8d1db315438e603.svg",
     "static/media/search.svg": "/cards/static/media/search.6158cb0922b030a57596a54d87e619dc.svg",
@@ -16,11 +16,11 @@
     "static/media/sf-ui-display-light.otf": "/cards/static/media/sf-ui-display-light.31d6cfe0d16ae931b73c.otf",
     "static/media/sf-ui-display-medium.otf": "/cards/static/media/sf-ui-display-medium.31d6cfe0d16ae931b73c.otf",
     "static/media/sf-ui-display-semibold.otf": "/cards/static/media/sf-ui-display-semibold.31d6cfe0d16ae931b73c.otf",
-    "main.528ec3da.css.map": "/cards/static/css/main.528ec3da.css.map",
-    "main.fd4a541f.js.map": "/cards/static/js/main.fd4a541f.js.map"
+    "main.cf982fff.css.map": "/cards/static/css/main.cf982fff.css.map",
+    "main.c3483600.js.map": "/cards/static/js/main.c3483600.js.map"
   },
   "entrypoints": [
-    "static/css/main.528ec3da.css",
-    "static/js/main.fd4a541f.js"
+    "static/css/main.cf982fff.css",
+    "static/js/main.c3483600.js"
   ]
 }
