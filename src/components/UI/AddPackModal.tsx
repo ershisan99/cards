@@ -11,7 +11,6 @@ import Input from './Input'
 
 const AddPackModal = () => {
     const { cardsPackName } = useAppSelector(selectPacks)
-
     const { addPack, updatedPackTitle } = useActions({
         ...packsThunks,
         ...packsActions,
