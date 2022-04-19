@@ -77,7 +77,12 @@ const PackTableItem: React.FC<TabItemType> = ({
                 <td className="w-20 px-4 py-2">{cards}</td>
                 <td className="w-20 px-4 py-2">{transformDate}</td>
                 <td className="text-ellipsis px-4 py-2">{createdBy}</td>
-                <td className="flex w-52 px-4 py-2">
+                <td
+                    className={
+                        'flex w-52 px-4 py-2' +
+                        (cards > 0 ? '' : ' justify-end')
+                    }
+                >
                     {cards > 0 && (
                         <Link to={`/learn/${id}`}>
                             <Button
