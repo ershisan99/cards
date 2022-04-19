@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
+import AddPackModal from '../../../components/UI/AddPackModal'
 import CardsSlider from '../../../components/UI/CardsSlider'
 import Table from '../../../components/UI/PacksTable'
 import { Pagination } from '../../../components/UI/Pagination'
@@ -44,7 +45,10 @@ const Profile: FC = () => {
                     <h2 className="mb-6 font-poppins text-xl font-semibold">
                         My card packs
                     </h2>
-                    <Search />
+                    <div className="flex justify-between">
+                        <Search />
+                        <AddPackModal />
+                    </div>
                     <Table />
                     <Pagination />
                 </div>

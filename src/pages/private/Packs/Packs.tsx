@@ -1,9 +1,7 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Button from '../../../components/UI/Button'
-import CardModal from '../../../components/UI/CardChangeModal'
+import AddPackModal from '../../../components/UI/AddPackModal'
 import CardsSlider from '../../../components/UI/CardsSlider'
-import Input from '../../../components/UI/Input'
 import Table from '../../../components/UI/PacksTable'
 import { Pagination } from '../../../components/UI/Pagination'
 import Search from '../../../components/UI/Search'
@@ -17,32 +15,17 @@ import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
 
 const Packs = () => {
-    const { getPacks, addPack, updatedPackTitle, updatedSearch } = useActions({
+    const { page, pageCount, minCardsCount, maxCardsCount } =
+        useAppSelector(selectPacks)
+    const { user } = useAppSelector(selectUser)
+    const { getPacks, updatedSearch } = useActions({
         ...packsThunks,
         ...packsActions,
     })
-    const { cardsPackName, page, pageCount, minCardsCount, maxCardsCount } =
-        useAppSelector(selectPacks)
-    const { user } = useAppSelector(selectUser)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const userId = searchParams.get('userId')
     const searchValue = searchParams.get('search')
-
-    const [addCardPack, setAddCardPack] = useState<boolean>(false)
-    const onCardPackHandler = () => setAddCardPack(!addCardPack)
-
-    const addCardPackHandler = useCallback((title: string) => {
-        addPack({ cardsPack: { name: title } })
-        setAddCardPack(false)
-        updatedPackTitle({ cardsPackName: '' })
-    }, [])
-
-    const onInputChangeHandler = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            updatedPackTitle({ cardsPackName: e.currentTarget.value })
-        },
-        []
-    )
 
     const debouncedState = useDebounce(searchValue, 1500)
     useEffect(() => {
@@ -55,36 +38,6 @@ const Packs = () => {
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
-                <CardModal
-                    isOpen={addCardPack}
-                    setIsOpen={onCardPackHandler}
-                    title={'Add new pack'}
-                >
-                    <Input
-                        alias={'Name pack'}
-                        className="my-6"
-                        onChange={(e) => onInputChangeHandler(e)}
-                    >
-                        Name pack
-                    </Input>
-                    <div className="my-4 flex justify-between">
-                        <Button
-                            className="w-1/3"
-                            color={'secondary'}
-                            onClick={onCardPackHandler}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            className="w-1/3"
-                            color={'primary'}
-                            onClick={() => addCardPackHandler(cardsPackName)}
-                        >
-                            Save
-                        </Button>
-                    </div>
-                </CardModal>
-
                 <div className="w-64 bg-light">
                     <div className="p-6">
                         <h3 className="text-base font-semibold">
@@ -133,13 +86,7 @@ const Packs = () => {
                     </h2>
                     <div className="flex justify-between">
                         <Search />
-                        <Button
-                            className="ml-6 w-48 text-sm"
-                            color={'primary'}
-                            onClick={onCardPackHandler}
-                        >
-                            Add new pack
-                        </Button>
+                        <AddPackModal />
                     </div>
                     <Table />
                     <Pagination />
