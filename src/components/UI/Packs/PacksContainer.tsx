@@ -1,4 +1,6 @@
 import React, { FC } from 'react'
+import { packsActions, selectPacks } from '../../../state/slices/packsSlice'
+import { useActions, useAppSelector } from '../../../utils/helpers'
 import { Pagination } from '../Pagination'
 import Search from '../Search'
 import AddPackModal from './AddPackModal'
@@ -10,6 +12,14 @@ type Props = {
 }
 
 const PacksContainer: FC<Props> = ({ children, title }) => {
+    const { cardPacksTotalCount, page, pageCount } = useAppSelector(selectPacks)
+    const { updatedPage, updatedPageCount } = useActions(packsActions)
+    const onPageChange = (page: number) => {
+        updatedPage({ page })
+    }
+    const onItemsPerPageChange = (pageCount: number) => {
+        updatedPageCount({ pageCount })
+    }
     return (
         <div className="h-full py-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
@@ -23,7 +33,13 @@ const PacksContainer: FC<Props> = ({ children, title }) => {
                         <AddPackModal />
                     </div>
                     <PacksTable />
-                    <Pagination />
+                    <Pagination
+                        totalItemsCount={cardPacksTotalCount}
+                        currentPage={page}
+                        itemsPerPage={pageCount}
+                        onPageChange={onPageChange}
+                        onItemsPerPageChange={onItemsPerPageChange}
+                    />
                 </div>
             </div>
         </div>

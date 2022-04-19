@@ -4,11 +4,11 @@ export type GetCardType = {
     cardAnswer?: string
     cardQuestion?: string
     cardsPack_id: string
-    min?: number
-    max?: number
+    min?: number //grade
+    max?: number //grade
     sortCards?: string
-    page?: string
-    pageCount?: string
+    page?: number
+    pageCount?: number
 }
 export type CardsType = {
     answer: string
@@ -22,7 +22,7 @@ export type CardsType = {
     _id: string
 }
 export type GetCardsResponseType = {
-    card: Array<CardsType>
+    cards: Array<CardsType>
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
@@ -41,7 +41,7 @@ export type PostCardType = {
     questionVideo?: string // не обязателен
     answerVideo?: string // не обязателен
 }
-export type SetCardType = {
+export type AddCardType = {
     card: PostCardType
 }
 export type DeleteCardType = {
@@ -57,12 +57,12 @@ export type UpdateCardType = {
 }
 
 export const CardsAPI = {
-    getCard: (args: GetCardType) => {
+    getCards: (args: GetCardType) => {
         return instance
             .get<GetCardsResponseType>('/cards/card', { params: args })
             .then((res) => res.data)
     },
-    setCard: (args: SetCardType) => {
+    addCard: (args: AddCardType) => {
         return instance.post('/cards/card', args)
     },
     deleteCard: (args: DeleteCardType) => {

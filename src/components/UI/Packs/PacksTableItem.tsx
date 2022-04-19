@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { packsThunks } from '../../../state/slices/packsSlice'
 import { selectUser } from '../../../state/slices/UserSlice'
@@ -38,10 +39,12 @@ const PackTableItem: React.FC<TabItemType> = ({
     }, [])
 
     const onDeleteCardPackHandler = () => setDeleteCardPack(!deleteCardPack)
-
+    const navigate = useNavigate()
     const date = new Date(lastUpdated)
-    const transformDate = `${date.getDate()}.${
-        date.getMonth() > 10 ? date.getMonth() : '0' + date.getMonth()
+    const transformDate = `${
+        date.getDate() > 9 ? date.getDate() + 1 : '0' + (date.getDate() + 1)
+    }.${
+        date.getMonth() > 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
     }.${date.getFullYear()}`
 
     return (
@@ -73,7 +76,12 @@ const PackTableItem: React.FC<TabItemType> = ({
                 </div>
             </CardModal>
             <tr style={tabBgStyle}>
-                <td className="w-48 px-4 py-2">{name}</td>
+                <td
+                    className="w-48 cursor-pointer px-4 py-2"
+                    onClick={() => navigate(`/pack/${id}`)}
+                >
+                    {name}
+                </td>
                 <td className="w-20 px-4 py-2">{cards}</td>
                 <td className="w-20 px-4 py-2">{transformDate}</td>
                 <td className="text-ellipsis px-4 py-2">{createdBy}</td>

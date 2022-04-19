@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { cardsReducer } from './slices/cardsSlice'
 import { newPasswordReducer } from './slices/newPasswordSlice'
 import { packsReducer } from './slices/packsSlice'
 import { resetPasswordReducer } from './slices/resetPasswordSlice'
@@ -14,6 +15,7 @@ export const store = configureStore({
         newPassword: newPasswordReducer,
         resetPassword: resetPasswordReducer,
         packs: packsReducer,
+        cards: cardsReducer,
     },
 })
 

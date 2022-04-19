@@ -1,26 +1,36 @@
-import React, { useState } from 'react'
-import { packsActions, selectPacks } from '../../state/slices/packsSlice'
-import { useActions, useAppSelector } from '../../utils/helpers'
+import React, { FC, useState } from 'react'
 import Select from './Select'
 
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-export const Pagination = () => {
-    const { cardPacksTotalCount, page, pageCount } = useAppSelector(selectPacks)
-    const { updatedPage, updatedPageCount } = useActions(packsActions)
-    const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+type PropsType = {
+    totalItemsCount: number
+    currentPage: number
+    itemsPerPage: number
+    onPageChange: (page: number) => void
+    onItemsPerPageChange: (iterm: number) => void
+}
+
+export const Pagination: FC<PropsType> = ({
+    totalItemsCount,
+    currentPage,
+    itemsPerPage,
+    onItemsPerPageChange,
+    onPageChange,
+}) => {
+    const pagesCount = Math.ceil(totalItemsCount / itemsPerPage)
     const pages: Array<number> = []
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-    let portionCount = Math.ceil(pagesCount / pageCount)
+    let portionCount = Math.ceil(pagesCount / itemsPerPage)
     const [portionNumber, setPortionNumber] = useState<number>(1)
     const onPageChanged = (page: number) => {
-        updatedPage({ page })
+        onPageChange(page)
     }
     const onSelectChange = (pageCount: number) => {
-        updatedPageCount({ pageCount })
+        onItemsPerPageChange(pageCount)
     }
     const onBackClickHandler = () => setPortionNumber(portionNumber - 1)
     const onForwardClickHandler = () => setPortionNumber(portionNumber + 1)
@@ -54,7 +64,7 @@ export const Pagination = () => {
                 )
                 .map((mpage: number, i: number) => {
                     let currentPageClassName =
-                        page === mpage
+                        currentPage === mpage
                             ? 'pagination-btn__active rounded mx-0.5 transition'
                             : 'pagination-btn rounded mx-0.5 transition'
 
@@ -88,10 +98,10 @@ export const Pagination = () => {
                 <span>Show</span>
                 <Select
                     options={arr}
-                    value={pageCount}
+                    value={itemsPerPage}
                     onChangeOption={onSelectChange}
                 />
-                <span className="ml-2">cards per page</span>
+                <span className="ml-2">items per page</span>
             </div>
         </div>
     )

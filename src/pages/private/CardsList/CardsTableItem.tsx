@@ -1,33 +1,33 @@
 import React, { useCallback, useState } from 'react'
 import Button from '../../../components/UI/Button'
 import CardModal from '../../../components/UI/CardChangeModal'
+import { selectCards } from '../../../state/slices/cardsSlice'
 import { packsThunks } from '../../../state/slices/packsSlice'
 import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../utils/helpers'
 
 type TabItemType = {
-    name: string
-    cards: number
-    lastUpdated: Date
-    createdBy: string
-    index: number
+    question: string
+    answer: string
+    updated: Date
+    created: Date
     id: string
     user_id: string
+    cardsPack_id: string
+    grade: number
 }
 
 const PackTableItem: React.FC<TabItemType> = ({
-    name,
-    cards,
-    lastUpdated,
-    createdBy,
-    index,
+    question,
+    answer,
+    cardsPack_id,
+    created,
+    updated,
     id,
     user_id,
+    grade,
 }) => {
-    const tabBgStyle = {
-        backgroundColor: index % 2 !== 0 ? '#ececf9' : 'transparent',
-    }
-
+    const { packUserId } = useAppSelector(selectCards)
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
     const { deletePack, getPacks } = useActions(packsThunks)
     const { user } = useAppSelector(selectUser)
@@ -38,9 +38,11 @@ const PackTableItem: React.FC<TabItemType> = ({
 
     const onDeleteCardPackHandler = () => setDeleteCardPack(!deleteCardPack)
 
-    const date = new Date(lastUpdated)
-    const transformDate = `${date.getDate()}.${
-        date.getMonth() > 10 ? date.getMonth() : '0' + date.getMonth()
+    const date = new Date(updated)
+    const transformDate = `${
+        date.getDate() > 9 ? date.getDate() + 1 : '0' + (date.getDate() + 1)
+    }.${
+        date.getMonth() > 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)
     }.${date.getFullYear()}`
 
     return (
@@ -51,8 +53,8 @@ const PackTableItem: React.FC<TabItemType> = ({
                 title={'Delete pack'}
             >
                 <div className="my-5">
-                    Do you really want to remove <b>{name}</b>? All cards will
-                    be excluded from this course.
+                    Do you really want to delete this card? You won't be able to
+                    restore it
                 </div>
                 <div className="my-4 flex justify-between">
                     <Button
@@ -71,34 +73,30 @@ const PackTableItem: React.FC<TabItemType> = ({
                     </Button>
                 </div>
             </CardModal>
-            <tr style={tabBgStyle}>
-                <td className="w-48 px-4 py-2">{name}</td>
-                <td className="w-20 px-4 py-2">{cards}</td>
-                <td className="w-20 px-4 py-2">{transformDate}</td>
-                <td className="text-ellipsis px-4 py-2">{createdBy}</td>
-                <td className="flex w-52 justify-end px-4 py-2">
-                    {user._id === user_id && (
-                        <>
-                            <Button
-                                className={'ml-1 rounded px-2'}
-                                color={'warning'}
-                                onClick={onDeleteCardPackHandler}
-                            >
-                                Delete
-                            </Button>
+            <tr className="bg-transparent even:bg-[#ececf9]">
+                <td className="w-60 max-w-xs truncate px-4 py-2">{question}</td>
+                <td className="w-60 max-w-xs truncate px-4 py-2">{answer}</td>
+                <td className="w-22 px-4 py-2">{transformDate}</td>
+                <td className="px-4 py-2">{grade}</td>
 
-                            <Button
-                                className={'ml-1 rounded px-2'}
-                                color={'secondary'}
-                            >
-                                Edit
-                            </Button>
-                        </>
-                    )}
-                    <Button className={'ml-1 rounded px-2'} color={'secondary'}>
-                        Learn
-                    </Button>
-                </td>
+                {user._id === packUserId && (
+                    <td className="flex w-52 justify-end px-4 py-2">
+                        <Button
+                            className={'ml-1 rounded px-2'}
+                            color={'warning'}
+                            onClick={onDeleteCardPackHandler}
+                        >
+                            Delete
+                        </Button>
+
+                        <Button
+                            className={'ml-1 rounded px-2'}
+                            color={'secondary'}
+                        >
+                            Edit
+                        </Button>
+                    </td>
+                )}
             </tr>
         </>
     )
