@@ -6,6 +6,7 @@ import {
     DeleteCardType,
     GetCardType,
     UpdateCardType,
+    UpdateGradeType,
 } from '../../API/cardsAPI'
 import { RootState } from '../store'
 
@@ -42,6 +43,14 @@ export const updateCard = createAsyncThunk(
         return await CardsAPI.updateCard({ ...payload })
     }
 )
+export const updateGrade = createAsyncThunk(
+    'cards/updateGrade',
+    async (payload: UpdateGradeType) => {
+        return await CardsAPI.updateCardGrade({ ...payload })
+    }
+)
+
+// grade: payload.grade, card_id: payload.card_id
 
 type InitialStateType = {
     cards: Array<CardsType>
@@ -53,6 +62,7 @@ type InitialStateType = {
     packUserId: string
     isLoading: boolean
     search: string
+    grade: number
 }
 
 const cardsSlice = createSlice({
@@ -61,6 +71,7 @@ const cardsSlice = createSlice({
         isLoading: true,
         page: 1,
         pageCount: 10,
+        grade: 0,
     } as InitialStateType,
     reducers: {
         updatedPage: (state, action: PayloadAction<{ page: number }>) => {
@@ -101,5 +112,6 @@ export const cardsThunks = {
     addCard,
     deleteCard,
     updateCard,
+    updateGrade,
 }
 export const selectCards = (state: RootState) => state.cards
