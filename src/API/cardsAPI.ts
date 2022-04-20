@@ -55,6 +55,10 @@ export type PutCardType = {
 export type UpdateCardType = {
     card: PutCardType
 }
+export type UpdateGradeType = {
+    grade: number
+    card_id: string
+}
 
 export const CardsAPI = {
     getCards: (args: GetCardType) => {
@@ -70,6 +74,9 @@ export const CardsAPI = {
     },
     updateCard: (args: UpdateCardType) => {
         return instance.put('/cards/card', args)
+    },
+    updateCardGrade: (args: UpdateGradeType) => {
+        return instance.put('cards/grade', args)
     },
 }
 
