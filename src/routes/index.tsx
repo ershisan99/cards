@@ -8,6 +8,7 @@ import NewPassword from '../pages/public/ResetPassword/NewPassword'
 import ResetPassword from '../pages/public/ResetPassword/ResetPassword'
 import SignIn from '../pages/public/SignIn/SignIn'
 import SignUp from '../pages/public/SignUp/SignUp'
+import Learn from '../components/UI/Learn/Learn'
 
 export interface IRoute {
     path: string
@@ -24,6 +25,7 @@ export enum RouteNames {
     PROFILE = '/profile',
     MAIN = '/main',
     PACK = '/pack/:id',
+    LEARN = '/learn/:id',
 }
 
 export const routes: IRoute[] = [
@@ -70,6 +72,14 @@ export const routes: IRoute[] = [
         component: (
             <RequireAuth>
                 <CardsList />
+            </RequireAuth>
+        ),
+    },
+    {
+        path: RouteNames.LEARN,
+        component: (
+            <RequireAuth>
+                <Learn />
             </RequireAuth>
         ),
     },
