@@ -39,7 +39,7 @@ const Radio: React.FC<SuperRadioPropsType> = ({
                       onChange={onChangeCallback}
                       {...restProps}
                   />
-                  <span className="p-2">{option}</span>
+                  <span className="cursor-pointer p-2">{option}</span>
               </label>
           ))
         : []
