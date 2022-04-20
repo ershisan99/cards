@@ -30,7 +30,7 @@ const Radio: React.FC<SuperRadioPropsType> = ({
 
     const mappedOptions: DefaultRadioPropsType[] = options
         ? options.map((option, index) => (
-              <label key={name + '-' + index}>
+              <label key={name + '-' + index} className="my-1">
                   <input
                       type={'radio'}
                       name={name}
@@ -39,12 +39,12 @@ const Radio: React.FC<SuperRadioPropsType> = ({
                       onChange={onChangeCallback}
                       {...restProps}
                   />
-                  {option}
+                  <span className="p-2">{option}</span>
               </label>
           ))
         : []
 
-    return <div>{mappedOptions}</div>
+    return <div className="flex flex-col justify-between">{mappedOptions}</div>
 }
 
 export default Radio
