@@ -9,7 +9,7 @@ import {
 } from '../../../utils/helpers'
 import { cardsThunks, selectCards } from '../../../state/slices/cardsSlice'
 import { CardsType } from '../../../API/cardsAPI'
-import Radio from '../Packs/Radio'
+import Radio from '../Radio'
 
 const grades = [
     'Did not know',
@@ -29,20 +29,18 @@ const Learn = () => {
     const [grade, setGrade] = useState<number>(0)
     const [showAnswer, setShowAnswer] = useState<boolean>(false)
 
-    console.log('Grade: ' + grade)
-
     useEffect(() => {
         if (first) {
             cardsPack_id && getCards({ cardsPack_id: cardsPack_id })
             setFirst(false)
         }
 
-        updateGrade({ card_id: card!._id, grade })
-
         if (cards && cards.length > 0) setCard(getRandomCard(cards))
     }, [cardsPack_id, cards, first])
 
     const onNext = () => {
+        updateGrade({ card_id: card!._id, grade })
+
         if (cards && cards.length > 0) {
             setCard(getRandomCard(cards))
             setShowAnswer(false)
