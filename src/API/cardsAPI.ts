@@ -49,7 +49,8 @@ export type DeleteCardType = {
 }
 export type PutCardType = {
     _id: string
-    name?: string
+    question?: string
+    answer?: string
     comments?: string
 }
 export type UpdateCardType = {

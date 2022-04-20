@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react'
 import Button from '../../../components/UI/Button'
 import CardModal from '../../../components/UI/CardChangeModal'
-import { selectCards } from '../../../state/slices/cardsSlice'
-import { packsThunks } from '../../../state/slices/packsSlice'
+import { cardsThunks, selectCards } from '../../../state/slices/cardsSlice'
 import { selectUser } from '../../../state/slices/UserSlice'
 import { useActions, useAppSelector } from '../../../utils/helpers'
+import EditCardModal from './EditCardModal'
 
 type TabItemType = {
     question: string
@@ -29,14 +29,24 @@ const PackTableItem: React.FC<TabItemType> = ({
 }) => {
     const { packUserId } = useAppSelector(selectCards)
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
-    const { deletePack, getPacks } = useActions(packsThunks)
+    const [editCardMode, setEditCardMode] = useState<boolean>(false)
+    const { updateCard, getCards, deleteCard } = useActions(cardsThunks)
     const { user } = useAppSelector(selectUser)
-    const deleteCardPackHandler = useCallback(() => {
-        deletePack({ id }).then(() => getPacks({}))
+
+    const deleteCardHandler = useCallback(() => {
+        deleteCard({ id }).then(() => getCards({ cardsPack_id }))
         setDeleteCardPack(false)
     }, [])
 
+    const saveCard = useCallback((question: string, answer: string) => {
+        updateCard({ card: { _id: id, question, answer } }).then(() =>
+            getCards({ cardsPack_id })
+        )
+        setEditCardMode(false)
+    }, [])
+
     const onDeleteCardPackHandler = () => setDeleteCardPack(!deleteCardPack)
+    const onchangeEditModeCard = () => setEditCardMode(!editCardMode)
 
     const date = new Date(updated)
     const transformDate = `${
@@ -67,12 +77,22 @@ const PackTableItem: React.FC<TabItemType> = ({
                     <Button
                         className="w-1/3"
                         color={'warning'}
-                        onClick={() => deleteCardPackHandler()}
+                        onClick={deleteCardHandler}
                     >
                         Delete
                     </Button>
                 </div>
             </CardModal>
+
+            <EditCardModal
+                isOpen={editCardMode}
+                callback={saveCard}
+                questionTitle={question}
+                answerTitle={answer}
+                changeEditCardMode={onchangeEditModeCard}
+                modalTitle={'Edit card'}
+            />
+
             <tr className="bg-transparent even:bg-[#ececf9]">
                 <td className="w-60 max-w-xs truncate px-4 py-2">{question}</td>
                 <td className="w-60 max-w-xs truncate px-4 py-2">{answer}</td>
@@ -91,6 +111,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                         <Button
                             className={'ml-1 rounded px-2'}
                             color={'secondary'}
+                            onClick={onchangeEditModeCard}
                         >
                             Edit
                         </Button>
