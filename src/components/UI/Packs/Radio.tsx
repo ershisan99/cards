@@ -4,8 +4,6 @@ import React, {
     DetailedHTMLProps,
 } from 'react'
 
-const s = require('./SuperRadio.module.css')
-
 type DefaultRadioPropsType = DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
@@ -31,22 +29,22 @@ const Radio: React.FC<SuperRadioPropsType> = ({
     }
 
     const mappedOptions: DefaultRadioPropsType[] = options
-        ? options.map((o, i) => (
-              <label key={name + '-' + i}>
+        ? options.map((option, index) => (
+              <label key={name + '-' + index}>
                   <input
                       type={'radio'}
                       name={name}
-                      value={o}
-                      checked={value === o}
+                      value={option}
+                      checked={value === index + 1}
                       onChange={onChangeCallback}
                       {...restProps}
                   />
-                  {o}
+                  {option}
               </label>
           ))
         : []
 
-    return <div className={s.radioButtons__list}>{mappedOptions}</div>
+    return <div>{mappedOptions}</div>
 }
 
 export default Radio
