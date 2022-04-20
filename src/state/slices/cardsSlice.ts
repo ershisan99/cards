@@ -50,8 +50,6 @@ export const updateGrade = createAsyncThunk(
     }
 )
 
-// grade: payload.grade, card_id: payload.card_id
-
 type InitialStateType = {
     cards: Array<CardsType>
     cardsTotalCount: number
@@ -62,7 +60,6 @@ type InitialStateType = {
     packUserId: string
     isLoading: boolean
     search: string
-    grade: number
 }
 
 const cardsSlice = createSlice({
@@ -71,7 +68,6 @@ const cardsSlice = createSlice({
         isLoading: true,
         page: 1,
         pageCount: 10,
-        grade: 0,
     } as InitialStateType,
     reducers: {
         updatedPage: (state, action: PayloadAction<{ page: number }>) => {
