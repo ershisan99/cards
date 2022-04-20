@@ -11,14 +11,14 @@ export const signOut = createAsyncThunk('user/signOut', async () => {
 })
 
 type InitialState = {
-    user: MeRes
-    isAuth: boolean
-    isLoading: boolean
+    user?: MeRes
+    isAuth?: boolean
+    isLoading?: boolean
 
-    error: boolean
-    errorMessageNotification: string
-    info: boolean
-    infoMessageNotification: string
+    error?: boolean
+    errorMessageNotification?: string
+    info?: boolean
+    infoMessageNotification?: string
 }
 const signInSlice = createSlice({
     name: 'user',
@@ -53,7 +53,7 @@ const signInSlice = createSlice({
         builder
             .addCase(sendSignInRequest.fulfilled, (state, action) => {
                 state.user = action.payload
-                state.isAuth = !!state.user
+                state.isAuth = true
                 state.isLoading = false
             })
             .addCase(sendSignInRequest.pending, (state) => {
@@ -63,8 +63,10 @@ const signInSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(getMe.fulfilled, (state, action) => {
-                state.user = action.payload
-                state.isAuth = !!state.user
+                if (action.payload) {
+                    state.user = action.payload
+                    state.isAuth = !!state.user
+                }
                 state.isLoading = false
             })
             .addCase(getMe.pending, (state) => {

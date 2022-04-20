@@ -1,37 +1,63 @@
-import LearnModal from './LearnModal'
-import Button from '../Button'
-import { Link, useParams } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { CardsType } from '../../../API/cardsAPI'
+import {
+    cardsActions,
+    cardsThunks,
+    selectCards,
+} from '../../../state/slices/cardsSlice'
+import { packsThunks, selectPacks } from '../../../state/slices/packsSlice'
 import {
     getRandomCard,
     useActions,
     useAppSelector,
 } from '../../../utils/helpers'
-import { cardsThunks, selectCards } from '../../../state/slices/cardsSlice'
-import { CardsType } from '../../../API/cardsAPI'
+import Button from '../Button'
 import Radio from '../Radio'
+import LearnModal from './LearnModal'
 
 const grades = [
-    'Did not know',
-    'Forgot',
-    'A lot of thought',
-    'Сonfused',
-    'Knew the answer',
+    "Didn't answer, 1/5",
+    "Wasn't sure, 2/5",
+    'Knew something, 3/5',
+    'Mostly knew the answer, 4/5',
+    'Knew the answer, 5/5',
 ]
 
 const Learn = () => {
     const { id: cardsPack_id } = useParams()
     const { cards } = useAppSelector(selectCards)
-    const { getCards, updateGrade } = useActions(cardsThunks)
+    const { cardPacks } = useAppSelector(selectPacks)
+    const { getCards, updateGrade, getPacks, setIsLoading } = useActions({
+        ...cardsThunks,
+        ...packsThunks,
+        ...cardsActions,
+    })
 
     const [card, setCard] = useState<CardsType>()
     const [first, setFirst] = useState<boolean>(true)
     const [grade, setGrade] = useState<number>(0)
     const [showAnswer, setShowAnswer] = useState<boolean>(false)
-
+    const pack = cardPacks.find((p) => p._id === cardsPack_id)
+    console.log(pack)
     useEffect(() => {
         if (first) {
-            cardsPack_id && getCards({ cardsPack_id: cardsPack_id })
+            setIsLoading({ isLoading: true })
+            cardPacks.length === 0
+                ? getPacks({}).finally(() => {
+                      const pack = cardPacks.find((p) => p._id === cardsPack_id)
+
+                      cardsPack_id &&
+                          getCards({
+                              cardsPack_id: cardsPack_id,
+                              pageCount: pack?.cardsCount || Infinity,
+                          })
+                  })
+                : cardsPack_id &&
+                  getCards({
+                      cardsPack_id: cardsPack_id,
+                      pageCount: pack?.cardsCount || Infinity,
+                  })
             setFirst(false)
         }
 
@@ -49,23 +75,23 @@ const Learn = () => {
 
     const onChangeGrade = (value: string) => {
         switch (value) {
-            case 'Did not know': {
+            case "Didn't answer, 1/5": {
                 setGrade(1)
                 break
             }
-            case 'Forgot': {
+            case "Wasn't sure, 2/5": {
                 setGrade(2)
                 break
             }
-            case 'A lot of thought': {
+            case 'Knew something, 3/5': {
                 setGrade(3)
                 break
             }
-            case 'Сonfused': {
+            case 'Mostly knew the answer, 4/5': {
                 setGrade(4)
                 break
             }
-            case 'Knew the answer': {
+            case 'Knew the answer, 5/5': {
                 setGrade(5)
                 break
             }
@@ -76,7 +102,7 @@ const Learn = () => {
 
     return (
         <>
-            <LearnModal isOpen={true} title={'Learn “Pack Name”'}>
+            <LearnModal isOpen={true} title={`Learn ${pack?.name || ''}`}>
                 {!showAnswer ? (
                     <div className="my-2 text-base">
                         <b>Question:</b> {card && card.question}

@@ -32,8 +32,8 @@ const Profile: FC = () => {
     }, [page, pageCount, minCardsCount, maxCardsCount])
 
     return (
-        <PacksContainer title={`${user.name}'s packs`}>
-            <UserProfile username={user.name} email={user.email} />
+        <PacksContainer title={`${user!.name}'s packs`}>
+            <UserProfile username={user!.name} email={user!.email} />
         </PacksContainer>
     )
 }

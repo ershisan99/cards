@@ -20,6 +20,7 @@ export const getCards = createAsyncThunk(
             page,
             ...payload,
         }
+
         return await CardsAPI.getCards(finalPayload)
     }
 )
@@ -55,8 +56,8 @@ type InitialStateType = {
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
-    page: number
-    pageCount: number
+    page?: number
+    pageCount?: number
     packUserId: string
     isLoading: boolean
     search: string
@@ -82,15 +83,23 @@ const cardsSlice = createSlice({
         updatedSearch: (state, action: PayloadAction<{ search: string }>) => {
             state.search = action.payload.search
         },
+        setIsLoading: (
+            state,
+            action: PayloadAction<{ isLoading: boolean }>
+        ) => {
+            state.isLoading = action.payload.isLoading
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getCards.fulfilled, (state, action) => {
-            state.cards = action.payload.cards
-            state.cardsTotalCount = action.payload.cardsTotalCount
-            state.page = action.payload.page
-            state.pageCount = action.payload.pageCount
-            state.isLoading = false
-            state.packUserId = action.payload.packUserId
+            if (action.payload) {
+                state.cards = action.payload.cards
+                state.cardsTotalCount = action.payload.cardsTotalCount
+                state.page = action.payload.page
+                state.pageCount = action.payload.pageCount
+                state.isLoading = false
+                state.packUserId = action.payload.packUserId
+            }
         })
         builder.addCase(getCards.pending, (state) => {
             state.isLoading = true

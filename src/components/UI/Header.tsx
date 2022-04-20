@@ -63,30 +63,30 @@ const Header = () => {
 
 const Tabs = () => {
     const { user } = useAppSelector(selectUser)
-    return (
-        user && (
-            <div className="mx-auto flex h-14 w-80">
-                <NavLink
-                    to={RouteNames.MAIN}
-                    className={({ isActive }) =>
-                        isActive ? 'tab-item__active' : 'tab-item'
-                    }
-                >
-                    <img className="ml-4" src={cards} alt="cards icon" />
-                    <span className="mx-1.5 text-sm font-thin">Packs list</span>
-                </NavLink>
+    return user ? (
+        <div className="mx-auto flex h-14 w-80">
+            <NavLink
+                to={RouteNames.MAIN}
+                className={({ isActive }) =>
+                    isActive ? 'tab-item__active' : 'tab-item'
+                }
+            >
+                <img className="ml-4" src={cards} alt="cards icon" />
+                <span className="mx-1.5 text-sm font-thin">Packs list</span>
+            </NavLink>
 
-                <NavLink
-                    to={`/profile?userId=${user._id}`}
-                    className={({ isActive }) =>
-                        isActive ? 'tab-item__active' : 'tab-item'
-                    }
-                >
-                    <img className="ml-6" src={profileIcon} alt="user icon" />
-                    <span className="mx-1.5 text-sm font-thin">Profile</span>
-                </NavLink>
-            </div>
-        )
+            <NavLink
+                to={`/profile?userId=${user._id}`}
+                className={({ isActive }) =>
+                    isActive ? 'tab-item__active' : 'tab-item'
+                }
+            >
+                <img className="ml-6" src={profileIcon} alt="user icon" />
+                <span className="mx-1.5 text-sm font-thin">Profile</span>
+            </NavLink>
+        </div>
+    ) : (
+        <></>
     )
 }
 export default Header

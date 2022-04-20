@@ -33,7 +33,7 @@ const PackTableItem: React.FC<TabItemType> = ({
 
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
     const [editPackModal, setEditPackModal] = useState<boolean>(false)
-    const { deletePack, getPacks, updatePack } = useActions(packsThunks)
+    const { deletePack, updatePack } = useActions(packsThunks)
     const { user } = useAppSelector(selectUser)
 
     const deleteCardPackHandler = useCallback(() => {
@@ -121,7 +121,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                             </Button>
                         </Link>
                     )}
-                    {user._id === user_id && (
+                    {user!._id === user_id && (
                         <>
                             <Button
                                 className={'ml-1 rounded px-2'}

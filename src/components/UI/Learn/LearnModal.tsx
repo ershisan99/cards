@@ -1,5 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { FC, Fragment } from 'react'
+import React, { FC, Fragment } from 'react'
+import { selectCards } from '../../../state/slices/cardsSlice'
+import { useAppSelector } from '../../../utils/helpers'
+import { Spinner } from '../Spinner'
 
 type PropsType = {
     isOpen: boolean
@@ -8,6 +11,8 @@ type PropsType = {
 }
 
 const LearnModal: FC<PropsType> = ({ title, children }) => {
+    const { isLoading } = useAppSelector(selectCards)
+
     return (
         <>
             <Transition appear show={true} as={Fragment}>
@@ -47,10 +52,11 @@ const LearnModal: FC<PropsType> = ({ title, children }) => {
                         >
                             <div
                                 className="inline-block
+                                max-h-[70vh]
                                 w-full
-                                max-w-sm
+                                max-w-lg
                                 transform
-                                overflow-hidden
+                                overflow-y-auto
                                 rounded-2xl
                                 bg-white
                                 px-2
@@ -60,15 +66,28 @@ const LearnModal: FC<PropsType> = ({ title, children }) => {
                                 shadow-xl
                                 transition-all"
                             >
-                                <div className="px-6 py-4 align-middle">
-                                    <Dialog.Title
-                                        as="h3"
-                                        className="text-center font-poppins text-2xl font-extrabold"
-                                    >
-                                        {title}
-                                    </Dialog.Title>
-                                </div>
-                                <div className="px-6 py-4">{children}</div>
+                                {isLoading ? (
+                                    <Spinner
+                                        className={
+                                            'flex items-center justify-center'
+                                        }
+                                        size={'150px'}
+                                    />
+                                ) : (
+                                    <>
+                                        <div className="px-6 py-4 align-middle">
+                                            <Dialog.Title
+                                                as="h3"
+                                                className="text-center font-poppins text-2xl font-extrabold"
+                                            >
+                                                {title}
+                                            </Dialog.Title>
+                                        </div>
+                                        <div className="px-6 py-4">
+                                            {children}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </Transition.Child>
                     </div>

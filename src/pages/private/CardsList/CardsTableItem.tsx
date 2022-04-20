@@ -20,11 +20,8 @@ type TabItemType = {
 const PackTableItem: React.FC<TabItemType> = ({
     question,
     answer,
-    cardsPack_id,
-    created,
     updated,
     id,
-    user_id,
     grade,
 }) => {
     const { packUserId } = useAppSelector(selectCards)
@@ -79,7 +76,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                 <td className="w-22 px-4 py-2">{transformDate}</td>
                 <td className="px-4 py-2">{grade.toFixed(1)}</td>
 
-                {user._id === packUserId && (
+                {user!._id === packUserId && (
                     <td className="flex w-32 px-4 py-2">
                         <Button
                             className={'ml-1 rounded px-2'}
