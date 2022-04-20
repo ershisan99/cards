@@ -37,6 +37,8 @@ const Learn = () => {
             setFirst(false)
         }
 
+        updateGrade({ card_id: card!._id, grade })
+
         if (cards && cards.length > 0) setCard(getRandomCard(cards))
     }, [cardsPack_id, cards, first])
 
