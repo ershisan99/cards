@@ -77,7 +77,7 @@ const PackTableItem: React.FC<TabItemType> = ({
                 <td className="w-60 max-w-xs truncate px-4 py-2">{question}</td>
                 <td className="w-60 max-w-xs truncate px-4 py-2">{answer}</td>
                 <td className="w-22 px-4 py-2">{transformDate}</td>
-                <td className="px-4 py-2">{grade}</td>
+                <td className="px-4 py-2">{grade.toFixed(1)}</td>
 
                 {user._id === packUserId && (
                     <td className="flex w-32 px-4 py-2">
