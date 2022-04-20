@@ -92,6 +92,7 @@ const SignIn = () => {
                         value={email}
                         error={errorEmail}
                         errorText={'Incorrect email'}
+                        onKeyPress={(e) => enterKeyHandler(e)}
                         onChange={(e) => onChangeEmail(e.currentTarget.value)}
                     >
                         Email

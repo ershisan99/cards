@@ -117,6 +117,7 @@ const SignUp = () => {
                         value={email}
                         error={errorEmail}
                         errorText={'Invalid email'}
+                        onKeyPress={(e) => enterKeyHandler(e)}
                         onChange={(e) => {
                             setEmail({ email: e.currentTarget.value })
                         }}
@@ -129,6 +130,7 @@ const SignUp = () => {
                         value={password}
                         error={errorPassword}
                         errorText={errorPasswordText}
+                        onKeyPress={(e) => enterKeyHandler(e)}
                         onChange={(e) => {
                             setPassword({ password: e.currentTarget.value })
                         }}
