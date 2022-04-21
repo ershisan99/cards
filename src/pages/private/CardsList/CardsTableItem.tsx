@@ -23,6 +23,7 @@ const PackTableItem: React.FC<TabItemType> = ({
     updated,
     id,
     grade,
+    cardsPack_id,
 }) => {
     const { packUserId } = useAppSelector(selectCards)
     const [deleteCardPack, setDeleteCardPack] = useState<boolean>(false)
