@@ -27,6 +27,7 @@ export type CardsPackType = {
     user_name: string
     __v: number
     _id: string
+    sortCards: string
 }
 export type GetCardsPackResponseType = {
     cardPacks: Array<CardsPackType>

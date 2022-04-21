@@ -14,7 +14,7 @@ import CardsTable from './CardsTable'
 
 const CardsList = () => {
     const { updatedPage, updatedPageCount } = useActions(cardsActions)
-    const { page, pageCount, cardsTotalCount, packUserId } =
+    const { page, pageCount, cardsTotalCount, packUserId, sortCards } =
         useAppSelector(selectCards)
     const { user } = useAppSelector(selectUser)
     const onPageChange = (page: number) => {
@@ -36,8 +36,8 @@ const CardsList = () => {
         updatedSearch({ search: debouncedState || '' })
     }, [debouncedState])
     useEffect(() => {
-        cardsPack_id && getCards({ cardsPack_id })
-    }, [page, pageCount, debouncedState])
+        cardsPack_id && getCards({ cardsPack_id, sortCards })
+    }, [page, pageCount, debouncedState, sortCards])
     return (
         <>
             <div className="h-full py-6">

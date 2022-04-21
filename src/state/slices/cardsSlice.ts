@@ -14,10 +14,11 @@ export const getCards = createAsyncThunk(
     'cards/getCards',
     async (payload: GetCardType, { getState }) => {
         const state = getState() as RootState
-        const { pageCount, page } = state.cards
+        const { pageCount, page, sortCards } = state.cards
         const finalPayload = {
             pageCount,
             page,
+            sortCards,
             ...payload,
         }
 
@@ -61,6 +62,7 @@ type InitialStateType = {
     packUserId: string
     isLoading: boolean
     search: string
+    sortCards: string
 }
 
 const cardsSlice = createSlice({
@@ -69,8 +71,15 @@ const cardsSlice = createSlice({
         isLoading: true,
         page: 1,
         pageCount: 10,
+        sortCards: '0grade',
     } as InitialStateType,
     reducers: {
+        updatedSortCards: (
+            state,
+            action: PayloadAction<{ sortCards: string }>
+        ) => {
+            state.sortCards = action.payload.sortCards
+        },
         updatedPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
         },
