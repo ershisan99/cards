@@ -28,15 +28,32 @@ const AppRouter = () => {
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
+                    bodyStyle: {
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        fontSize: '20px',
+                        lineHeight: '20px',
+                        minHeight: '30px',
+                    },
                 })
             }
             if (typeNotification === 'info') {
                 toast(`✅️ ${message}`, {
-                    position: 'bottom-left',
+                    position: 'bottom-center',
                     autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
+                    bodyStyle: {
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        fontSize: '20px',
+                        lineHeight: '20px',
+                        minHeight: '30px',
+                    },
                 })
             }
         },
@@ -51,6 +68,7 @@ const AppRouter = () => {
             notify(errorMessageNotification!, 'error')
         }
     }, [error, errorMessageNotification, info, infoMessageNotification])
+
     return isLoading ? (
         <Spinner
             className={
@@ -61,7 +79,7 @@ const AppRouter = () => {
     ) : (
         <>
             <ToastContainer
-                position="bottom-left"
+                position="bottom-center"
                 autoClose={3000}
                 hideProgressBar
                 newestOnTop={false}
