@@ -45,10 +45,10 @@ const AppRouter = () => {
 
     useEffect(() => {
         if (info) {
-            notify(infoMessageNotification, 'info')
+            notify(infoMessageNotification!, 'info')
         }
         if (error) {
-            notify(errorMessageNotification, 'error')
+            notify(errorMessageNotification!, 'error')
         }
     }, [error, errorMessageNotification, info, infoMessageNotification])
     return isLoading ? (

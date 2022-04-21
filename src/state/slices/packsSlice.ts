@@ -7,6 +7,7 @@ import {
     SetCardsPackType,
     UpdateCardsPackType,
 } from '../../API/packsAPI'
+import { clearState } from '../../utils/localstorage'
 import { RootState } from '../store'
 
 export const getPacks = createAsyncThunk(
@@ -26,7 +27,7 @@ export const getPacks = createAsyncThunk(
             page,
         } = state.packs
         const [min, max] = [minCardsCount, maxCardsCount]
-        const user_id = state.user.user._id
+        const user_id = state.user.user?._id || false
         const packName = state.packs.search
         const finalPayload = {
             pageCount,
@@ -35,7 +36,7 @@ export const getPacks = createAsyncThunk(
             page,
             ...payload,
         }
-        isPersonalCardsPack && (finalPayload.user_id = user_id)
+        isPersonalCardsPack && user_id && (finalPayload.user_id = user_id)
         packName && (finalPayload.packName = packName)
         url_user_id && (finalPayload.user_id = url_user_id)
         return await PacksAPI.getPacks({
@@ -146,6 +147,7 @@ const getCardsPackSlice = createSlice({
         })
         builder.addCase(getPacks.rejected, (state) => {
             state.isLoading = false
+            clearState()
         })
     },
 })

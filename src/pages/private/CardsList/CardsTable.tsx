@@ -19,7 +19,7 @@ const CardsTable: React.FC = () => {
                             <th className="px-4 py-3">Answer</th>
                             <th className="px-4 py-3">Updated</th>
                             <th className="px-4 py-3">Grade</th>
-                            {packUserId === user._id && (
+                            {packUserId === user!._id && (
                                 <th className="px-4 py-3">Actions</th>
                             )}
                         </tr>

@@ -48,13 +48,13 @@ const CardsList = () => {
                         </h2>
                         <div className="flex justify-between">
                             <Search />
-                            {packUserId === user._id && <AddCardModal />}
+                            {packUserId === user!._id && <AddCardModal />}
                         </div>
                         <CardsTable />
                         <Pagination
                             totalItemsCount={cardsTotalCount}
-                            currentPage={page}
-                            itemsPerPage={pageCount}
+                            currentPage={page || 1}
+                            itemsPerPage={pageCount || 10}
                             onPageChange={onPageChange}
                             onItemsPerPageChange={onItemsPerPageChange}
                         />

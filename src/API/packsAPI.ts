@@ -1,3 +1,4 @@
+import { clearState } from '../utils/localstorage'
 import { instance } from './instance'
 
 export type GetCardsType = {
@@ -65,13 +66,15 @@ export const PacksAPI = {
             .then((res) => res.data)
     },
     addPack: (args: SetCardsPackType) => {
-        return instance.post('/cards/pack', args)
+        return instance.post('/cards/pack', args).catch(() => clearState())
     },
     deletePack: (args: DeleteCardsPackType) => {
-        return instance.delete(`cards/pack`, { params: args })
+        return instance
+            .delete(`cards/pack`, { params: args })
+            .catch(() => clearState())
     },
     updatePack: (args: UpdateCardsPackType) => {
-        return instance.put('/cards/pack', args)
+        return instance.put('/cards/pack', args).catch(() => clearState())
     },
 }
 

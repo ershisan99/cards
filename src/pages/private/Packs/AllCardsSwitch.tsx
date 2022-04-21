@@ -20,7 +20,7 @@ const AllCardsSwitch = () => {
                     onClick={() =>
                         setSearchParams({
                             ...Object.fromEntries(searchParams),
-                            userId: user._id,
+                            userId: user!._id,
                         })
                     }
                 >

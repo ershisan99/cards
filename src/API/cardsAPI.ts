@@ -1,3 +1,4 @@
+import { clearState } from '../utils/localstorage'
 import { instance } from './instance'
 
 export type GetCardType = {
@@ -55,21 +56,34 @@ export type PutCardType = {
 export type UpdateCardType = {
     card: PutCardType
 }
+export type UpdateGradeType = {
+    grade: number
+    card_id: string
+}
 
 export const CardsAPI = {
     getCards: (args: GetCardType) => {
-        return instance
-            .get<GetCardsResponseType>('/cards/card', { params: args })
-            .then((res) => res.data)
+        try {
+            return instance
+                .get<GetCardsResponseType>('/cards/card', { params: args })
+                .then((res) => res.data)
+        } catch {
+            clearState()
+        }
     },
     addCard: (args: AddCardType) => {
-        return instance.post('/cards/card', args)
+        return instance.post('/cards/card', args).catch(() => clearState())
     },
     deleteCard: (args: DeleteCardType) => {
-        return instance.delete(`/cards/card`, { params: args })
+        return instance
+            .delete(`/cards/card`, { params: args })
+            .catch(() => clearState())
     },
     updateCard: (args: UpdateCardType) => {
-        return instance.put('/cards/card', args)
+        return instance.put('/cards/card', args).catch(() => clearState())
+    },
+    updateCardGrade: (args: UpdateGradeType) => {
+        return instance.put('cards/grade', args).catch(() => clearState())
     },
 }
 

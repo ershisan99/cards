@@ -6,6 +6,7 @@ import {
     DeleteCardType,
     GetCardType,
     UpdateCardType,
+    UpdateGradeType,
 } from '../../API/cardsAPI'
 import { RootState } from '../store'
 
@@ -19,6 +20,7 @@ export const getCards = createAsyncThunk(
             page,
             ...payload,
         }
+
         return await CardsAPI.getCards(finalPayload)
     }
 )
@@ -42,14 +44,20 @@ export const updateCard = createAsyncThunk(
         return await CardsAPI.updateCard({ ...payload })
     }
 )
+export const updateGrade = createAsyncThunk(
+    'cards/updateGrade',
+    async (payload: UpdateGradeType) => {
+        return await CardsAPI.updateCardGrade({ ...payload })
+    }
+)
 
 type InitialStateType = {
     cards: Array<CardsType>
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
-    page: number
-    pageCount: number
+    page?: number
+    pageCount?: number
     packUserId: string
     isLoading: boolean
     search: string
@@ -75,15 +83,23 @@ const cardsSlice = createSlice({
         updatedSearch: (state, action: PayloadAction<{ search: string }>) => {
             state.search = action.payload.search
         },
+        setIsLoading: (
+            state,
+            action: PayloadAction<{ isLoading: boolean }>
+        ) => {
+            state.isLoading = action.payload.isLoading
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getCards.fulfilled, (state, action) => {
-            state.cards = action.payload.cards
-            state.cardsTotalCount = action.payload.cardsTotalCount
-            state.page = action.payload.page
-            state.pageCount = action.payload.pageCount
-            state.isLoading = false
-            state.packUserId = action.payload.packUserId
+            if (action.payload) {
+                state.cards = action.payload.cards
+                state.cardsTotalCount = action.payload.cardsTotalCount
+                state.page = action.payload.page
+                state.pageCount = action.payload.pageCount
+                state.isLoading = false
+                state.packUserId = action.payload.packUserId
+            }
         })
         builder.addCase(getCards.pending, (state) => {
             state.isLoading = true
@@ -101,5 +117,6 @@ export const cardsThunks = {
     addCard,
     deleteCard,
     updateCard,
+    updateGrade,
 }
 export const selectCards = (state: RootState) => state.cards
