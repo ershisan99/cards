@@ -16,10 +16,10 @@ const CardsSlider = () => {
         ...packsThunks,
         ...packsActions,
     })
-    const { maxCardsCount, minCardsCount } = useAppSelector(selectPacks)
+    const { maxCardsCount, minCards } = useAppSelector(selectPacks)
     const [values, setValues] = useState<number[]>([
-        minCardsCount,
-        maxCardsCount,
+        minCards,
+        maxCardsCount || 1000,
     ])
     const debouncedState = useDebounce(values, 2000)
     useEffect(() => {
@@ -61,6 +61,8 @@ const CardsSlider = () => {
                     step={STEP_VALUE}
                     disable={ALLOW_CROSS}
                     values={values}
+                    min={0}
+                    max={maxCardsCount}
                     onChangeRange={onChangeRangeSecondHandler}
                 />
             </div>

@@ -17,8 +17,7 @@ const Profile: FC = () => {
         ...packsThunks,
         ...packsActions,
     })
-    const { page, pageCount, minCardsCount, maxCardsCount } =
-        useAppSelector(selectPacks)
+    const { page, pageCount, minCards, maxCards } = useAppSelector(selectPacks)
 
     const [urlSearch] = useSearchParams()
     const debouncedSearch = urlSearch.get('search')
@@ -29,7 +28,7 @@ const Profile: FC = () => {
     }, [debouncedState])
     useEffect(() => {
         userId && getPacks({ user_id: userId })
-    }, [page, pageCount, minCardsCount, maxCardsCount])
+    }, [page, pageCount, minCards, maxCards])
 
     return (
         <PacksContainer title={`${user!.name}'s packs`}>

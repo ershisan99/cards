@@ -19,14 +19,9 @@ export const getPacks = createAsyncThunk(
 
         let url_user_id = params.get('userId')
         console.log(url_user_id)
-        const {
-            isPersonalCardsPack,
-            pageCount,
-            minCardsCount,
-            maxCardsCount,
-            page,
-        } = state.packs
-        const [min, max] = [minCardsCount, maxCardsCount]
+        const { isPersonalCardsPack, pageCount, minCards, maxCards, page } =
+            state.packs
+        const [min, max] = [minCards, maxCards]
         const user_id = state.user.user?._id || false
         const packName = state.packs.search
         const finalPayload = {
@@ -70,8 +65,9 @@ export const deletePack = createAsyncThunk(
 type InitialStateType = {
     cardPacks: Array<CardsPackType>
     cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
+    maxCardsCount?: number
+    maxCards: number
+    minCards: number
     page: number
     pageCount: number
     cardsPackName: string
@@ -86,8 +82,8 @@ const getCardsPackSlice = createSlice({
     initialState: {
         cardPacks: [],
         cardPacksTotalCount: 0,
-        maxCardsCount: 100,
-        minCardsCount: 0,
+        minCards: 0,
+        maxCards: 1000,
         page: 1,
         pageCount: 10,
         cardsPackName: '',
@@ -109,8 +105,8 @@ const getCardsPackSlice = createSlice({
                 maxCardsCount: number
             }>
         ) => {
-            state.minCardsCount = action.payload.minCardsCount
-            state.maxCardsCount = action.payload.maxCardsCount
+            state.minCards = action.payload.minCardsCount
+            state.maxCards = action.payload.maxCardsCount
         },
         updatedPage: (state, action: PayloadAction<{ page: number }>) => {
             state.page = action.payload.page
@@ -141,6 +137,7 @@ const getCardsPackSlice = createSlice({
             state.page = action.payload.page
             state.pageCount = action.payload.pageCount
             state.isLoading = false
+            state.maxCardsCount = action.payload.maxCardsCount
         })
         builder.addCase(getPacks.pending, (state) => {
             state.isLoading = true
