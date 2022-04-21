@@ -5,7 +5,7 @@ export type GetCardsType = {
     packName?: string // english - default value
     min?: number
     max?: number
-    sortPacks?: number // 0updated - default value,
+    sortPacks?: string // 0updated - default value,
     page?: number
     pageCount?: number
     user_id?: string

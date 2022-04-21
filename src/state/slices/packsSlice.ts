@@ -19,8 +19,14 @@ export const getPacks = createAsyncThunk(
 
         let url_user_id = params.get('userId')
         console.log(url_user_id)
-        const { isPersonalCardsPack, pageCount, minCards, maxCards, page } =
-            state.packs
+        const {
+            isPersonalCardsPack,
+            pageCount,
+            minCards,
+            maxCards,
+            page,
+            sortPacks,
+        } = state.packs
         const [min, max] = [minCards, maxCards]
         const user_id = state.user.user?._id || false
         const packName = state.packs.search
@@ -29,6 +35,7 @@ export const getPacks = createAsyncThunk(
             min,
             max,
             page,
+            sortPacks,
             ...payload,
         }
         isPersonalCardsPack && user_id && (finalPayload.user_id = user_id)
@@ -75,6 +82,7 @@ type InitialStateType = {
     nameCards: string
     isLoading: boolean
     search?: string | undefined
+    sortPacks: string
 }
 
 const getCardsPackSlice = createSlice({
@@ -90,8 +98,15 @@ const getCardsPackSlice = createSlice({
         isPersonalCardsPack: null,
         nameCards: '',
         isLoading: false,
+        sortPacks: '0updated',
     } as InitialStateType,
     reducers: {
+        updatedSortPacks: (
+            state,
+            action: PayloadAction<{ sortPacks: string }>
+        ) => {
+            state.sortPacks = action.payload.sortPacks
+        },
         updatedPackTitle: (
             state,
             action: PayloadAction<{ cardsPackName: string }>

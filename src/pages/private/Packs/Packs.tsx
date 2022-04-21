@@ -10,7 +10,8 @@ import { useActions, useAppSelector, useDebounce } from '../../../utils/helpers'
 import AllCardsSwitch from './AllCardsSwitch'
 
 const Packs = () => {
-    const { page, pageCount, minCards, maxCards } = useAppSelector(selectPacks)
+    const { page, pageCount, minCards, maxCards, sortPacks } =
+        useAppSelector(selectPacks)
     const { getPacks, updatedSearch } = useActions({
         ...packsThunks,
         ...packsActions,
@@ -26,7 +27,7 @@ const Packs = () => {
     }, [debouncedState])
     useEffect(() => {
         userId ? getPacks({ user_id: userId }) : getPacks({})
-    }, [page, pageCount, minCards, maxCards, debouncedState, userId])
+    }, [page, pageCount, minCards, maxCards, debouncedState, userId, sortPacks])
     return (
         <PacksContainer title="Packs list">
             <AllCardsSwitch />
