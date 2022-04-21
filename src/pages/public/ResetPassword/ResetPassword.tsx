@@ -77,7 +77,7 @@ const ResetPassword = () => {
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
-                <div className="mb-10 text-center font-poppins text-xl font-semibold text-slate">
+                <div className="mb-10 text-center text-xl font-semibold text-slate">
                     Forgot your password?
                 </div>
                 <form>
@@ -126,7 +126,7 @@ const ResetPassword = () => {
                 setIsOpen={() => setIsLoading({ value: false })}
                 title="Cards"
             >
-                <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
+                <div className="mb-10 flex justify-center font-semibold text-slate">
                     <img src={icon_mail} alt={'icon_mail'} />
                 </div>
                 <div className="mb-3 text-center text-xl font-bold text-primary">

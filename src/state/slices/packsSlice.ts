@@ -66,8 +66,8 @@ type InitialStateType = {
     cardPacks: Array<CardsPackType>
     cardPacksTotalCount: number
     maxCardsCount?: number
-    maxCards: number
-    minCards: number
+    maxCards?: number
+    minCards?: number
     page: number
     pageCount: number
     cardsPackName: string

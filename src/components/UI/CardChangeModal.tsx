@@ -52,7 +52,7 @@ const CardModal: FC<PropsType> = ({ isOpen, setIsOpen, title, children }) => {
                                 <div className="flex justify-between border px-6 py-4 align-middle text-sm">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-center font-poppins text-lg"
+                                        className="text-center text-lg"
                                     >
                                         {title}
                                     </Dialog.Title>

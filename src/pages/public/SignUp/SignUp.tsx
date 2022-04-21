@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
-import complete_icon from '../../../assets/images/complete_icon.svg.png'
+import complete_icon from '../../../assets/images/complete_icon.svg'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/Input'
 import Modal from '../../../components/UI/Modal'
@@ -107,7 +107,7 @@ const SignUp = () => {
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
-                <div className="mb-5 text-center font-poppins text-xl font-semibold text-slate">
+                <div className="mb-5 text-center text-xl font-semibold text-slate">
                     Sign Up
                 </div>
                 <form>
@@ -191,7 +191,7 @@ const SignUp = () => {
                 title="Cards"
             >
                 <div className="flex-center flex flex-col items-center justify-center">
-                    <div className="mb-10 flex justify-center font-poppins font-semibold text-slate">
+                    <div className="mb-10 flex justify-center font-semibold text-slate">
                         <img
                             src={complete_icon}
                             alt={'icon_mail'}
@@ -199,10 +199,10 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="mb-3 text-center text-xl font-bold text-primary">
-                        Are you registered!
+                        Signed up successfully!
                     </div>
                     <div className="text-md mb-5 text-center text-light-gray opacity-60">
-                        You can login using your data.
+                        You can now sign in using your data.
                     </div>
                     <Button
                         color="primary"

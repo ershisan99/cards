@@ -64,7 +64,7 @@ const NewPassword = () => {
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
-                <div className="mb-10 text-center font-poppins text-xl font-semibold text-slate">
+                <div className="mb-10 text-center text-xl font-semibold text-slate">
                     Create new password
                 </div>
                 <form>

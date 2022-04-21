@@ -6,7 +6,7 @@ module.exports = {
             colors: {
                 primary: '#21268f',
                 secondary: '#9a91c8',
-                'secondary-light': '#DCCCDB',
+                'secondary-light': '#dcccdb',
                 'light-purple': '#d7d8ef',
                 light: '#ececf9',
                 warning: '#f1453d',
@@ -16,10 +16,7 @@ module.exports = {
                 cardModal: 'rgba(26, 26, 26, 0.8)',
             },
             fontFamily: {
-                sans: ['SF UI Display'],
-                sf: 'SF UI Display',
-                poppins: 'Poppins',
-                lato: 'Lato',
+                sans: ['Roboto'],
             },
             backgroundImage: {
                 gradient: 'linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%)',

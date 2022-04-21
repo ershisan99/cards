@@ -82,7 +82,7 @@ const SignIn = () => {
     return (
         <div>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} title="Cards">
-                <div className="mb-5 text-center font-poppins text-xl font-semibold text-slate">
+                <div className="mb-5 text-center text-xl font-semibold text-slate">
                     Sign In
                 </div>
                 <form>

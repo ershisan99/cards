@@ -18,10 +18,13 @@ const CardsSlider = () => {
     })
     const { maxCardsCount, minCards } = useAppSelector(selectPacks)
     const [values, setValues] = useState<number[]>([
-        minCards,
+        minCards || 0,
         maxCardsCount || 1000,
     ])
     const debouncedState = useDebounce(values, 2000)
+    useEffect(() => {
+        !isFirstLoad && setValues([minCards || 0, maxCardsCount || 1000])
+    }, [maxCardsCount])
     useEffect(() => {
         const [minCardsCount, maxCardsCount] = values
         updatedMinMax({ minCardsCount, maxCardsCount })

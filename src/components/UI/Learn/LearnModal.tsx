@@ -78,7 +78,7 @@ const LearnModal: FC<PropsType> = ({ title, children }) => {
                                         <div className="px-6 py-4 align-middle">
                                             <Dialog.Title
                                                 as="h3"
-                                                className="text-center font-poppins text-2xl font-extrabold"
+                                                className="text-center text-2xl font-extrabold"
                                             >
                                                 {title}
                                             </Dialog.Title>

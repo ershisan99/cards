@@ -67,7 +67,7 @@ const AppRouter = () => {
         if (error) {
             notify(errorMessageNotification!, 'error')
         }
-    }, [error, errorMessageNotification, info, infoMessageNotification])
+    }, [errorMessageNotification, info])
 
     return isLoading ? (
         <Spinner

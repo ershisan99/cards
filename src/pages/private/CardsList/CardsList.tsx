@@ -43,7 +43,7 @@ const CardsList = () => {
             <div className="h-full py-6">
                 <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                     <div className="w-full bg-white px-12 py-6">
-                        <h2 className="mb-6 font-poppins text-xl font-semibold">
+                        <h2 className="mb-6 text-xl font-semibold">
                             {'Pack Name'}
                         </h2>
                         <div className="flex justify-between">

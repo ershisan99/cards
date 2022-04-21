@@ -1,54 +1,10 @@
-@font-face {
-    font-family: 'SF UI Display';
-    font-weight: 700;
-    src: url('./fonts/sf-ui-display/sf-ui-display-bold.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'SF UI Display';
-    font-weight: 600;
-    src: url('./fonts/sf-ui-display/sf-ui-display-semibold.otf')
-        format('opentype');
-}
-
-@font-face {
-    font-family: 'SF UI Display';
-    font-weight: 500;
-    src: url('./fonts/sf-ui-display/sf-ui-display-medium.otf')
-        format('opentype');
-}
-
-@font-face {
-    font-family: 'SF UI Display';
-    font-weight: 400;
-    src: url('./fonts/sf-ui-display/sf-ui-display-light.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'Poppins';
-    font-weight: 600;
-    src: url('./fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Poppins';
-    font-weight: 500;
-    src: url('./fonts/Poppins/Poppins-Medium.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Lato';
-    font-weight: 400;
-    src: url('./fonts/Lato/Lato-Regular.ttf') format('truetype');
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     html {
-        font-family: 'SF UI Display', Proxima Nova, system-ui, sans-serif;
+        font-family: 'Roboto', Proxima Nova, system-ui, sans-serif;
         box-sizing: border-box;
     }
 
