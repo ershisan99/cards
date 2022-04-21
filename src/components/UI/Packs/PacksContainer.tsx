@@ -21,7 +21,7 @@ const PacksContainer: FC<Props> = ({ children, title }) => {
         updatedPageCount({ pageCount })
     }
     return (
-        <div className="h-full py-6">
+        <div className="h-full pt-6">
             <div className="mx-auto flex h-3/4 w-4/6 overflow-hidden rounded-xl">
                 <SidebarContainer>{children}</SidebarContainer>
                 <div className="w-full bg-white px-12 py-6">
