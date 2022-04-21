@@ -19,21 +19,11 @@ export const getPacks = createAsyncThunk(
 
         let url_user_id = params.get('userId')
         console.log(url_user_id)
-        const {
-            isPersonalCardsPack,
-            pageCount,
-            minCards,
-            maxCards,
-            page,
-            sortPacks,
-        } = state.packs
-        const [min, max] = [minCards, maxCards]
+        const { isPersonalCardsPack, pageCount, page, sortPacks } = state.packs
         const user_id = state.user.user?._id || false
         const packName = state.packs.search
         const finalPayload = {
             pageCount,
-            min,
-            max,
             page,
             sortPacks,
             ...payload,

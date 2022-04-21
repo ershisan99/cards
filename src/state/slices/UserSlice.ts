@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { MeRes, UserAPI } from '../../API/userAPI'
+import { EditMeArgs, EditMeRes, MeRes, UserAPI } from '../../API/userAPI'
 import { RootState } from '../store'
 import { sendSignInRequest } from './signInSlice'
 
@@ -9,6 +9,13 @@ export const getMe = createAsyncThunk('user/getMe', async () => {
 export const signOut = createAsyncThunk('user/signOut', async () => {
     return await UserAPI.signOut()
 })
+
+export const editMe = createAsyncThunk(
+    'user/edit',
+    async (payload: EditMeArgs) => {
+        return await UserAPI.editMe(payload).then((res) => res.data)
+    }
+)
 
 type InitialState = {
     user?: MeRes
@@ -76,11 +83,20 @@ const signInSlice = createSlice({
                 state.isLoading = false
                 state.isAuth = false
             })
+            .addCase(
+                editMe.fulfilled,
+                (state, action: PayloadAction<EditMeRes>) => {
+                    if (action.payload) {
+                        state.user = action.payload.updatedUser
+                    }
+                    state.isLoading = false
+                }
+            )
     },
 })
 
 export const userReducer = signInSlice.reducer
 export const userActions = signInSlice.actions
-export const userThunks = { getMe, signOut }
+export const userThunks = { getMe, signOut, editMe }
 
 export const selectUser = (state: RootState) => state.user

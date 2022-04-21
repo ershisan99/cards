@@ -55,6 +55,14 @@ type SignOutRes = {
     info: string
     error?: string
 }
+export type EditMeArgs = {
+    name?: string
+    avatar?: string
+}
+export type EditMeRes = {
+    updatedUser: MeRes
+    error?: string
+}
 
 export const UserAPI = {
     signIn: (args: SignInArgs) => {
@@ -68,6 +76,9 @@ export const UserAPI = {
     },
     getMe: () => {
         return instance.post<MeRes>('/auth/me').then((res) => res.data)
+    },
+    editMe: (args: EditMeArgs) => {
+        return instance.put<EditMeRes>('/auth/me', args)
     },
     forgotPassword: (args: ForgotArgs) => {
         return instance
