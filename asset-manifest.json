@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cards/static/css/main.e7567eb6.css",
-    "main.js": "/cards/static/js/main.9ecf48bd.js",
+    "main.js": "/cards/static/js/main.f3d52712.js",
     "static/media/complete_icon.svg": "/cards/static/media/complete_icon.bf6e15af53643c24eb8e5581a90dd83a.svg",
     "static/media/roboto-all-500-normal.woff": "/cards/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/cards/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
@@ -43,10 +43,10 @@
     "static/media/cross.svg": "/cards/static/media/cross.45fc2a18a856ec9dcb9f26ae1f5917a6.svg",
     "static/media/clearIcon.svg": "/cards/static/media/clearIcon.ec55f837a4ca93d39e2d84677237179c.svg",
     "main.e7567eb6.css.map": "/cards/static/css/main.e7567eb6.css.map",
-    "main.9ecf48bd.js.map": "/cards/static/js/main.9ecf48bd.js.map"
+    "main.f3d52712.js.map": "/cards/static/js/main.f3d52712.js.map"
   },
   "entrypoints": [
     "static/css/main.e7567eb6.css",
-    "static/js/main.9ecf48bd.js"
+    "static/js/main.f3d52712.js"
   ]
 }
