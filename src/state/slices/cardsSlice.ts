@@ -16,6 +16,8 @@ export const getCards = createAsyncThunk(
         const state = getState() as RootState
         const { pageCount, page, sortCards } = state.cards
         const finalPayload = {
+            pageCount,
+            page,
             sortCards,
             ...payload,
         }

@@ -51,12 +51,14 @@ const Learn = () => {
                           getCards({
                               cardsPack_id: cardsPack_id,
                               pageCount: pack?.cardsCount || Infinity,
+                              page: 1,
                           })
                   })
                 : cardsPack_id &&
                   getCards({
                       cardsPack_id: cardsPack_id,
                       pageCount: pack?.cardsCount || Infinity,
+                      page: 1,
                   })
             setFirst(false)
         }
